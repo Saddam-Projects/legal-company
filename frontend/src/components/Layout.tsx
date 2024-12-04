@@ -8,6 +8,7 @@ import ContainerComponent from './Container';
 import ContextApiComponent from './ContextApi';
 import { ThemeProvider } from './ThemeProvider';
 import BottomBarComponent from './BottomBar';
+import LiveChatComponent from './LiveChat';
 
 export default function LayoutComponent({ children }: { children: React.ReactNode }) {
   const [burgerMenuActive, setBurgerMenuActive] = useState(false);
@@ -21,12 +22,14 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
             {burgerMenuActive && <div className="w-screen h-screen left-0 top-0 absolute z-10 lg:hidden" onClick={() => setBurgerMenuActive(false)}></div>}
             <div className="w-full h-full flex-col ">
               <NavbarComponent active={burgerMenuActive} setActive={setBurgerMenuActive} />
-              <ScrollArea style={{ height: '80%' }}>
+              <ScrollArea style={{ height: '100%' }}>
                 <ContainerComponent className="h-full w-full ">
                   <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
                 </ContainerComponent>
+                <div className="h-[50px]"></div>
               </ScrollArea>
-              <BottomBarComponent />
+              {/* <BottomBarComponent /> */}
+              <LiveChatComponent />
             </div>
           </div>
         </ThemeProvider>

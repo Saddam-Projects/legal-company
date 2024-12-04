@@ -8,9 +8,6 @@ import TextComponent from './Text';
 import ContainerComponent from './Container';
 import { usePathname } from 'next/navigation';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import Image from 'next/image';
-import { DUMMY_LOGO } from '@/utils/images';
-import { DESCRIPTION, TITLE } from '@/utils/constant';
 
 export default function SidebarComponent({ active, setActive }: BooleanInterface) {
   const [childMenuActive, setChildMenuActive] = useState<INavbarMenu | null>(null);
@@ -32,7 +29,7 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
   };
 
   return (
-    <ContainerComponent className={`  ${active ? 'flex' : 'hidden'} absolute lg:hidden z-30 w-3/5 px-3 xl:w-1/5 h-full flex-col border-r-1 border-r-gray-200 bg-white`}>
+    <ContainerComponent className={`  ${active ? 'flex' : 'hidden'} absolute lg:hidden z-30 w-3/5 px-3 xl:w-1/5 h-full flex-col bg-teal`}>
       <div className="h-20 flex flex-col items-center justify-center py-4"></div>
       <ScrollArea style={{ height: '99%' }}>
         <div className="h-full flex flex-col space-y-6 py-5">
@@ -40,13 +37,13 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
             item.childrens ? (
               <div key={index} className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2 cursor-pointer" onClick={() => onClickMenu(item)}>
-                  <item.icon className="text-black" />
+                  <item.icon className="text-white" />
                   <TextComponent className={`capitalize text-base  ${pathName === item.to ? 'font-bold' : 'font-regular'}`}>{item.title}</TextComponent>
                 </div>
                 {childMenuActive && childMenuActive.title === item.title && (
                   <div className="ml-6 flex flex-col space-y-4 pt-4">
                     {item.childrens.map((child, index) => (
-                      <TextComponent key={index} onClick={() => navigateTo(child.to)} className={`cursor-pointer capitalize text-base text-black  ${pathName === child.to ? 'font-bold' : 'font-regular'}`}>
+                      <TextComponent key={index} onClick={() => navigateTo(child.to)} className={`cursor-pointer capitalize text-base text-white  ${pathName === child.to ? 'font-bold' : 'font-regular'}`}>
                         {child.title}
                       </TextComponent>
                     ))}
@@ -56,8 +53,8 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
             ) : (
               <div key={index} className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
-                  <item.icon className="text-black" />
-                  <TextComponent onClick={() => navigateTo(item.to)} className={`cursor-pointer text-black capitalize text-base  ${pathName === item.to ? 'font-bold' : 'font-regular'}`}>
+                  <item.icon className="text-white" />
+                  <TextComponent onClick={() => navigateTo(item.to)} className={`cursor-pointer text-white capitalize text-base  ${pathName === item.to ? 'font-bold' : 'font-regular'}`}>
                     {item.title}
                   </TextComponent>
                 </div>
