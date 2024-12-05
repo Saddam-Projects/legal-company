@@ -1,22 +1,15 @@
 import BooleanInterface from '@/interfaces/components/shared/BooleanInterface';
 import ContainerComponent from './Container';
 import BarMenuComponent from './BarMenu';
-import useContextApi from '@/hooks/useContextApi';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import navbarMenus from '@/datasources/internals/navbarMenu';
 import TextComponent from './Text';
 import Image from 'next/image';
 import { COMPANY_LOGO } from '@/utils/images';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { SERVICES_URL } from '@/datasources/internals/menus';
 import { usePathname } from 'next/navigation';
 import { TITLE } from '@/utils/constant';
 import useNavigateTo from '@/hooks/useNavigateTo';
 
 export default function NavbarComponent({ active, setActive }: BooleanInterface) {
-  const { theme } = useContextApi();
-  const { set } = useLocalStorage;
-
   const pathname = usePathname();
   const navigateTo = useNavigateTo();
 

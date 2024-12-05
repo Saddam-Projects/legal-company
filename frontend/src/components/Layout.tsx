@@ -28,8 +28,8 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
                 </ContainerComponent>
                 <div className="h-[50px]"></div>
               </ScrollArea>
-              {/* <BottomBarComponent /> */}
-              <LiveChatComponent />
+              <BottomBarComponent />
+              {/* <LiveChatComponent /> */}
             </div>
           </div>
         </ThemeProvider>

@@ -2,46 +2,28 @@
 
 import { useForm } from 'react-hook-form';
 import { Button } from './ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { GENDER } from '@/entity/enum';
-import ButtonActionComponent from './ButtonAction';
-import permission from '@/datasources/internals/permission';
-import SelectInput from './SelectInput';
 
 export default function FormComponent() {
-  const meta = {
-    title: 'create employee',
-    description: 'create new employee',
-    resourceName: permission.resources.EMPLOYEE,
-  };
   const formSchema = z.object({
     name: z.string().min(2, {
       message: 'name must be at least 2 characters.',
     }),
-    workingMail: z.string().email(),
-    workingPhone: z.string().max(13).regex(/^\d/, 'Phone number must be digits'),
-    gender: z.string(),
-    company: z.string(),
-    department: z.string(),
-    position: z.string(),
-    reportTo: z.string(),
+    email: z.string().email(),
+    phone: z.string().max(13).regex(/^\d/, 'Phone number must be digits'),
+    message: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      workingMail: '',
-      workingPhone: '',
-      gender: '',
-      company: '',
-      department: '',
-      position: '',
-      reportTo: '',
+      email: '',
+      phone: '',
+      message: '',
     },
   });
 
@@ -56,9 +38,9 @@ export default function FormComponent() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className="text-black">Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,12 +48,12 @@ export default function FormComponent() {
         />
         <FormField
           control={form.control}
-          name="workingMail"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Working Email</FormLabel>
+              <FormLabel className="text-black">Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,12 +61,12 @@ export default function FormComponent() {
         />
         <FormField
           control={form.control}
-          name="workingPhone"
+          name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Working Phonenumber</FormLabel>
+              <FormLabel className="text-black">phone</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,79 +74,20 @@ export default function FormComponent() {
         />
         <FormField
           control={form.control}
-          name="gender"
+          name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gender</FormLabel>
+              <FormLabel className="text-black">Message</FormLabel>
               <FormControl>
-                <Select>
-                  <SelectTrigger className="border-1 dark:border-white border-dark">
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={GENDER.MALE}>{GENDER.MALE.toLowerCase()}</SelectItem>
-                    <SelectItem value={GENDER.FEMALE}>{GENDER.FEMALE.toLowerCase()}</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="company"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company</FormLabel>
-              <FormControl>
-                <SelectInput />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="department"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Department</FormLabel>
-              <FormControl>
-                <SelectInput />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="position"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Position</FormLabel>
-              <FormControl>
-                <SelectInput />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="reportTo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Report To</FormLabel>
-              <FormControl>
-                <SelectInput />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <div className="flex justify-end space-x-4">
-          <Button size={'sm'} className="bg-blue-hris text-white hover:bg-blue-hris hover:opacity-90" type="submit">
+          <Button size={'sm'} className="bg-primary text-black hover:bg-primary hover:opacity-90" type="submit">
             Save
           </Button>
         </div>
