@@ -7,3 +7,4 @@ export const IMAGE_GRIDS = ['/image-grid-1.jpeg', '/image-grid-2.jpeg', '/image-
 export const PRO_IMAGE = '/pro.svg';
 export const MEDIUM_IMAGE = '/medium.svg';
 export const STARTER_IMAGE = '/starter.svg';
+export const BUILDING_IMAGE = '/building-2.jpg';

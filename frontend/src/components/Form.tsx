@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from './ui/input';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Textarea } from './ui/textarea';
 
 export default function FormComponent() {
   const formSchema = z.object({
@@ -40,7 +41,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
+                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -53,7 +54,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
+                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,7 +67,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">phone</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
+                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,7 +80,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Message</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-secondary border-1" />
+                <Textarea rows={6} placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1 resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>

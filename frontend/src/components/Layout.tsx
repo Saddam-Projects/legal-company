@@ -19,10 +19,9 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
         <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
           <div className="h-full w-full flex">
             <SidebarComponent active={burgerMenuActive} setActive={setBurgerMenuActive} />
-            {burgerMenuActive && <div className="w-screen h-screen left-0 top-0 absolute z-10 lg:hidden" onClick={() => setBurgerMenuActive(false)}></div>}
             <div className="w-full h-full flex-col ">
               <NavbarComponent active={burgerMenuActive} setActive={setBurgerMenuActive} />
-              <ScrollArea style={{ height: '100%' }}>
+              <ScrollArea style={{ height: '100%' }} onClick={() => setBurgerMenuActive(false)}>
                 <ContainerComponent className="h-full w-full ">
                   <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
                 </ContainerComponent>

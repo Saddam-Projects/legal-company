@@ -29,7 +29,7 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
   };
 
   return (
-    <ContainerComponent className={`  ${active ? 'flex' : 'hidden'} absolute lg:hidden z-30 w-3/5 px-3 xl:w-1/5 h-full flex-col bg-teal`}>
+    <ContainerComponent className={`${active ? 'flex' : 'hidden'} fixed lg:hidden z-30 w-3/5 px-3 xl:w-1/5 h-full flex-col bg-teal`}>
       <div className="h-20 flex flex-col items-center justify-center py-4"></div>
       <ScrollArea style={{ height: '99%' }}>
         <div className="h-full flex flex-col space-y-6 py-5">
