@@ -16,6 +16,7 @@ import { FaAddressBook, FaDochub, FaMapMarkerAlt, FaRocket, FaStar } from 'react
 import ServiceCardComponent from '@/components/ServiceCard';
 import serviceService from '@/services/service';
 import LoadingComponent from '@/components/Loading';
+import { AdvertiseComponent } from '@/components/Advertise';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -103,6 +104,11 @@ export default function Page() {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </div>
+      <div className="flex justify-center my-8">
+        <div className="px-2 w-full lg:w-3/4">
+          <AdvertiseComponent />
         </div>
       </div>
       <div className="flex justify-center py-8">

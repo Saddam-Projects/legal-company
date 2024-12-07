@@ -33,7 +33,7 @@ func (r *ServiceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.S
 
 	sortCtx := ctx.Query("sort")
 	unknownPrice := ctx.Query("is-unknown-price")
-	limit := 10
+	limit := 100
 	offset := 0
 
 	limitQuery := ctx.Query("limit")

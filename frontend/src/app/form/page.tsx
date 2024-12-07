@@ -18,6 +18,7 @@ import FormComponent from '@/components/Form';
 import { Input } from '@/components/ui/input';
 import { FaAddressBook, FaDochub, FaEnvelope, FaMapMarker, FaMapMarkerAlt, FaPhone, FaRocket, FaStar } from 'react-icons/fa';
 import FormServiceComponent from '@/components/FormService';
+import { AdvertiseComponent } from '@/components/Advertise';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -38,16 +39,23 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Card className="shadow-none bg-transparent border-1 my-8 mx-2 lg:mx-4 px-2 rounded-lg border-gray-200">
-        <CardContent className="py-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-            <div className="order-2 lg:order-1">
-              <FormServiceComponent />
-            </div>
-            <div className="flex justify-center order-1 lg:order-2">
-              <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
-            </div>
-            {/* <Card className="shadow-none  bg-transparent border-1 border-gray-200 order-1 lg:order-2 h-full">
+      <div className="flex justify-center my-8">
+        <div className="px-2 w-full lg:w-3/4">
+          <AdvertiseComponent />
+        </div>
+      </div>
+      <div className="flex justify-center my-8">
+        <div className="px-2 w-full lg:w-3/4">
+          <Card className="shadow-none bg-transparent border-1 rounded-lg border-gray-200">
+            <CardContent className="py-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+                <div className="order-2 lg:order-1">
+                  <FormServiceComponent />
+                </div>
+                <div className="flex justify-center order-1 lg:order-2">
+                  <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
+                </div>
+                {/* <Card className="shadow-none  bg-transparent border-1 border-gray-200 order-1 lg:order-2 h-full">
               <CardContent className="h-full">
                 <div className="flex flex-col justify-between py-4 h-full">
                   <div className="flex flex-col space-y-2 h-[150px] overflow-y-auto">
@@ -86,9 +94,11 @@ export default function Page() {
                 </div>
               </CardContent>
             </Card> */}
-          </div>
-        </CardContent>
-      </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </>
   );
 }

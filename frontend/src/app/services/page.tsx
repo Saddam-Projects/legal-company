@@ -1,13 +1,16 @@
 'use client';
 
 import TextComponent from '@/components/Text';
-import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import ServiceCardComponent from '@/components/ServiceCard';
 import LoadingComponent from '@/components/Loading';
 import serviceService from '@/services/service';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
+import { AdvertiseComponent } from '@/components/Advertise';
 
 export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
@@ -27,6 +30,11 @@ export default function Page() {
               <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="flex justify-center my-8">
+        <div className="px-2 w-full lg:w-3/4">
+          <AdvertiseComponent />
         </div>
       </div>
       <div className="flex justify-center my-8">
