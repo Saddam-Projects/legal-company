@@ -1,6 +1,6 @@
 import FetchInterface from '@/interfaces/states/fetchInterface';
 import { BASE_API_URL } from '@/utils/constant';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function useFetch<T>(path: string, baseUrl = BASE_API_URL, method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET', header?: Record<string, string>, body?: T, queryParam?: string[]): FetchInterface<T> {
   const [data, setData] = useState<T | null>(null);

@@ -2,12 +2,11 @@
 
 import TextComponent from '@/components/Text';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { SERVICES_URL } from '@/datasources/internals/menus';
-import { SERVICE_DUMMY, SERVICES } from '@/datasources/internals/services';
+import { Card, CardContent } from '@/components/ui/card';
+import { FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { convertToCurrency } from '@/lib/utils';
-import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER } from '@/utils/images';
 import { CheckCircle2 } from 'lucide-react';
@@ -15,12 +14,28 @@ import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
 import FormComponent from '@/components/Form';
-import { Input } from '@/components/ui/input';
-import { FaAddressBook, FaDochub, FaEnvelope, FaMapMarker, FaMapMarkerAlt, FaPhone, FaRocket, FaStar } from 'react-icons/fa';
+import { FaAddressBook, FaDochub, FaMapMarkerAlt, FaRocket, FaStar } from 'react-icons/fa';
+import { getData } from '@/actions/service.action';
+import { useEffect, useState } from 'react';
+import { Service } from '@/entity/service';
+import ServiceCardComponent from '@/components/ServiceCard';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
   const navigateTo = useNavigateTo();
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    getData(6, 0, undefined, 'new')
+      .then((res) => {
+        setServices(res);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-4">
       <div className="bg-teal py-8">
@@ -30,7 +45,9 @@ export default function Page() {
             <TextComponent className="text-white text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
             <div className="flex space-x-2">
               <Button className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">About Us</Button>
-              <Button className="bg-primary text-black hover:bg-primary hover:opacity-90">More Service</Button>
+              <Button className="bg-primary text-black hover:bg-primary hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
+                More Service
+              </Button>
             </div>
           </div>
           <div className="flex justify-center order-1 lg:order-2">
@@ -101,44 +118,19 @@ export default function Page() {
         </div>
       </div>
       <div className="flex justify-center py-8">
-        <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
-          Our Services
-        </TextComponent>
+        <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
-      <div className="flex justify-center">
-        <div className="px-2 w-full lg:w-3/4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {SERVICES.map((item, index) => (
-              <Card key={index} className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
-                <CardContent className="h-full py-8">
-                  <div className="flex flex-col items-center justify-between h-full">
-                    <div className="flex flex-col items-center space-y-8">
-                      <TextComponent className="text-black font-bold text-lg">{item.title}</TextComponent>
-                      <Image objectFit="cover" quality={100} src={item.img} width={120} height={120} alt="Page Not Found" priority />
-                    </div>
-                    <div className="py-4">
-                      <TextComponent className="text-base font-bold text-teal">{convertToCurrency(item.price)}</TextComponent>
-                    </div>
-                    <div className="flex flex-col space-y-2 mb-4">
-                      {item.terms.map((e, index) => (
-                        <div key={index} className="flex space-x-2 items-center">
-                          <CheckCircle2 className="text-secondary w-4" />
-                          <TextComponent>{e}</TextComponent>
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      <Button size={'sm'} className="bg-primary text-black hover:bg-primary hover:opacity-90 mx-auto">
-                        Minta Proposal
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+      {services.length > 0 && (
+        <div className="flex justify-center">
+          <div className="px-2 w-full lg:w-3/4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {services.map((item, index) => (
+                <ServiceCardComponent item={item} index={index} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="py-8 bg-teal my-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center">
@@ -151,7 +143,7 @@ export default function Page() {
             </div>
           </div>
           <div className="flex items-center">
-            <Button className="bg-primary text-teal hover:bg-teal hover:opacity-90 mx-auto" size={'lg'}>
+            <Button onClick={() => navigateTo(FORM_URL)} className="bg-primary text-teal hover:bg-primary hover:opacity-90 mx-auto" size={'lg'}>
               Lihat Proposal
             </Button>
           </div>

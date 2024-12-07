@@ -8,19 +8,23 @@ import (
 )
 
 type HttpLib interface {
-	Connect(url string, port int) *fiber.App
+	Connect(url string, port int)
 }
-type HttpLibImpl struct{}
-
-func NewHttpLib() HttpLib {
-	return &HttpLibImpl{}
+type HttpLibImpl struct {
+	engine *fiber.App
 }
 
-func (h *HttpLibImpl) Connect(url string, port int) *fiber.App {
-	engine := fiber.New(fiber.Config{})
-	err := engine.Listen(fmt.Sprintf("%s:%d", url, port))
+func NewHttpLib(
+	engine *fiber.App,
+) HttpLib {
+	return &HttpLibImpl{
+		engine: engine,
+	}
+}
+
+func (h *HttpLibImpl) Connect(url string, port int) {
+	err := h.engine.Listen(fmt.Sprintf("%s:%d", url, port))
 	if err != nil {
 		log.Fatal(err)
 	}
-	return engine
 }

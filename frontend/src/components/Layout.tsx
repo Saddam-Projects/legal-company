@@ -8,7 +8,6 @@ import ContainerComponent from './Container';
 import ContextApiComponent from './ContextApi';
 import { ThemeProvider } from './ThemeProvider';
 import BottomBarComponent from './BottomBar';
-import LiveChatComponent from './LiveChat';
 
 export default function LayoutComponent({ children }: { children: React.ReactNode }) {
   const [burgerMenuActive, setBurgerMenuActive] = useState(false);

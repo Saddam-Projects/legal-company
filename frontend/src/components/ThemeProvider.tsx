@@ -7,7 +7,6 @@ import ContextInterface from '@/interfaces/contextInterface';
 import { useEffect } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { THEME_KEY } from '@/utils/constant';
-import PreloadComponent from './Preload';
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   const ctx: ContextInterface = useContextApi();
@@ -23,7 +22,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     if (theme) {
       ctx.theme!.setTheme(theme);
     }
-  }, []);
+  }, [ctx.theme]);
 
   // if (!ctx.theme!.theme) return <PreloadComponent />;
   return (

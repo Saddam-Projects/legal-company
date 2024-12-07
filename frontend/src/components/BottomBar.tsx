@@ -28,7 +28,7 @@ export const CONTACT = [
 ];
 export default function BottomBarComponent() {
   return (
-    <ContainerComponent className="fixed bottom-0 left-0 w-full bg-white z-50">
+    <ContainerComponent className="fixed bottom-0 left-0 w-full bg-white z-30">
       <div className="flex justify-between">
         {CONTACT.map((item, index) => (
           <div key={index} className={`flex items-center space-x-1 justify-center bg-primary w-full h-full p-2 ${item.color}`}>

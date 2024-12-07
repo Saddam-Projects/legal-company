@@ -1,7 +1,6 @@
-import { BackpackIcon, CardStackIcon, CardStackPlusIcon, ChatBubbleIcon, CubeIcon, ExitIcon, FileIcon, GearIcon, GlobeIcon, HomeIcon, LayersIcon, LetterSpacingIcon, PersonIcon, StackIcon } from '@radix-ui/react-icons';
+import { BackpackIcon, CardStackIcon, HomeIcon, LayersIcon } from '@radix-ui/react-icons';
 import { ABOUT_US_URL, CONTACT_US_URL, DASHBOARD_URL, SERVICES_URL } from './menus';
 import { INavbarMenu } from '@/interfaces/components/MenuInterface';
-import permission from './permission';
 
 const navbarMenus: INavbarMenu[] = [
   {

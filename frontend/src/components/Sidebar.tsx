@@ -43,7 +43,7 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
                 {childMenuActive && childMenuActive.title === item.title && (
                   <div className="ml-6 flex flex-col space-y-4 pt-4">
                     {item.childrens.map((child, index) => (
-                      <TextComponent key={index} onClick={() => navigateTo(child.to)} className={`cursor-pointer capitalize text-base text-white  ${pathName === child.to ? 'font-bold' : 'font-regular'}`}>
+                      <TextComponent key={index} onClick={() => navigateTo(child.to)} className={`select-none cursor-pointer capitalize text-base text-white  ${pathName === child.to ? 'font-bold' : 'font-regular'}`}>
                         {child.title}
                       </TextComponent>
                     ))}
@@ -54,7 +54,7 @@ export default function SidebarComponent({ active, setActive }: BooleanInterface
               <div key={index} className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
                   <item.icon className="text-white" />
-                  <TextComponent onClick={() => navigateTo(item.to)} className={`cursor-pointer text-white capitalize text-base  ${pathName === item.to ? 'font-bold' : 'font-regular'}`}>
+                  <TextComponent onClick={() => navigateTo(item.to)} className={`select-none cursor-pointer text-white capitalize text-base  ${pathName === item.to ? 'font-bold' : 'font-regular'}`}>
                     {item.title}
                   </TextComponent>
                 </div>

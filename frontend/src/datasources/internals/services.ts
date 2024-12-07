@@ -1,5 +1,4 @@
 import { PRO_IMAGE, MEDIUM_IMAGE, STARTER_IMAGE } from '@/utils/images';
-import * as Fa from 'react-icons/fa';
 
 export const SERVICE_DUMMY = [
   {
