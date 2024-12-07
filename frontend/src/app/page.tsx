@@ -5,36 +5,24 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import { convertToCurrency } from '@/lib/utils';
-import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER } from '@/utils/images';
-import { CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
 import FormComponent from '@/components/Form';
 import { FaAddressBook, FaDochub, FaMapMarkerAlt, FaRocket, FaStar } from 'react-icons/fa';
-import { getData } from '@/actions/service.action';
-import { useEffect, useState } from 'react';
-import { Service } from '@/entity/service';
 import ServiceCardComponent from '@/components/ServiceCard';
+import serviceService from '@/services/service';
+import LoadingComponent from '@/components/Loading';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
   const navigateTo = useNavigateTo();
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const service = serviceService.getData(6, 0, undefined, 'new');
 
-  useEffect(() => {
-    getData(6, 0, undefined, 'new')
-      .then((res) => {
-        setServices(res);
-      })
-      .catch((err) => setError(err))
-      .finally(() => setLoading(false));
-  }, []);
+  if (service.loading) return <LoadingComponent />;
 
   return (
     <div className="grid grid-cols-1 gap-4">
@@ -120,11 +108,11 @@ export default function Page() {
       <div className="flex justify-center py-8">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
-      {services.length > 0 && (
+      {service.services.length > 0 && (
         <div className="flex justify-center">
           <div className="px-2 w-full lg:w-3/4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {services.map((item, index) => (
+              {service.services.map((item, index) => (
                 <ServiceCardComponent item={item} index={index} />
               ))}
             </div>

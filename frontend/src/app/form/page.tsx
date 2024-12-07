@@ -17,6 +17,7 @@ import dynamic from 'next/dynamic';
 import FormComponent from '@/components/Form';
 import { Input } from '@/components/ui/input';
 import { FaAddressBook, FaDochub, FaEnvelope, FaMapMarker, FaMapMarkerAlt, FaPhone, FaRocket, FaStar } from 'react-icons/fa';
+import FormServiceComponent from '@/components/FormService';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -27,7 +28,8 @@ export default function Page() {
         <div className="bg-teal py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-              <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
+              <TextComponent className={`text-white text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
+              <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic capitalize`}>Ajukan Sekarang, Tim Kami akan segera proses secara langsung</TextComponent>
               <TextComponent className="text-white text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
             </div>
             <div className="flex justify-center order-1 lg:order-2">
@@ -36,62 +38,45 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Card className="shadow-none bg-transparent border-1 my-8 mx-2 lg:mx-4 px-2 rounded-lg border-primary">
+      <Card className="shadow-none bg-transparent border-1 my-8 mx-2 lg:mx-4 px-2 rounded-lg border-gray-200">
         <CardContent className="py-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
             <div className="order-2 lg:order-1">
-              <FormComponent />
+              <FormServiceComponent />
             </div>
-            <Card className="shadow-none  bg-transparent border-1 border-gray-200 order-1 lg:order-2 h-full">
+            <div className="flex justify-center order-1 lg:order-2">
+              <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
+            </div>
+            {/* <Card className="shadow-none  bg-transparent border-1 border-gray-200 order-1 lg:order-2 h-full">
               <CardContent className="h-full">
                 <div className="flex flex-col justify-between py-4 h-full">
                   <div className="flex flex-col space-y-2 h-[150px] overflow-y-auto">
                     <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
-                    </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white border-1 border-gray-200">
-                      <TextComponent>Service 1</TextComponent>
-                      <TextComponent>Rp. 1.000.000</TextComponent>
+                      <TextComponent className="text-teal text-base">Service 1</TextComponent>
+                      <TextComponent className="text-base text-teal">Rp. 1.000.000</TextComponent>
                     </div>
                   </div>
-                  <div className="flex flex-col ">
-                    <div className="p-2 flex justify-between rounded-lg bg-white">
-                      <TextComponent className="text-black text-sm font-medium">Total</TextComponent>
-                      <TextComponent className="text-black text-sm font-regular">Rp. 1.000.000</TextComponent>
+                  <div className="flex flex-col space-y-3">
+                    <div className="flex justify-between rounded-lg bg-white">
+                      <TextComponent className="text-black text-sm ">Total</TextComponent>
+                      <TextComponent className="text-black text-sm ">Rp. 1.000.000</TextComponent>
                     </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white">
-                      <TextComponent className="text-black text-sm font-medium">Name</TextComponent>
-                      <TextComponent className="text-black text-sm font-regular">Name</TextComponent>
+                    <div className="h-[1px] w-full bg-gray-200"></div>
+                    <div className="flex justify-between rounded-lg bg-white">
+                      <TextComponent className="text-black text-sm ">Name</TextComponent>
+                      <TextComponent className="text-black text-sm ">Name</TextComponent>
                     </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white">
-                      <TextComponent className="text-black text-sm font-medium">Email</TextComponent>
-                      <TextComponent className="text-black text-sm font-regular">Name</TextComponent>
+                    <div className="h-[1px] w-full bg-gray-200"></div>
+                    <div className="flex justify-between rounded-lg bg-white">
+                      <TextComponent className="text-black text-sm ">Email</TextComponent>
+                      <TextComponent className="text-black text-sm ">Name</TextComponent>
                     </div>
-                    <div className="p-2 flex justify-between rounded-lg bg-white">
-                      <TextComponent className="text-black text-sm font-medium">Phone</TextComponent>
-                      <TextComponent className="text-black text-sm font-regular">Name</TextComponent>
+                    <div className="h-[1px] w-full bg-gray-200"></div>
+                    <div className="flex justify-between rounded-lg bg-white">
+                      <TextComponent className="text-black text-sm ">Phone</TextComponent>
+                      <TextComponent className="text-black text-sm ">Name</TextComponent>
                     </div>
+                    <div className="h-[1px] w-full bg-gray-200"></div>
                   </div>
                   <div className="ml-auto">
                     <Button size={'sm'} className="bg-primary text-black hover:bg-primary hover:opacity-90">
@@ -100,7 +85,7 @@ export default function Page() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </CardContent>
       </Card>

@@ -11,7 +11,9 @@ import useNavigateTo from '@/hooks/useNavigateTo';
 import { useState } from 'react';
 import { SERVICES_URL } from '@/datasources/internals/menus';
 import { Card, CardContent } from './ui/card';
-import { FaArrowCircleRight, FaBuilding } from 'react-icons/fa';
+import { FaBuilding, FaRegBuilding } from 'react-icons/fa';
+import serviceService from '@/services/service';
+import DropdownService from './DropdownService';
 
 export default function NavbarComponent({ active, setActive }: BooleanInterface) {
   const pathname = usePathname();
@@ -52,48 +54,7 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
           </div>
         </div>
       </div>
-      {dropDownService && (
-        <div className="fixed bottom-0 h-4/5 w-full p-4 bg-white z-40 ">
-          <div className="flex flex-col items-center h-full w-full">
-            <TextComponent className="text-2xl font-medium capitalize text-teal">Layanan Kami</TextComponent>
-            <div className="h-[1px] bg-gray-200 w-full my-4"></div>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full  overflow-y-auto">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, index) => (
-                <Card key={index} className="w-full h-full bg-transparent border-none shadow-none cursor-pointer hover:opacity-80">
-                  <CardContent className="py-4">
-                    <div className="flex space-x-4 items-center justify-center">
-                      <FaBuilding className="text-teal" size={50} />
-                      <div className="flex flex-col">
-                        <TextComponent className="text-xl text-teal">Pendirian CV</TextComponent>
-                        <TextComponent className="text-base text-teal">Lorem ipsum dolor sit amet consectetur adipisicing.</TextComponent>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              <div
-                onClick={() => {
-                  closeDropdownService();
-                  navigateTo(SERVICES_URL);
-                }}
-                className="lg:flex hidden cursor-pointer items-center justify-center space-x-4"
-              >
-                <FaArrowCircleRight className="text-teal" size={30} />
-                <TextComponent className="text-xl text-teal">View More</TextComponent>
-              </div>
-            </div>
-            <div className="mt-auto">
-              <div
-                onClick={closeDropdownService}
-                className=" hover:opacity-90 cursor-pointer px-3 py-1 shadow-lg mb-2
-               rounded-full bg-primary"
-              >
-                <TextComponent className="font-bold text-xl text-teal">X</TextComponent>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {dropDownService && <DropdownService closeDropdownService={closeDropdownService} />}
     </ContainerComponent>
   );
 }

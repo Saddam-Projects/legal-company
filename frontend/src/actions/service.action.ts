@@ -1,8 +1,8 @@
 'use client';
 import { BASE_API_URL } from '@/utils/constant';
 
-export const getData = async (limit = 10, offset = 0, keyword?: string, sort?: string) => {
-  const args = [`limit=${limit}`, `offset=${offset}`];
+const getData = async (limit?: number, offset?: number, keyword?: string, sort?: string) => {
+  const args = [];
 
   if (keyword) {
     args.push(`keyword=${keyword}`);
@@ -11,11 +11,20 @@ export const getData = async (limit = 10, offset = 0, keyword?: string, sort?: s
     args.push(`sort=${sort}`);
   }
 
+  if (limit) {
+    args.push(`limit=${limit}`);
+  }
+
+  if (offset) {
+    args.push(`offset=${offset}`);
+  }
+
   let queryParams = '';
 
   if (args && args.length > 0) {
     queryParams = `?${args.join('&')}`;
   }
+
   try {
     const response = await fetch(`${BASE_API_URL}${'/service'}${queryParams}`, {
       method: 'GET',
@@ -32,3 +41,8 @@ export const getData = async (limit = 10, offset = 0, keyword?: string, sort?: s
     throw error;
   }
 };
+
+const serviceActions = {
+  getData,
+};
+export default serviceActions;
