@@ -78,11 +78,11 @@ CREATE TABLE "references" (
   
   address TEXT NOT NULL,
   company_phone VARCHAR(15) NOT NULL,
-  company_email VARCHAR(15) NOT NULL,
+  company_email VARCHAR(255) NOT NULL,
   address_lat VARCHAR(255) NULL,
   address_long VARCHAR(255) NULL,
   company_logo varchar(255) NOT NULL,
-  
+  company_name varchar(255) NOT NULL,
   
   created_at TIMESTAMP default CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NULL,
@@ -92,7 +92,19 @@ CREATE TABLE "references" (
 );
 
 
-
+INSERT INTO "references"(
+  address, company_phone, company_email, address_lat, address_long, company_logo, company_name
+)
+VALUES
+(
+  'Lagoon Premium Office Lt. UG Unit 33 Lagoon Avenue Mall Bekasi Kawasan Grand Kamala Lagoon Jl. Chandrabhaga RT.006/RW.003 Jawa Barat Bekasi Selatan Pekayonjaya',
+  '082321419003',
+  'ptarunikaindomiratama@gmail.com',
+  '-6.2508211',
+  '106.9760332',
+  'company-logo.png',
+  'PT. Arunika Indo Miratama'
+);
 
 INSERT INTO service (
 	name, price, description, image

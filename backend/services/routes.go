@@ -41,6 +41,10 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	orderHandler := handlers.NewOrderHandler(orderRepository, serviceRepository, customerRepository)
 	orderController := controllers.NewOrderController(orderHandler, db)
 
+	referenceRepository := repositories.NewReferenceRepository()
+	referenceHandler := handlers.NewReferenceHandler(referenceRepository)
+	referenceController := controllers.NewReferenceController(referenceHandler, db)
+
 	api.Get("/service", serviceController.FindAll)
 	api.Get("/service/:id", serviceController.FindById)
 	api.Post("/service", serviceController.Create)
@@ -58,4 +62,7 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	api.Post("/service-term/:id/update", serviceTermController.Update)
 	api.Post("/service-term/:id/delete", serviceTermController.Delete)
 
+	api.Get("/reference", referenceController.FindAll)
+	api.Get("/reference/:id", referenceController.FindOne)
+	api.Post("/reference/:id/update", referenceController.Update)
 }

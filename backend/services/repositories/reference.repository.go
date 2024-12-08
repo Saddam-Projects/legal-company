@@ -10,7 +10,8 @@ import (
 )
 
 type ReferenceRepository interface {
-	FindOne(ctx *fiber.Ctx, db *gorm.DB) (*models.Reference, *libs.ErrorResponse)
+	FindOne(ctx *fiber.Ctx, db *gorm.DB, id string) (*models.Reference, *libs.ErrorResponse)
+	FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Reference, *libs.ErrorResponse)
 	Update(ctx *fiber.Ctx, db *gorm.DB, reference *models.Reference) (*models.Reference, *libs.ErrorResponse)
 }
 type ReferenceRepositoryImpl struct{}
@@ -19,10 +20,10 @@ func NewReferenceRepository() ReferenceRepository {
 	return &ReferenceRepositoryImpl{}
 }
 
-func (r *ReferenceRepositoryImpl) FindOne(ctx *fiber.Ctx, db *gorm.DB) (*models.Reference, *libs.ErrorResponse) {
+func (r *ReferenceRepositoryImpl) FindOne(ctx *fiber.Ctx, db *gorm.DB, id string) (*models.Reference, *libs.ErrorResponse) {
 	var reference *models.Reference
 
-	query := db.Where("id = ? and is_deleted = 0", ctx.Params("id")).First(&reference)
+	query := db.Where("id = ? and is_deleted = 0", id).First(&reference)
 
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
@@ -48,4 +49,17 @@ func (r *ReferenceRepositoryImpl) Update(ctx *fiber.Ctx, db *gorm.DB, reference 
 	query.Updates(reference)
 
 	return reference, nil
+}
+
+func (r *ReferenceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Reference, *libs.ErrorResponse) {
+
+	var references []models.Reference
+
+	query := db.Where("is_deleted = 0").Order("created_at DESC").Find(&references)
+
+	if query.Error != nil {
+		return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return references, nil
 }

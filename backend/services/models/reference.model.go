@@ -8,6 +8,7 @@ type Reference struct {
 	Address       string `json:"address" gorm:"column:address"`
 	Address_lat   string `json:"address_lat" gorm:"column:address_lat"`
 	Address_long  string `json:"address_long" gorm:"column:address_long"`
+	Company_name  string `json:"company_name" gorm:"column:company_name"`
 }
 
 func (*Reference) TableName() string {
