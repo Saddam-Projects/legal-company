@@ -14,8 +14,6 @@ import DialogErrorComponent from '@/components/DialogError';
 export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
 
-  if (service.loading) return <LoadingComponent />;
-
   return (
     <>
       <div className="grid grid-cols-1 gap-4">
@@ -30,11 +28,6 @@ export default function Page() {
               <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
             </div>
           </div>
-        </div>
-      </div>
-      <div className="flex justify-center my-8">
-        <div className="px-2 w-full lg:w-3/4">
-          <AdvertiseComponent />
         </div>
       </div>
       <div className="flex justify-center my-8">

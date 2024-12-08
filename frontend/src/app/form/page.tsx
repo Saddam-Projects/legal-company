@@ -50,11 +50,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-8">
-        <div className="px-2 w-full lg:w-3/4">
-          <AdvertiseComponent />
-        </div>
-      </div>
+
       <div className="flex justify-center my-8">
         <div className="px-2 w-full lg:w-3/4">
           <Card className="shadow-none bg-transparent border-1 rounded-lg border-gray-200">

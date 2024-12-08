@@ -24,8 +24,6 @@ export default function Page() {
   const navigateTo = useNavigateTo();
   const service = serviceService.getData(6, 0, undefined, 'new');
 
-  if (service.loading) return <LoadingComponent />;
-
   return (
     <div className="grid grid-cols-1 gap-4">
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
@@ -106,11 +104,6 @@ export default function Page() {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
-      <div className="flex justify-center my-8">
-        <div className="px-2 w-full lg:w-3/4">
-          <AdvertiseComponent />
         </div>
       </div>
       <div className="flex justify-center py-8">
