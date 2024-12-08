@@ -39,7 +39,7 @@ export default function ServiceCardComponent({ item, index }: { item: Service; i
             ))}
           </div>
           <div>
-            <Button onClick={() => navigateTo(FORM_URL)} size={'sm'} className="bg-primary text-black hover:bg-primary hover:opacity-90 mx-auto">
+            <Button onClick={() => navigateTo(FORM_URL, `service-id=${item.id}`)} size={'sm'} className="bg-primary text-black hover:bg-primary hover:opacity-90 mx-auto">
               Minta Proposal
             </Button>
           </div>

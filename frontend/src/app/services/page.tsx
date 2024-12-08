@@ -1,16 +1,15 @@
 'use client';
 
 import TextComponent from '@/components/Text';
-import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import ServiceCardComponent from '@/components/ServiceCard';
 import LoadingComponent from '@/components/Loading';
 import serviceService from '@/services/service';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
 import { AdvertiseComponent } from '@/components/Advertise';
+import DialogErrorComponent from '@/components/DialogError';
 
 export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
@@ -20,6 +19,7 @@ export default function Page() {
   return (
     <>
       <div className="grid grid-cols-1 gap-4">
+        <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
         <div className="bg-teal py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">

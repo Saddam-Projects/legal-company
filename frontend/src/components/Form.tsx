@@ -7,19 +7,11 @@ import { Input } from './ui/input';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from './ui/textarea';
+import contactSchema from '@/dtos/contact';
 
 export default function FormComponent() {
-  const formSchema = z.object({
-    name: z.string().min(2, {
-      message: 'name must be at least 2 characters.',
-    }),
-    email: z.string().email(),
-    phone: z.string().max(13).regex(/^\d/, 'Phone number must be digits'),
-    message: z.string(),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof contactSchema>>({
+    resolver: zodResolver(contactSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -28,7 +20,7 @@ export default function FormComponent() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof contactSchema>) {
     console.log(values);
   }
   return (
@@ -41,7 +33,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
+                <Input placeholder="name" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -54,7 +46,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
+                <Input placeholder="email" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +59,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">phone</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1" />
+                <Input placeholder="phone" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,7 +72,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Message</FormLabel>
               <FormControl>
-                <Textarea rows={6} placeholder="shadcn" {...field} className=" text-black border-gray-200 border-1 resize-none" />
+                <Textarea rows={6} placeholder="message" {...field} className=" text-black border-gray-200 border-1 resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>

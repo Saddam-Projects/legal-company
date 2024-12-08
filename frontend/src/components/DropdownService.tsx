@@ -3,7 +3,7 @@ import TextComponent from './Text';
 import { Card, CardContent } from './ui/card';
 import { FaBuilding, FaRegBuilding } from 'react-icons/fa';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import { FORM_URL } from '@/datasources/internals/menus';
+import { SERVICES_URL } from '@/datasources/internals/menus';
 
 export default function DropdownService({ closeDropdownService }: { closeDropdownService: () => void }) {
   const service = serviceService.getData(10, 0, undefined, 'new');
@@ -19,7 +19,7 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
               <CardContent className="py-4 w-full">
                 <div className="flex space-x-4 items-center">
                   {index % 2 === 0 ? <FaBuilding className="text-teal" size={40} /> : <FaRegBuilding className="text-teal" size={40} />}
-                  <TextComponent onClick={() => navigateTo(FORM_URL)} className="text-teal text-base capitalize">
+                  <TextComponent onClick={() => navigateTo(`${SERVICES_URL}/${item.id}`)} className="text-teal text-base capitalize">
                     {item.name}
                   </TextComponent>
                 </div>

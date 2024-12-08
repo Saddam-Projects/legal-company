@@ -31,8 +31,11 @@ CREATE TABLE service_term(
 );
 
 CREATE  TABLE customer(
-id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+  id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
   created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
   updated_at TIMESTAMP NULL,
   is_deleted SMALLINT default 0,
 	deleted_at TIMESTAMP NULL

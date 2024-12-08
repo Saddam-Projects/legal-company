@@ -8,6 +8,7 @@ type Service struct {
 	Image       *string `json:"image" gorm:"column:image"`
 
 	ServiceTerms []ServiceTerm `json:"service_terms" gorm:"foreignKey:service_id"`
+	OrderItems   []OrderItem   `json:"order_items" gorm:"foreignKey:service_id"`
 }
 
 func (*Service) TableName() string {

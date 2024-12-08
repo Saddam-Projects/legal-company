@@ -17,6 +17,7 @@ import ServiceCardComponent from '@/components/ServiceCard';
 import serviceService from '@/services/service';
 import LoadingComponent from '@/components/Loading';
 import { AdvertiseComponent } from '@/components/Advertise';
+import DialogErrorComponent from '@/components/DialogError';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -27,6 +28,7 @@ export default function Page() {
 
   return (
     <div className="grid grid-cols-1 gap-4">
+      <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
       <div className="bg-teal py-8">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
