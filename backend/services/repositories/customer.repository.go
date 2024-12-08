@@ -17,6 +17,7 @@ type CustomerRepository interface {
 	Create(ctx *fiber.Ctx, db *gorm.DB, customer *models.Customer) (*models.Customer, *libs.ErrorResponse)
 	Update(ctx *fiber.Ctx, db *gorm.DB, customer *models.Customer) (*models.Customer, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Customer, *libs.ErrorResponse)
+	FindEmailAndPhone(ctx *fiber.Ctx, db *gorm.DB, email string, phone string) (*models.Customer, *libs.ErrorResponse)
 }
 
 type CustomerRepositoryImpl struct{}
@@ -32,7 +33,7 @@ func (*CustomerRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Cu
 	offset := 0
 
 	k := ctx.Query("k")
-	query := db.Where("is_deleted = 0").Preload("OrderItems").Preload("Customer")
+	query := db.Where("is_deleted = 0").Preload("Order")
 
 	limitQuery := ctx.Query("limit")
 	limitInt, errConvLimit := strconv.Atoi(limitQuery)
@@ -113,4 +114,19 @@ func (*CustomerRepositoryImpl) Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Cust
 	query.Update("is_deleted", 1).Update("deleted_at", now)
 
 	return cuustomerDeleted, nil
+}
+
+func (*CustomerRepositoryImpl) FindEmailAndPhone(ctx *fiber.Ctx, db *gorm.DB, email string, phone string) (*models.Customer, *libs.ErrorResponse) {
+	var customer *models.Customer
+
+	query := db.Where("email = ? and phone = ? and is_deleted = 0", email, phone).First(&customer)
+
+	if query.Error != nil {
+		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
+			return nil, &libs.ErrorResponse{Status: 404, Message: "Data not found"}
+		}
+		return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return customer, nil
 }

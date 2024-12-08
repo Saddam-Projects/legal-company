@@ -46,6 +46,7 @@ CREATE TABLE "order"(
   total_price DOUBLE PRECISION NOT NULL,
   	
   customer_id VARCHAR(36) NOT NULL,
+  description Text NULL,
   
   created_at TIMESTAMP default CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NULL,

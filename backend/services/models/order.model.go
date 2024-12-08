@@ -5,6 +5,7 @@ type Order struct {
 	Total_price float64     `json:"total_price" gorm:"column:total_price"`
 	Customer_id string      `json:"customer_id" gorm:"column:customer_id"`
 	Customer    *Customer   `json:"customer" gorm:"foreignKey:customer_id"`
+	Description *string     `json:"description" gorm:"column:description"`
 	OrderItems  []OrderItem `json:"order_items" gorm:"foreignKey:order_id"`
 }
 

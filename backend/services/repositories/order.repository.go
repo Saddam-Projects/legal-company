@@ -14,6 +14,7 @@ type OrderRepository interface {
 	FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Order, *libs.ErrorResponse)
 	FindOne(ctx *fiber.Ctx, db *gorm.DB) (*models.Order, *libs.ErrorResponse)
 	Create(ctx *fiber.Ctx, db *gorm.DB, order *models.Order) (*models.Order, *libs.ErrorResponse)
+	CreateOrderItems(ctx *fiber.Ctx, db *gorm.DB, orderItems []models.OrderItem) *libs.ErrorResponse
 }
 
 type OrderRepositoryImpl struct{}
@@ -23,12 +24,12 @@ func NewOrderRepository() OrderRepository {
 }
 
 func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Order, *libs.ErrorResponse) {
-	var orders []models.Order
+
+	orders := make([]models.Order, 0)
 
 	limit := 100
 	offset := 0
 
-	k := ctx.Query("k")
 	startDate := ctx.Query("start-date")
 	endDate := ctx.Query("end-date")
 	query := db.Where("is_deleted = 0").Preload("OrderItems").Preload("Customer")
@@ -51,10 +52,6 @@ func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Ord
 
 	if endDate != "" {
 		query.Where("created_at <= ?", endDate)
-	}
-
-	if k != "" {
-		query.Where("name like ?", "%"+k+"%")
 	}
 
 	query.Order("created_at DESC").Limit(limit).Offset(offset).Find(&orders)
@@ -85,4 +82,15 @@ func (r *OrderRepositoryImpl) Create(ctx *fiber.Ctx, db *gorm.DB, order *models.
 	}
 
 	return order, nil
+}
+
+func (r *OrderRepositoryImpl) CreateOrderItems(ctx *fiber.Ctx, db *gorm.DB, orderItems []models.OrderItem) *libs.ErrorResponse {
+
+	query := db.CreateInBatches(orderItems, len(orderItems))
+
+	if query.Error != nil {
+		return &libs.ErrorResponse{Status: 500, Message: "Failed to create data"}
+	}
+
+	return nil
 }

@@ -17,6 +17,7 @@ type ServiceRepository interface {
 	Create(ctx *fiber.Ctx, db *gorm.DB, service *models.Service) (*models.Service, *libs.ErrorResponse)
 	Update(ctx *fiber.Ctx, db *gorm.DB, service *models.Service) (*models.Service, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Service, *libs.ErrorResponse)
+	FindManyByIds(ctx *fiber.Ctx, db *gorm.DB, ids []string) ([]models.Service, *libs.ErrorResponse)
 }
 
 type ServiceRepositoryImpl struct {
@@ -27,7 +28,7 @@ func NewServiceRepository() ServiceRepository {
 }
 func (r *ServiceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Service, *libs.ErrorResponse) {
 	var services []models.Service
-	query := db.Where("is_deleted = 0").Preload("ServiceTerms").Order("created_at DESC")
+	query := db.Where("is_deleted = 0").Preload("ServiceTerms", "is_deleted = 0").Order("created_at DESC")
 
 	k := ctx.Query("k")
 
@@ -86,7 +87,7 @@ func (r *ServiceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.S
 func (r *ServiceRepositoryImpl) FindById(ctx *fiber.Ctx, db *gorm.DB, id string) (*models.Service, *libs.ErrorResponse) {
 	var service *models.Service
 
-	query := db.Where("id = ? and is_deleted = 0", id).Preload("ServiceTerms").First(&service)
+	query := db.Where("id = ? and is_deleted = 0", id).Preload("ServiceTerms", "is_deleted = 0").First(&service)
 
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
@@ -145,4 +146,16 @@ func (r *ServiceRepositoryImpl) Update(ctx *fiber.Ctx, db *gorm.DB, service *mod
 	query.Updates(service)
 
 	return service, nil
+}
+
+func (r *ServiceRepositoryImpl) FindManyByIds(ctx *fiber.Ctx, db *gorm.DB, ids []string) ([]models.Service, *libs.ErrorResponse) {
+	var services []models.Service
+
+	query := db.Where("id in (?) and is_deleted = 0", ids).Find(&services)
+
+	if query.Error != nil {
+		return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return services, nil
 }

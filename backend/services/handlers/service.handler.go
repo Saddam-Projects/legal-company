@@ -62,7 +62,6 @@ func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 		}
 		fileName = fmt.Sprintf("uploads/%s", newFileName)
 	}
-
 	newService := models.Service{
 		Name:        dt.Service_name,
 		Price:       float64(dt.Price),
@@ -70,6 +69,15 @@ func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 		Image:       &fileName,
 	}
 
+	newTerms := make([]models.ServiceTerm, 0)
+	for _, service := range dt.Terms {
+		newTerms = append(newTerms, models.ServiceTerm{
+			TermName:   service,
+			Service_id: newService.Id.String(),
+		})
+	}
+
+	newService.ServiceTerms = newTerms
 	service, err := s.serviceRepository.Create(ctx, db, &newService)
 
 	if err != nil {
