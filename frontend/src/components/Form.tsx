@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from './ui/textarea';
 import contactSchema from '@/dtos/contact';
 
-export default function FormComponent() {
+export default function FormComponent({ handler }: { handler: (values: z.infer<typeof contactSchema>) => void }) {
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -20,12 +20,15 @@ export default function FormComponent() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof contactSchema>) {
-    console.log(values);
-  }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit((values) => {
+          handler(values);
+          form.reset();
+        })}
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="name"
@@ -33,7 +36,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Name</FormLabel>
               <FormControl>
-                <Input placeholder="name" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" placeholder="name" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,7 +49,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" placeholder="email" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,7 +62,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">phone</FormLabel>
               <FormControl>
-                <Input placeholder="phone" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" placeholder="phone" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,7 +75,7 @@ export default function FormComponent() {
             <FormItem>
               <FormLabel className="text-black">Message</FormLabel>
               <FormControl>
-                <Textarea rows={6} placeholder="message" {...field} className=" text-black border-gray-200 border-1 resize-none" />
+                <Textarea autoComplete="off" rows={6} placeholder="message" {...field} className=" text-black border-gray-200 border-1 resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>

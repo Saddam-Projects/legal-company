@@ -18,14 +18,31 @@ import serviceService from '@/services/service';
 import LoadingComponent from '@/components/Loading';
 import { AdvertiseComponent } from '@/components/Advertise';
 import DialogErrorComponent from '@/components/DialogError';
+import contactSchema from '@/dtos/contact';
+import { z } from 'zod';
+import { OrderDto } from '@/dtos/order';
+import DialogSuccessComponent from '@/components/DialogSuccess';
+import { useState } from 'react';
+import orderAction from '@/actions/order.action';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
   const navigateTo = useNavigateTo();
   const service = serviceService.getData(6, 0, undefined, 'new');
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const handlerSubmit = (values: z.infer<typeof contactSchema>) => {
+    const orderDto: OrderDto = {
+      ...values,
+      order_items: [],
+    };
+
+    orderAction.create(orderDto, service.setLoading, service.setError).then(() => setSuccess(true));
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4">
+      <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
       <div className="bg-teal py-8">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -175,7 +192,7 @@ export default function Page() {
             <Card className="bg-transparent border-none w-full">
               <CardContent className="flex flex-col space-y-4 py-4">
                 <TextComponent className="text-xl lg:text-2xl font-medium text-teal">Ask For Proposal?</TextComponent>
-                <FormComponent />
+                <FormComponent handler={handlerSubmit} />
               </CardContent>
             </Card>
           </div>

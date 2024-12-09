@@ -1,4 +1,5 @@
 'use client';
+import { API_SERVICE } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 
 const getData = async (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -26,7 +27,7 @@ const getData = async (limit?: number, offset?: number, keyword?: string, sort?:
   }
 
   try {
-    const response = await fetch(`${BASE_API_URL}${'/service'}${queryParams}`, {
+    const response = await fetch(`${BASE_API_URL}${API_SERVICE}${queryParams}`, {
       method: 'GET',
     });
 

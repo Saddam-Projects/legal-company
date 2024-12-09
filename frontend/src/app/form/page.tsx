@@ -1,41 +1,43 @@
 'use client';
 
 import TextComponent from '@/components/Text';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { SERVICES_URL } from '@/datasources/internals/menus';
-import { SERVICE_DUMMY, SERVICES } from '@/datasources/internals/services';
-import useNavigateTo from '@/hooks/useNavigateTo';
-import { convertToCurrency } from '@/lib/utils';
-import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { Card, CardContent } from '@/components/ui/card';
+import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER } from '@/utils/images';
-import { CheckCircle2, PlusIcon } from 'lucide-react';
+import { BUILDING_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
-import dynamic from 'next/dynamic';
-import FormComponent from '@/components/Form';
-import { Input } from '@/components/ui/input';
-import { FaAddressBook, FaDochub, FaEnvelope, FaMapMarker, FaMapMarkerAlt, FaPhone, FaRocket, FaStar } from 'react-icons/fa';
 import FormServiceComponent from '@/components/FormService';
-import { AdvertiseComponent } from '@/components/Advertise';
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { useMemo, useState } from 'react';
-import { Cross2Icon } from '@radix-ui/react-icons';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { z } from 'zod';
 import serviceFormSchema from '@/dtos/service';
 import { useSearchParams } from 'next/navigation';
-import DialogErrorComponent from '@/components/DialogError';
-const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
+import { OrderDto } from '@/dtos/order';
+import orderAction from '@/actions/order.action';
+import DialogSuccessComponent from '@/components/DialogSuccess';
 
 export default function Page() {
   const searchParam = useSearchParams();
   const serviceId = useMemo(() => searchParam.get('service-id') && searchParam.get('service-id'), [searchParam]);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const submit = (values: z.infer<typeof serviceFormSchema>) => {};
+  const submit = (values: z.infer<typeof serviceFormSchema>) => {
+    const orderDto: OrderDto = {
+      email: values.email,
+      message: values.message,
+      name: values.name,
+      phone: values.phone,
+      order_items: [values.service],
+    };
+
+    orderAction.create(orderDto, setLoading, setError).then(() => setSuccess(true));
+  };
+
   return (
     <>
+      <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-teal py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">

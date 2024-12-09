@@ -8,10 +8,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { GENDER } from '@/entity/enum';
 import serviceService from '@/services/service';
 import serviceFormSchema from '@/dtos/service';
-import LoadingComponent from './Loading';
 import DialogErrorComponent from './DialogError';
 
 export default function FormServiceComponent({ handler, serviceId }: { handler: (values: z.infer<typeof serviceFormSchema>) => void; serviceId: string | null }) {
@@ -24,7 +22,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
       email: '',
       phone: '',
       message: '',
-      service: '',
+      service: serviceId ?? '',
     },
   });
 
@@ -32,7 +30,13 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
     <Form {...form}>
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
 
-      <form onSubmit={form.handleSubmit(handler)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit((values) => {
+          handler(values);
+          form.reset();
+        })}
+        className="space-y-4"
+      >
         {!service.loading && (
           <FormField
             control={form.control}
@@ -41,7 +45,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
               <FormItem>
                 <FormLabel className="text-black">Name</FormLabel>
                 <FormControl>
-                  <Select defaultValue={serviceId ?? undefined}>
+                  <Select onValueChange={field.onChange} defaultValue={serviceId ?? undefined}>
                     <SelectTrigger autoFocus={serviceId === null} className="text-black hover:bg-white border-1 border-gray-200">
                       <SelectValue className="text-black" placeholder="Pilih Layanan" />
                     </SelectTrigger>
@@ -66,7 +70,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
             <FormItem>
               <FormLabel className="text-black">Name</FormLabel>
               <FormControl>
-                <Input autoFocus={serviceId !== null} placeholder="name" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" autoFocus={serviceId !== null} placeholder="name" {...field} className=" text-black border-gray-200 border-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,7 +83,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
             <FormItem>
               <FormLabel className="text-black">Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" placeholder="email" {...field} className=" text-black border-gray-200 border-1 autofill:bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,7 +96,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
             <FormItem>
               <FormLabel className="text-black">phone</FormLabel>
               <FormControl>
-                <Input placeholder="phone" {...field} className=" text-black border-gray-200 border-1" />
+                <Input autoComplete="off" placeholder="phone" {...field} className=" text-black border-gray-200 border-1 autofill:bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,7 +109,7 @@ export default function FormServiceComponent({ handler, serviceId }: { handler: 
             <FormItem>
               <FormLabel className="text-black">Message</FormLabel>
               <FormControl>
-                <Textarea rows={6} placeholder="message" {...field} className=" text-black border-gray-200 border-1 resize-none" />
+                <Textarea autoComplete="off" rows={6} placeholder="message" {...field} className=" text-black border-gray-200 border-1 resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>
