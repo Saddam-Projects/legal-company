@@ -12,7 +12,7 @@ import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
 import FormComponent from '@/components/Form';
-import { FaAddressBook, FaDochub, FaMapMarkerAlt, FaRocket, FaStar } from 'react-icons/fa';
+import { FaAddressBook, FaDochub, FaHandshake, FaMapMarkerAlt, FaRocket, FaShieldAlt, FaStar } from 'react-icons/fa';
 import ServiceCardComponent from '@/components/ServiceCard';
 import serviceService from '@/services/service';
 import LoadingComponent from '@/components/Loading';
@@ -74,53 +74,49 @@ export default function Page() {
             <TextComponent className={`text-secondary text-lg font-bold ${robot.className} italic`}>About US</TextComponent>
             <TextComponent className={`text-black text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
             <TextComponent className="text-black text-base font-regular">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque quasi id suscipit. Velit beatae veniam libero illo, debitis iste atque modi nisi ex pariatur ipsam tempora laudantium consequatur eius corrupti nemo soluta
-              molestiae officiis commodi, perferendis alias vero reprehenderit et dolorum! Sequi, sapiente quam voluptas temporibus aspernatur rerum beatae ad!
+              Konsultan legalitas dan perizinan khusus Pembuatan Pendirian (PT,CV & YAYASAN), SBU Konstruksi, PKP, BPOM, Izin Edar Alkes, SKUP MIGAS, HKI & ABUJAPI farmasi yang berlokasi di Bekasi. Berkomitmen untuk membantu UMKM dalam
+              proses legalitas dan perizinan berusaha di Indonesia, dengan memprioritaskan kemudahan klien untuk mulai dari pengumpulan dokumen yang dibutuhkan hingga penyelesaian alur kerja.{' '}
             </TextComponent>
           </div>
         </div>
       </div>
-      <div className="py-8 my-8 px-4 lg:px-8 flex flex-col text-center space-y-8">
-        <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
-          Why Choose Us?
-        </TextComponent>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
-            <CardContent className="h-full py-8">
-              <div className="flex flex-col items-center justify-between h-full">
-                <div className="flex flex-col items-center space-y-8">
-                  <FaStar className="text-4xl text-primary" />
-                  <TextComponent className="text-teal font-medium text-base text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam voluptates dolorem veritatis aliquid ipsa aliquam ab? Voluptatum quia reiciendis pariatur.
-                  </TextComponent>
+      <div className="flex justify-center my-8">
+        <div className="px-2 w-full lg:w-3/4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
+              <CardContent className="h-full py-8">
+                <div className="flex flex-col items-center justify-between h-full">
+                  <div className="flex flex-col items-center space-y-2">
+                    <FaHandshake className="text-4xl text-primary" />
+                    <TextComponent className="text-lg font-bold text-teal">Komitmen</TextComponent>
+                    <TextComponent className="text-teal font-medium text-base text-center">kami percaya bahwa komitmen adalah kunci keberhasilan.</TextComponent>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
-            <CardContent className="h-full py-8">
-              <div className="flex flex-col items-center justify-between h-full">
-                <div className="flex flex-col items-center space-y-8">
-                  <FaRocket className="text-4xl text-primary" />
-                  <TextComponent className="text-teal font-medium text-base text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam voluptates dolorem veritatis aliquid ipsa aliquam ab? Voluptatum quia reiciendis pariatur.
-                  </TextComponent>
+              </CardContent>
+            </Card>
+            <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
+              <CardContent className="h-full py-8">
+                <div className="flex flex-col items-center justify-between h-full">
+                  <div className="flex flex-col items-center space-y-2">
+                    <FaStar className="text-4xl text-primary" />
+                    <TextComponent className="text-lg font-bold text-teal">Kualitas</TextComponent>
+                    <TextComponent className="text-teal font-medium text-base text-center">Kebanggaan kami ada pada system perijinan yang Sesuai dengan kenutuhan anda.</TextComponent>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
-            <CardContent className="h-full py-8">
-              <div className="flex flex-col items-center justify-between h-full">
-                <div className="flex flex-col items-center space-y-8">
-                  <FaDochub className="text-4xl text-primary" />
-                  <TextComponent className="text-teal font-medium text-base text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam voluptates dolorem veritatis aliquid ipsa aliquam ab? Voluptatum quia reiciendis pariatur.
-                  </TextComponent>
+              </CardContent>
+            </Card>
+            <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
+              <CardContent className="h-full py-8">
+                <div className="flex flex-col items-center justify-between h-full">
+                  <div className="flex flex-col items-center space-y-2">
+                    <FaShieldAlt className="text-4xl text-primary" />
+                    <TextComponent className="text-lg font-bold text-teal capitalize">Keselamatan & Lingkungan</TextComponent>
+                    <TextComponent className="text-teal font-medium text-base text-center">Kami menghargai semua individu dan juga kesejahteraan hidup mereka.</TextComponent>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
       <div className="flex justify-center py-8">

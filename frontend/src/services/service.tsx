@@ -23,8 +23,30 @@ const getData = (limit?: number, offset?: number, keyword?: string, sort?: strin
   return { services, loading, error, fetchData, setServices, setLoading, setError };
 };
 
+const getService = (id: string) => {
+  const [service, setService] = useState<Service | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
+  const fetchData = () => {
+    setLoading(true);
+    serviceActions
+      .getService(id)
+      .then((res) => {
+        setService(res);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => fetchData(), [id]);
+
+  return { service, loading, error, fetchData, setService, setLoading, setError };
+};
+
 const serviceService = {
   getData,
+  getService,
 };
 
 export default serviceService;

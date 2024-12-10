@@ -43,7 +43,26 @@ const getData = async (limit?: number, offset?: number, keyword?: string, sort?:
   }
 };
 
+const getService = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${API_SERVICE}/${id}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const serviceActions = {
   getData,
+  getService,
 };
 export default serviceActions;
