@@ -3,11 +3,11 @@
 import TextComponent from '@/components/Text';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
+import { ABOUT_US_URL, FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import { DESCRIPTION, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER } from '@/utils/images';
+import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER, LAW_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
@@ -47,17 +47,21 @@ export default function Page() {
       <div className="bg-teal py-8">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-            <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
-            <TextComponent className="text-white text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
+            <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {TITLE} </TextComponent>
+            <TextComponent className="text-white text-base font-regular">
+              Kami adalah perusahaan yang terkemuka dalam bidang pendirian perusahaan, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka
+            </TextComponent>
             <div className="flex space-x-2">
-              <Button className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">About Us</Button>
+              <Button onClick={() => navigateTo(ABOUT_US_URL)} className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">
+                About Us
+              </Button>
               <Button className="bg-primary text-black hover:bg-primary hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
                 More Service
               </Button>
             </div>
           </div>
           <div className="flex justify-center order-1 lg:order-2">
-            <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+            <Image src={LAW_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
           </div>
         </div>
       </div>
@@ -72,10 +76,10 @@ export default function Page() {
           </div>
           <div className="flex flex-col space-y-4 px-4 lg:px-12 justify-center">
             <TextComponent className={`text-secondary text-lg font-bold ${robot.className} italic`}>About US</TextComponent>
-            <TextComponent className={`text-black text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
-            <TextComponent className="text-black text-base font-regular">
+            <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
+            <TextComponent className="text-teal text-base font-regular">
               Konsultan legalitas dan perizinan khusus Pembuatan Pendirian (PT,CV & YAYASAN), SBU Konstruksi, PKP, BPOM, Izin Edar Alkes, SKUP MIGAS, HKI & ABUJAPI farmasi yang berlokasi di Bekasi. Berkomitmen untuk membantu UMKM dalam
-              proses legalitas dan perizinan berusaha di Indonesia, dengan memprioritaskan kemudahan klien untuk mulai dari pengumpulan dokumen yang dibutuhkan hingga penyelesaian alur kerja.{' '}
+              proses legalitas dan perizinan berusaha di Indonesia, dengan memprioritaskan kemudahan klien untuk mulai dari pengumpulan dokumen yang dibutuhkan hingga penyelesaian alur kerja.
             </TextComponent>
           </div>
         </div>
@@ -139,8 +143,8 @@ export default function Page() {
             <div className="flex flex-col space-y-4 px-4 lg:w-3/4">
               <TextComponent className={`text-white text-xl lg:text-2xl font-medium italic capitalize`}>Pengurusan cepat, lancar dan terpercaya</TextComponent>
               <TextComponent className="text-base text-justify text-white lowercase">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia ipsum neque eius quaerat enim porro ducimus! Magni, nobis, nam voluptatum laborum repudiandae dignissimos natus reiciendis incidunt fugiat blanditiis ea
-                quidem!
+                komitmen kami untuk memberikan pelayanan yang efektif, efisien, dan dapat diandalkan. Kami berdedikasi untuk memenuhi kebutuhan Anda dengan cepat, akurat, dan profesional, sehingga Anda dapat merasa nyaman dan percaya diri
+                dengan pilihan Anda
               </TextComponent>
             </div>
           </div>
@@ -182,7 +186,7 @@ export default function Page() {
       <div className="py-2 bg-white px-4 my-8 mt-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center ">
-            <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
+            <Image src={`${BUILDING_IMAGE}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
           </div>
           <div className="flex items-center">
             <Card className="bg-transparent border-none w-full">

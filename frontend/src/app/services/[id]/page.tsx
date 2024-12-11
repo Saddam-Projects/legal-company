@@ -6,7 +6,7 @@ import { Service } from '@/entity/service';
 import serviceService from '@/services/service';
 import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { IMAGE_HEADER } from '@/utils/images';
+import { DOC_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -21,16 +21,19 @@ export default function Page() {
   return (
     service.service && (
       <div>
-        <div className="grid grid-cols-1 gap-4">
-          <div className="bg-teal py-8">
+        <div className="grid grid-cols-1 mt-12 gap-4">
+          <div className="bg-white py-24">
             <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-                <TextComponent className={`text-white text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
-                <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic uppercase`}>{service.service.name}</TextComponent>
-                <TextComponent className="text-white text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
+                <TextComponent className={`text-teal text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
+                <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic uppercase`}>{service.service.name}</TextComponent>
+                <TextComponent className="text-teal text-base font-regular">
+                  Langkah awal yang penting dalam memulai bisnis Anda adalah memilih nama perusahaan yang tepat, membuat rencana bisnis yang efektif, dan mengurus semua persyaratan hukum dan administrasi yang diperlukan. Dengan melakukan
+                  langkah-langkah ini, Anda dapat memulai bisnis Anda dengan lancar dan lancar, serta meningkatkan kesempatan Anda untuk sukses di pasar.
+                </TextComponent>
               </div>
               <div className="flex justify-center order-1 lg:order-2">
-                <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+                <Image src={DOC_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
               </div>
             </div>
           </div>

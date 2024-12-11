@@ -9,7 +9,7 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
   const service = serviceService.getData(10, 0, undefined, 'new');
   const navigateTo = useNavigateTo();
   return (
-    <div className="fixed bottom-0 h-4/5 w-full p-4 bg-white z-40" onMouseLeave={closeDropdownService}>
+    <div className="fixed bottom-0 h-4/5 w-full p-4 bg-white" onMouseLeave={closeDropdownService}>
       <div className="flex flex-col items-center h-full w-full">
         <TextComponent className="text-2xl font-medium capitalize text-teal">Layanan Kami</TextComponent>
         <div className="h-[1px] bg-gray-200 w-full my-4"></div>
@@ -27,7 +27,7 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
             </Card>
           ))}
         </div>
-        <div className="mt-auto">
+        <div className="mt-auto mb-12">
           <div
             onClick={closeDropdownService}
             className=" hover:opacity-90 cursor-pointer px-3 py-1 shadow-lg mb-2

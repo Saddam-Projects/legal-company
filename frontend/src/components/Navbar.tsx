@@ -10,9 +10,6 @@ import { TITLE } from '@/utils/constant';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { useState } from 'react';
 import { SERVICES_URL } from '@/datasources/internals/menus';
-import { Card, CardContent } from './ui/card';
-import { FaBuilding, FaRegBuilding } from 'react-icons/fa';
-import serviceService from '@/services/service';
 import DropdownService from './DropdownService';
 
 export default function NavbarComponent({ active, setActive }: BooleanInterface) {
@@ -30,7 +27,7 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
   };
 
   return (
-    <ContainerComponent className="h-20 bg-teal">
+    <ContainerComponent className="fixed top-0 left-0 w-full bg-teal z-30 h-20">
       <div className="flex items-center h-full pr-8">
         <div className="flex space-x-2 items-center">
           <Image src={COMPANY_LOGO} width={120} height={120} alt="Company Logo" priority className="z-50" />

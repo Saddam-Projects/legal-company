@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import serviceService from '@/services/service';
 import { TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { IMAGE_HEADER } from '@/utils/images';
+import { HANDSHAKE_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import { FaPhone, FaRocket, FaSmile, FaSpeakerDeck, FaStar, FaThumbsUp } from 'react-icons/fa';
 
@@ -14,19 +14,17 @@ export default function AboutPage() {
   return (
     <div className="grid grid-cols-1 gap-8">
       <div className="grid grid-cols-1 gap-4">
-        <div className="bg-teal py-8">
+        <div className="bg-white py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-2 px-4 lg:px-24 justify-center order-2 lg:order-1">
-              <TextComponent className={`text-white text-base font-regular ${robot.className}  capitalize`}>Tentang Kami</TextComponent>
-              <TextComponent className={`text-white text-4xl font-extrabold ${robot.className}  capitalize`}>{TITLE}</TextComponent>
-              <TextComponent className="text-white text-base font-regular text-justify">
-                Consultant legalitas dan perizinan khusus Seperti Pembuatan Pendirian (PT,CV&YAYASAN), SBU Konstruksi, PKP, BPOM, IzinEdarAlkes, SKUP MIGAS, Merek HAKI, ABUJAPI dan IDAK yang berlokasi di Bekasi. Berkomitmen untuk membantu
-                UMKM dalam proses legalitas dan perizinan berusaha di Indonesia, dengan memprioritaskan kemudahan klien untuk mulai dari pengumpulan dokumen yang dibutuhkan hingga penyelesaian alur kerja yang efisien dan cepat, tepat dan
-                professional, AIM Consultant sendiri bercita-cita ingin menjadi partner yang terpercaya bagi para pengusaha / pebisnis.
+              <TextComponent className={`text-teal text-base font-regular ${robot.className}  capitalize`}>Tentang Kami</TextComponent>
+              <TextComponent className={`text-teal text-4xl font-extrabold ${robot.className}  capitalize`}>{TITLE}</TextComponent>
+              <TextComponent className="text-teal text-base font-regular">
+                Consultant legalitas dan perizinan khusus Seperti Pembuatan Pendirian (PT,CV&YAYASAN), SBU Konstruksi, PKP, BPOM, IzinEdarAlkes, SKUP MIGAS, Merek HAKI, ABUJAPI dan IDAK yang berlokasi di Bekasi.
               </TextComponent>
             </div>
             <div className="flex justify-center order-1 lg:order-2">
-              <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+              <Image src={HANDSHAKE_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
             </div>
           </div>
         </div>
@@ -87,8 +85,8 @@ export default function AboutPage() {
               <TextComponent className={`text-teal text-base font-extrabold ${robot.className}  lowercase`}>#aimconsultant</TextComponent>
               <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic capitalize`}>kami memiliki visi misi yang kuat dan mengedepankan kepuasan pelanggan</TextComponent>
               <TextComponent className="text-teal text-base font-regular">
-                Menjadi sebuah perubahan yang dapat terus membantu jalan nya usaha dari setiap kalangan, Menjadi perusahaan yang profesional dan berintegritas tinggi, Menjadi satu satunya consultant yang paling bermanfaat untuk banyak
-                kalangan pebisnis.
+                Berkomitmen untuk membantu UMKM dalam proses legalitas dan perizinan berusaha di Indonesia, dengan memprioritaskan kemudahan klien untuk mulai dari pengumpulan dokumen yang dibutuhkan hingga penyelesaian alur kerja yang
+                efisien dan cepat, tepat dan professional, AIM Consultant sendiri bercita-cita ingin menjadi partner yang terpercaya bagi para pengusaha / pebisnis.
               </TextComponent>
             </div>
             <div className="flex justify-center order-1 lg:order-2">

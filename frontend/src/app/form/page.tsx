@@ -4,7 +4,7 @@ import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_HEADER } from '@/utils/images';
+import { BUILDING_IMAGE, BUILDING_IMAGE_3, BUILDING_IMAGE_4, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import FormServiceComponent from '@/components/FormService';
@@ -62,7 +62,7 @@ export default function Page() {
                   <FormServiceComponent serviceId={serviceId} handler={submit} />
                 </div>
                 <div className="flex justify-center order-1 lg:order-2">
-                  <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
+                  <Image src={BUILDING_IMAGE_4} objectFit="contain" className="rounded-sm shadow-sm" width={420} height={420} alt="Page Not Found" priority />
                 </div>
               </div>
             </CardContent>

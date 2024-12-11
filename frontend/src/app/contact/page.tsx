@@ -6,9 +6,9 @@ import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import contactSchema from '@/dtos/contact';
 import { OrderDto } from '@/dtos/order';
-import { TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { BASE_API_URL, TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_HEADER } from '@/utils/images';
+import { BUILDING_IMAGE, BUILDING_IMAGE_2, BUILDING_IMAGE_3, CONTACT_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaAddressBook, FaClock, FaInfinity, FaMapMarkerAlt, FaShieldAlt, FaStar, FaTeamspeak, FaUsers } from 'react-icons/fa';
@@ -28,17 +28,17 @@ export default function ContactPage() {
     orderAction.create(orderDto, setLoading, setError).then(() => setSuccess(true));
   };
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="grid grid-cols-1 mt-12 gap-8">
       <div className="grid grid-cols-1 gap-4">
-        <div className="bg-teal py-8">
+        <div className="bg-white py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-              <TextComponent className={`text-white text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
-              <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic capitalize`}>Ajukan Sekarang, Tim Kami akan segera proses secara langsung</TextComponent>
-              <TextComponent className="text-white text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
+              <TextComponent className={`text-teal text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
+              <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic capitalize`}>Ajukan Sekarang, Tim Kami akan segera proses secara langsung</TextComponent>
+              <TextComponent className="text-teal text-base font-regular">{TAGLINE_DESCRIPTION}</TextComponent>
             </div>
             <div className="flex justify-center order-1 lg:order-2">
-              <Image src={IMAGE_HEADER} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+              <Image src={CONTACT_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function ContactPage() {
       <div className="py-2 bg-white px-4 my-8 mt-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center ">
-            <Image src={BUILDING_IMAGE} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
+            <Image src={`${BUILDING_IMAGE_3}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
           </div>
           <div className="flex items-center">
             <Card className="bg-transparent border-none w-full">

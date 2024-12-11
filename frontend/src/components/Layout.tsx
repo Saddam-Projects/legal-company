@@ -24,10 +24,9 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
                 <ContainerComponent className="h-full w-full ">
                   <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
                 </ContainerComponent>
-                <div className="h-[50px]"></div>
+                <div className="h-[10px]"></div>
               </ScrollArea>
               <BottomBarComponent />
-              {/* <LiveChatComponent /> */}
             </div>
           </div>
         </ThemeProvider>
