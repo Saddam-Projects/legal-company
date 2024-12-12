@@ -6,26 +6,20 @@ export function AdvertiseComponent() {
   return (
     <Carousel>
       <CarouselContent>
-        <CarouselItem>
-          <Card className="bg-white shadow-lg border-1 border-gray-200">
-            <CardContent className="h-[400px] p-0">
-              <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
-            </CardContent>
-          </Card>
+        <CarouselItem className="lg:basis-1/2">
+          <div className="w-full h-[400px]">
+            <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
+          </div>
         </CarouselItem>
-        <CarouselItem>
-          <Card className="bg-white shadow-lg border-1 border-gray-200">
-            <CardContent className="h-[400px] p-0">
-              <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
-            </CardContent>
-          </Card>
+        <CarouselItem className="lg:basis-1/2">
+          <div className="w-full h-[400px]">
+            <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
+          </div>
         </CarouselItem>
-        <CarouselItem>
-          <Card className="bg-white shadow-lg border-1 border-gray-200">
-            <CardContent className="h-[400px] p-0">
-              <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
-            </CardContent>
-          </Card>
+        <CarouselItem className="lg:basis-1/2">
+          <div className="w-full h-[400px]">
+            <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
+          </div>
         </CarouselItem>
       </CarouselContent>
     </Carousel>

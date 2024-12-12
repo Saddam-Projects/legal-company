@@ -1,4 +1,4 @@
-import serviceActions from '@/actions/service.action';
+import { getServiceData, getServicesData } from '@/actions/service.action';
 import { Service } from '@/entity/service';
 import { useEffect, useState } from 'react';
 
@@ -9,8 +9,7 @@ const getData = (limit?: number, offset?: number, keyword?: string, sort?: strin
 
   const fetchData = () => {
     setLoading(true);
-    serviceActions
-      .getData(limit, offset, keyword, sort)
+    getServicesData(limit, offset, keyword, sort)
       .then((res) => {
         setServices(res);
       })
@@ -30,8 +29,7 @@ const getService = (id: string) => {
 
   const fetchData = () => {
     setLoading(true);
-    serviceActions
-      .getService(id)
+    getServiceData(id)
       .then((res) => {
         setService(res);
       })

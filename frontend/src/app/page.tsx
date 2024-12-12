@@ -5,18 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ABOUT_US_URL, FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import { BASE_API_URL, DESCRIPTION, TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
+import { DESCRIPTION, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_GRIDS, IMAGE_HEADER, LAW_IMAGE } from '@/utils/images';
+import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
 import FormComponent from '@/components/Form';
-import { FaAddressBook, FaDochub, FaHandshake, FaMapMarkerAlt, FaRocket, FaShieldAlt, FaStar } from 'react-icons/fa';
+import { FaAddressBook, FaHandshake, FaMapMarkerAlt, FaShieldAlt, FaStar } from 'react-icons/fa';
 import ServiceCardComponent from '@/components/ServiceCard';
 import serviceService from '@/services/service';
-import LoadingComponent from '@/components/Loading';
-import { AdvertiseComponent } from '@/components/Advertise';
 import DialogErrorComponent from '@/components/DialogError';
 import contactSchema from '@/dtos/contact';
 import { z } from 'zod';
@@ -41,10 +39,10 @@ export default function Page() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
-      <div className="bg-teal py-8">
+      <div className="bg-teal ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
             <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {TITLE} </TextComponent>
@@ -65,7 +63,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="bg-white py-8">
+      <div className="bg-white ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center">
             <div className="grid grid-cols-2 gap-1">
@@ -84,7 +82,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-8">
+      <div className="flex justify-center ">
         <div className="px-2 w-full lg:w-3/4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
@@ -123,7 +121,8 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center py-8">
+
+      <div className="flex justify-center ">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
       {service.services.length > 0 && (
@@ -137,7 +136,7 @@ export default function Page() {
           </div>
         </div>
       )}
-      <div className="py-8 bg-teal my-8">
+      <div className=" bg-teal py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center">
             <div className="flex flex-col space-y-4 px-4 lg:w-3/4">
@@ -155,7 +154,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="bg-white py-8 px-4 lg:px-24 ">
+      <div className="bg-white  px-4 lg:px-24 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 justify-center">
             <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
@@ -183,7 +182,7 @@ export default function Page() {
       <div className="grid grid-cols-1 h-[400px] z-0">
         <MapComponent />
       </div>
-      <div className="py-2 bg-white px-4 my-8 mt-12">
+      <div className="py-2 bg-white px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center ">
             <Image src={`${BUILDING_IMAGE}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />

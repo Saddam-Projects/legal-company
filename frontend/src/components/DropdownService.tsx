@@ -19,7 +19,13 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
               <CardContent className="py-4 w-full">
                 <div className="flex space-x-4 items-center">
                   {index % 2 === 0 ? <FaBuilding className="text-teal" size={40} /> : <FaRegBuilding className="text-teal" size={40} />}
-                  <TextComponent onClick={() => navigateTo(`${SERVICES_URL}/${item.id}`)} className="text-teal text-base capitalize">
+                  <TextComponent
+                    onClick={() => {
+                      navigateTo(`${SERVICES_URL}/${item.id}`);
+                      closeDropdownService();
+                    }}
+                    className="text-teal text-base capitalize"
+                  >
                     {item.name}
                   </TextComponent>
                 </div>

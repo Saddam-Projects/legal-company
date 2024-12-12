@@ -1,4 +1,6 @@
 'use client';
+import { ClientComponent } from '@/components/Clients';
+import { GalleryComponent } from '@/components/Gallery';
 import ServiceCardComponent from '@/components/ServiceCard';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,7 +14,7 @@ import { FaPhone, FaRocket, FaSmile, FaSpeakerDeck, FaStar, FaThumbsUp } from 'r
 export default function AboutPage() {
   const service = serviceService.getData(3, 0, undefined, 'expensive');
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="grid grid-cols-1 gap-16 mt-12">
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-white py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -29,8 +31,8 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="py-8 my-8 px-4 lg:px-8 flex flex-col text-center space-y-8">
-        <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90">Why Choose Us?</TextComponent>
+      <div className="px-4 lg:px-8 flex flex-col text-center space-y-8">
+        <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Why Choose Us?</TextComponent>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
             <CardContent className="h-full py-8">
@@ -78,6 +80,13 @@ export default function AboutPage() {
           </Card>
         </div>
       </div>
+      <div className="flex flex-col space-y-12 py-12 text-center px-4 lg:px-24">
+        <div className=" flex  flex-col">
+          <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">You're Next</TextComponent>
+          <TextComponent className="text-small font-bold text-teal hover:opacity-90">jadilah client kebanggaan kami, kami siap membantu anda</TextComponent>
+        </div>
+        <ClientComponent />
+      </div>
       <div className="grid grid-cols-1 gap-4">
         <div>
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -95,7 +104,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center py-8">
+      <div className="flex justify-center">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Layanan Kami</TextComponent>
       </div>
       {service.services.length > 0 && (
@@ -109,6 +118,12 @@ export default function AboutPage() {
           </div>
         </div>
       )}
+      <div className="flex justify-center">
+        <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Testimoni</TextComponent>
+      </div>
+      <div className="px-4 lg:px-24">
+        <GalleryComponent />
+      </div>
     </div>
   );
 }

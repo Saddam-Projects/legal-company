@@ -1,4 +1,5 @@
 'use client';
+import { AdvertiseComponent } from '@/components/Advertise';
 import ServiceCardComponent from '@/components/ServiceCard';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,8 +21,8 @@ export default function Page() {
 
   return (
     service.service && (
-      <div>
-        <div className="grid grid-cols-1 mt-12 gap-4">
+      <div className="grid grid-cols-1 gap-16 mt-12">
+        <div className="grid grid-cols-1 gap-4">
           <div className="bg-white py-24">
             <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
@@ -38,7 +39,10 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="py-8 my-8 px-4 lg:px-8 flex flex-col text-center space-y-8">
+        <div className="flex px-4 lg:px-24 justify-center">
+          <AdvertiseComponent />
+        </div>
+        <div className="px-4 lg:px-8 flex flex-col text-center space-y-14">
           <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90">Yang Akan Anda Dapatkan</TextComponent>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {service.service.service_terms.map((e, index) => (
@@ -55,11 +59,11 @@ export default function Page() {
             ))}
           </div>
         </div>
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center">
           <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Rekomendasi Lainnya</TextComponent>
         </div>
         {services.services.length > 0 && (
-          <div className="flex justify-center my-8">
+          <div className="flex justify-center">
             <div className="px-2 w-full lg:w-3/4">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {services.services.map((item, index) => (

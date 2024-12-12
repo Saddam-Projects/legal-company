@@ -42,7 +42,9 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
               <TextComponent
                 onMouseEnter={() => dropdownServiceHandler(item.to)}
                 key={index}
-                onClick={() => navigateTo(item.to)}
+                onClick={() => {
+                  navigateTo(item.to);
+                }}
                 className={`cursor-pointer capitalize text-lg font-medium text-primary ${pathname === item.to ? 'font-bold' : 'font-regular'}`}
               >
                 {item.title}

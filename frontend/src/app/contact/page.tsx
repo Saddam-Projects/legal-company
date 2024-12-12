@@ -28,7 +28,7 @@ export default function ContactPage() {
     orderAction.create(orderDto, setLoading, setError).then(() => setSuccess(true));
   };
   return (
-    <div className="grid grid-cols-1 mt-12 gap-8">
+    <div className="grid grid-cols-1 gap-16 mt-12">
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-white py-8">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -44,7 +44,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="flex justify-center my-8">
+      <div className="flex justify-center">
         <div className="px-2 w-full lg:w-3/4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
@@ -84,7 +84,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="bg-white py-8 px-4 lg:px-24 ">
+      <div className="bg-white px-4 lg:px-24 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 justify-center">
             <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
@@ -113,7 +113,7 @@ export default function ContactPage() {
         <MapComponent />
       </div>
 
-      <div className="py-2 bg-white px-4 my-8 mt-12">
+      <div className="bg-white px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center ">
             <Image src={`${BUILDING_IMAGE_3}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />

@@ -10,6 +10,9 @@ const nextConfig = {
             },
         ],
     },
+    reactStrictMode: true,
+    cleanDistDir: true,
+    compress: true,
 };
 
 export default nextConfig;

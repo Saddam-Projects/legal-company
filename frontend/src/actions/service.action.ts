@@ -1,8 +1,9 @@
 'use client';
+
 import { API_SERVICE } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 
-const getData = async (limit?: number, offset?: number, keyword?: string, sort?: string) => {
+export const getServicesData = async (limit?: number, offset?: number, keyword?: string, sort?: string) => {
   const args = [];
 
   if (keyword) {
@@ -43,7 +44,7 @@ const getData = async (limit?: number, offset?: number, keyword?: string, sort?:
   }
 };
 
-const getService = async (id: string) => {
+export const getServiceData = async (id: string) => {
   try {
     const response = await fetch(`${BASE_API_URL}${API_SERVICE}/${id}`, {
       method: 'GET',
@@ -60,9 +61,3 @@ const getService = async (id: string) => {
     throw error;
   }
 };
-
-const serviceActions = {
-  getData,
-  getService,
-};
-export default serviceActions;

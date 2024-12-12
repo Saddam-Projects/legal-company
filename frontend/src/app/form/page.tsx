@@ -36,7 +36,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-teal py-8">
@@ -53,7 +53,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex justify-center my-8">
+      <div className="flex justify-center">
         <div className="px-2 w-full lg:w-3/4">
           <Card className="shadow-none bg-transparent border-1 rounded-lg border-gray-200">
             <CardContent className="py-4">
@@ -69,6 +69,6 @@ export default function Page() {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 }

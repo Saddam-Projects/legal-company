@@ -15,8 +15,8 @@ export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
 
   return (
-    <>
-      <div className="grid grid-cols-1 mt-12 gap-4">
+    <div className="grid grid-cols-1 gap-16 mt-12">
+      <div className="grid grid-cols-1 gap-4">
         <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
         <div className="bg-white py-24">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -33,7 +33,10 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-8">
+      <div className="flex px-4 lg:px-24 justify-center">
+        <AdvertiseComponent />
+      </div>
+      <div className="flex justify-center">
         <div className="px-2 w-full lg:w-3/4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {service.services.map((item, index) => (
@@ -42,6 +45,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
