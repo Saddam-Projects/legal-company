@@ -42,28 +42,30 @@ export default function Page() {
     <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
-      <div className="bg-teal ">
-        <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-            <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {TITLE} </TextComponent>
-            <TextComponent className="text-white text-base font-regular">
-              Kami adalah perusahaan yang terkemuka dalam bidang pendirian perusahaan, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka
-            </TextComponent>
-            <div className="flex space-x-2">
-              <Button onClick={() => navigateTo(ABOUT_US_URL)} className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">
-                About Us
-              </Button>
-              <Button className="bg-primary text-black hover:bg-primary hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
-                More Service
-              </Button>
+      <div className="bg-teal">
+        <div className="container mx-auto px-4">
+          <div className="grid h-full container mx-auto grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
+              <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {TITLE} </TextComponent>
+              <TextComponent className="text-white text-base font-regular">
+                Kami adalah perusahaan yang terkemuka dalam bidang pendirian perusahaan, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka
+              </TextComponent>
+              <div className="flex space-x-2">
+                <Button onClick={() => navigateTo(ABOUT_US_URL)} className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">
+                  About Us
+                </Button>
+                <Button className="bg-primary text-black hover:bg-primary hover:opacity-90" onClick={() => navigateTo(SERVICES_URL)}>
+                  More Service
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="flex justify-center order-1 lg:order-2">
-            <Image src={LAW_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+            <div className="flex justify-center order-1 lg:order-2">
+              <Image src={LAW_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+            </div>
           </div>
         </div>
       </div>
-      <div className="bg-white ">
+      <div className="bg-white container mx-auto">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex justify-center">
             <div className="grid grid-cols-2 gap-1">
@@ -72,7 +74,7 @@ export default function Page() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col space-y-4 px-4 lg:px-12 justify-center">
+          <div className="flex flex-col space-y-4 px-4  justify-center">
             <TextComponent className={`text-secondary text-lg font-bold ${robot.className} italic`}>About US</TextComponent>
             <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic`}>{DESCRIPTION}</TextComponent>
             <TextComponent className="text-teal text-base font-regular">
@@ -83,7 +85,7 @@ export default function Page() {
         </div>
       </div>
       <div className="flex justify-center ">
-        <div className="px-2 w-full lg:w-3/4">
+        <div className="px-2 w-full container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <Card className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
               <CardContent className="h-full py-8">
@@ -125,36 +127,40 @@ export default function Page() {
       <div className="flex justify-center ">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
-      {service.services.length > 0 && (
-        <div className="flex justify-center">
-          <div className="px-2 w-full lg:w-3/4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {service.services.map((item, index) => (
-                <ServiceCardComponent item={item} index={index} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      <div className=" bg-teal py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="container mx-auto px-4">
+        {service.services.length > 0 && (
           <div className="flex justify-center">
-            <div className="flex flex-col space-y-4 px-4 lg:w-3/4">
-              <TextComponent className={`text-white text-xl lg:text-2xl font-medium italic capitalize`}>Pengurusan cepat, lancar dan terpercaya</TextComponent>
-              <TextComponent className="text-base text-justify text-white lowercase">
-                komitmen kami untuk memberikan pelayanan yang efektif, efisien, dan dapat diandalkan. Kami berdedikasi untuk memenuhi kebutuhan Anda dengan cepat, akurat, dan profesional, sehingga Anda dapat merasa nyaman dan percaya diri
-                dengan pilihan Anda
-              </TextComponent>
+            <div className="px-2 w-full ">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {service.services.map((item, index) => (
+                  <ServiceCardComponent item={item} index={index} />
+                ))}
+              </div>
             </div>
           </div>
-          <div className="flex items-center">
-            <Button onClick={() => navigateTo(FORM_URL)} className="bg-primary text-teal hover:bg-primary hover:opacity-90 mx-auto" size={'lg'}>
-              Lihat Proposal
-            </Button>
+        )}
+      </div>
+      <div className=" bg-teal py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="flex justify-center">
+              <div className="flex flex-col space-y-4 ">
+                <TextComponent className={`text-white text-xl lg:text-2xl font-medium italic capitalize`}>Pengurusan cepat, lancar dan terpercaya</TextComponent>
+                <TextComponent className="text-base text-justify text-white lowercase">
+                  komitmen kami untuk memberikan pelayanan yang efektif, efisien, dan dapat diandalkan. Kami berdedikasi untuk memenuhi kebutuhan Anda dengan cepat, akurat, dan profesional, sehingga Anda dapat merasa nyaman dan percaya diri
+                  dengan pilihan Anda
+                </TextComponent>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <Button onClick={() => navigateTo(FORM_URL)} className="bg-primary text-teal hover:bg-primary hover:opacity-90 mx-auto" size={'lg'}>
+                Lihat Proposal
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="bg-white  px-4 lg:px-24 ">
+      <div className="bg-white container mx-auto px-4 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 justify-center">
             <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
@@ -182,9 +188,9 @@ export default function Page() {
       <div className="grid grid-cols-1 h-[400px] z-0">
         <MapComponent />
       </div>
-      <div className="py-2 bg-white px-4">
+      <div className="py-2 bg-white container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="flex justify-center ">
+          <div className="flex ">
             <Image src={`${BUILDING_IMAGE}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />
           </div>
           <div className="flex items-center">

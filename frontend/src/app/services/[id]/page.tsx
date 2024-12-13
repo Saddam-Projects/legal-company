@@ -22,10 +22,10 @@ export default function Page() {
   return (
     service.service && (
       <div className="grid grid-cols-1 gap-16 mt-12">
-        <div className="grid grid-cols-1 gap-4">
+        <div className="container mx-auto px-4">
           <div className="bg-white py-24">
             <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
-              <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
+              <div className="flex flex-col space-y-4 px-4  justify-center order-2 lg:order-1">
                 <TextComponent className={`text-teal text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
                 <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic uppercase`}>{service.service.name}</TextComponent>
                 <TextComponent className="text-teal text-base font-regular">
@@ -33,46 +33,50 @@ export default function Page() {
                   langkah-langkah ini, Anda dapat memulai bisnis Anda dengan lancar dan lancar, serta meningkatkan kesempatan Anda untuk sukses di pasar.
                 </TextComponent>
               </div>
-              <div className="flex justify-center order-1 lg:order-2">
+              <div className="flex justify-end order-1 lg:order-2">
                 <Image src={DOC_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
               </div>
             </div>
           </div>
         </div>
-        <div className="flex px-4 lg:px-24 justify-center">
+        <div className="flex px-4 container mx-auto justify-center">
           <AdvertiseComponent />
         </div>
-        <div className="px-4 lg:px-8 flex flex-col text-center space-y-14">
-          <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90">Yang Akan Anda Dapatkan</TextComponent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {service.service.service_terms.map((e, index) => (
-              <Card key={index} className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
-                <CardContent className="h-full py-8">
-                  <div className="flex flex-col items-center justify-between h-full">
-                    <div className="flex flex-col items-center space-y-2">
-                      <FaCheckCircle className="text-teal w-6 h-6" />
-                      <TextComponent className="text-teal font-medium text-base text-center">{e.term_name}</TextComponent>
+        <div className="container mx-auto px-4">
+          <div className="px-4 flex flex-col text-center space-y-14">
+            <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90">Yang Akan Anda Dapatkan</TextComponent>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {service.service.service_terms.map((e, index) => (
+                <Card key={index} className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
+                  <CardContent className="h-full py-8">
+                    <div className="flex flex-col items-center justify-between h-full">
+                      <div className="flex flex-col items-center space-y-2">
+                        <FaCheckCircle className="text-teal w-6 h-6" />
+                        <TextComponent className="text-teal font-medium text-base text-center">{e.term_name}</TextComponent>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
         <div className="flex justify-center">
           <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Rekomendasi Lainnya</TextComponent>
         </div>
-        {services.services.length > 0 && (
-          <div className="flex justify-center">
-            <div className="px-2 w-full lg:w-3/4">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {services.services.map((item, index) => (
-                  <ServiceCardComponent item={item} index={index} />
-                ))}
+        <div className="container mx-auto px-4">
+          {services.services.length > 0 && (
+            <div className="flex justify-center">
+              <div className="px-2 w-full ">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  {services.services.map((item, index) => (
+                    <ServiceCardComponent item={item} index={index} />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     )
   );

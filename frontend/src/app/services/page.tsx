@@ -16,34 +16,40 @@ export default function Page() {
 
   return (
     <div className="grid grid-cols-1 gap-16 mt-12">
-      <div className="grid grid-cols-1 gap-4">
-        <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
-        <div className="bg-white py-24">
-          <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="flex flex-col space-y-4 px-4 lg:px-24 justify-center order-2 lg:order-1">
-              <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic capitalize`}>Selamat datang di {TITLE}, Kami Siap Membantu Anda</TextComponent>
-              <TextComponent className="text-teal text-base font-regular">
-                Kami menawarkan jasa pendirian perusahaan yang dapat membantu Anda dalam memulai bisnis Anda dengan lancar dan lancar. Dengan layanan kami, Anda dapat memperoleh bantuan yang lengkap dan dapat diandalkan untuk mengelola
-                aspek-aspek penting dalam pendirian perusahaan, seperti persyaratan hukum, administrasi, dan lain-lain
-              </TextComponent>
-            </div>
-            <div className="flex justify-center order-1 lg:order-2">
-              <Image src={CS_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+      <div className="mx-auto px-4 container">
+        <div className="grid grid-cols-1 gap-4">
+          <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
+          <div className="bg-white py-24">
+            <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
+                <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic capitalize`}>Selamat datang di {TITLE}, Kami Siap Membantu Anda</TextComponent>
+                <TextComponent className="text-teal text-base font-regular">
+                  Kami menawarkan jasa pendirian perusahaan yang dapat membantu Anda dalam memulai bisnis Anda dengan lancar dan lancar. Dengan layanan kami, Anda dapat memperoleh bantuan yang lengkap dan dapat diandalkan untuk mengelola
+                  aspek-aspek penting dalam pendirian perusahaan, seperti persyaratan hukum, administrasi, dan lain-lain
+                </TextComponent>
+              </div>
+              <div className="flex justify-end order-1 lg:order-2">
+                <Image src={CS_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex px-4 lg:px-24 justify-center">
+      <div className="flex px-4 container mx-auto justify-center">
         <AdvertiseComponent />
       </div>
-      <div className="flex justify-center">
-        <div className="px-2 w-full lg:w-3/4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {service.services.map((item, index) => (
-              <ServiceCardComponent index={index} item={item} />
-            ))}
+      <div className="container mx-auto px-4">
+        {service.services.length > 0 && (
+          <div className="flex justify-center">
+            <div className="px-2 w-full ">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {service.services.map((item, index) => (
+                  <ServiceCardComponent item={item} index={index} />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
