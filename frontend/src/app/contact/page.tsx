@@ -117,7 +117,7 @@ export default function ContactPage() {
         <MapComponent />
       </div>
 
-      <div className="py-2 bg-white container mx-auto">
+      <div className="py-2 bg-white px-4 container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex ">
             <Image src={`${BUILDING_IMAGE_3}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />

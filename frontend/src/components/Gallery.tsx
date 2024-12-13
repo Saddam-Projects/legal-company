@@ -6,13 +6,13 @@ export function GalleryComponent() {
   return (
     <Carousel>
       <CarouselContent>
-        <CarouselItem className="basis-1 lg:basis-1/3">
+        <CarouselItem className="basis-1/2 lg:basis-1/3">
           <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
         </CarouselItem>
-        <CarouselItem className="basis-1 lg:basis-1/3">
+        <CarouselItem className="basis-1/2 lg:basis-1/3">
           <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
         </CarouselItem>
-        <CarouselItem className="basis-1 lg:basis-1/3">
+        <CarouselItem className="basis-1/2 lg:basis-1/3">
           <img src={`${BASE_API_URL}/banner.jpg`} className="w-full h-full object-cover" />
         </CarouselItem>
       </CarouselContent>

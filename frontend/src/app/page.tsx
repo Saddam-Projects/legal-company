@@ -42,7 +42,7 @@ export default function Page() {
     <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
       <DialogErrorComponent active={service.error !== ''} onClose={() => service.setError('')} />
-      <div className="bg-teal">
+      <div className="bg-teal py-8">
         <div className="container mx-auto px-4">
           <div className="grid h-full container mx-auto grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
@@ -59,7 +59,7 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-            <div className="flex justify-center order-1 lg:order-2">
+            <div className="flex justify-end order-1 lg:order-2">
               <Image src={LAW_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
             </div>
           </div>
@@ -130,7 +130,7 @@ export default function Page() {
       <div className="container mx-auto px-4">
         {service.services.length > 0 && (
           <div className="flex justify-center">
-            <div className="px-2 w-full ">
+            <div className="w-full">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {service.services.map((item, index) => (
                   <ServiceCardComponent item={item} index={index} />
@@ -188,7 +188,7 @@ export default function Page() {
       <div className="grid grid-cols-1 h-[400px] z-0">
         <MapComponent />
       </div>
-      <div className="py-2 bg-white container mx-auto">
+      <div className="py-2 bg-white container px-4 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex ">
             <Image src={`${BUILDING_IMAGE}`} objectFit="contain" className="rounded-sm shadow-sm" width={520} height={520} alt="Page Not Found" priority />

@@ -67,7 +67,7 @@ export default function Page() {
         <div className="container mx-auto px-4">
           {services.services.length > 0 && (
             <div className="flex justify-center">
-              <div className="px-2 w-full ">
+              <div className="w-full ">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                   {services.services.map((item, index) => (
                     <ServiceCardComponent item={item} index={index} />

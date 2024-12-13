@@ -84,7 +84,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="py-12 mx-auto container">
+      <div className="py-12 mx-auto px-4 container">
         <div className="flex flex-col space-y-12 text-center">
           <div className=" flex  flex-col">
             <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">You're Next</TextComponent>
@@ -113,10 +113,10 @@ export default function AboutPage() {
       <div className="flex justify-center">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Layanan Kami</TextComponent>
       </div>
-      <div className="container mx-auto">
+      <div className="container px-4 mx-auto">
         {service.services.length > 0 && (
           <div className="flex justify-center my-8">
-            <div className="px-2 w-full">
+            <div className="w-full">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {service.services.map((item, index) => (
                   <ServiceCardComponent item={item} index={index} />
