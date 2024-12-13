@@ -22,6 +22,7 @@ import { OrderDto } from '@/dtos/order';
 import DialogSuccessComponent from '@/components/DialogSuccess';
 import { useState } from 'react';
 import orderAction from '@/actions/order.action';
+import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -128,6 +129,13 @@ export default function Page() {
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
       <div className="container mx-auto px-4">
+        {service.loading && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <ServiceCardShimmersComponent key={index} />
+            ))}
+          </div>
+        )}
         {service.services.length > 0 && (
           <div className="flex justify-center">
             <div className="w-full">
@@ -153,9 +161,11 @@ export default function Page() {
               </div>
             </div>
             <div className="flex items-center">
-              <Button onClick={() => navigateTo(FORM_URL)} className="bg-primary text-teal hover:bg-primary hover:opacity-90 mx-auto" size={'lg'}>
-                Lihat Proposal
-              </Button>
+              <div className="lg:ml-auto lg:px-12">
+                <Button onClick={() => navigateTo(FORM_URL)} className="bg-primary text-teal hover:bg-primary hover:opacity-90 mx-auto" size={'lg'}>
+                  Lihat Proposal
+                </Button>
+              </div>
             </div>
           </div>
         </div>

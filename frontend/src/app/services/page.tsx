@@ -1,15 +1,16 @@
 'use client';
 
 import TextComponent from '@/components/Text';
-import { DESCRIPTION, TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
+import { TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { CS_IMAGE, IMAGE_HEADER } from '@/utils/images';
+import { CS_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import ServiceCardComponent from '@/components/ServiceCard';
-import LoadingComponent from '@/components/Loading';
 import serviceService from '@/services/service';
 import { AdvertiseComponent } from '@/components/Advertise';
 import DialogErrorComponent from '@/components/DialogError';
+import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
+import { dummyDataSource } from '@/datasources/internals/dummy';
 
 export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
@@ -35,10 +36,19 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex px-4 container mx-auto justify-center">
-        <AdvertiseComponent />
-      </div>
+      {dummyDataSource.length > 0 && (
+        <div className="flex px-4 container mx-auto justify-center">
+          <AdvertiseComponent />
+        </div>
+      )}
       <div className="container mx-auto px-4">
+        {service.loading && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <ServiceCardShimmersComponent key={index} />
+            ))}
+          </div>
+        )}
         {service.services.length > 0 && (
           <div className="flex justify-center">
             <div className="px-2 w-full ">

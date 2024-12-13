@@ -2,8 +2,10 @@
 import { ClientComponent } from '@/components/Clients';
 import { GalleryComponent } from '@/components/Gallery';
 import ServiceCardComponent from '@/components/ServiceCard';
+import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
+import { dummyDataSource } from '@/datasources/internals/dummy';
 import serviceService from '@/services/service';
 import { TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
@@ -84,15 +86,17 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="py-12 mx-auto px-4 container">
-        <div className="flex flex-col space-y-12 text-center">
-          <div className=" flex  flex-col">
-            <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">You're Next</TextComponent>
-            <TextComponent className="text-small font-bold text-teal hover:opacity-90">jadilah client kebanggaan kami, kami siap membantu anda</TextComponent>
+      {dummyDataSource.length > 0 && (
+        <div className="py-12 mx-auto px-4 container">
+          <div className="flex flex-col space-y-12 text-center">
+            <div className=" flex  flex-col">
+              <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">You're Next</TextComponent>
+              <TextComponent className="text-small font-bold text-teal hover:opacity-90">jadilah client kebanggaan kami, kami siap membantu anda</TextComponent>
+            </div>
+            <ClientComponent />
           </div>
-          <ClientComponent />
         </div>
-      </div>
+      )}
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-4">
           <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
@@ -114,6 +118,13 @@ export default function AboutPage() {
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Layanan Kami</TextComponent>
       </div>
       <div className="container px-4 mx-auto">
+        {service.loading && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <ServiceCardShimmersComponent key={index} />
+            ))}
+          </div>
+        )}
         {service.services.length > 0 && (
           <div className="flex justify-center my-8">
             <div className="w-full">
@@ -126,12 +137,16 @@ export default function AboutPage() {
           </div>
         )}
       </div>
-      <div className="flex justify-center">
-        <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Testimoni</TextComponent>
-      </div>
-      <div className="px-4 container mx-auto">
-        <GalleryComponent />
-      </div>
+      {dummyDataSource.length > 0 && (
+        <div className="flex justify-center">
+          <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Testimoni</TextComponent>
+        </div>
+      )}
+      {dummyDataSource.length > 0 && (
+        <div className="px-4 container mx-auto">
+          <GalleryComponent />
+        </div>
+      )}
     </div>
   );
 }

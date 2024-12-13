@@ -1,8 +1,10 @@
 'use client';
 import { AdvertiseComponent } from '@/components/Advertise';
 import ServiceCardComponent from '@/components/ServiceCard';
+import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
+import { dummyDataSource } from '@/datasources/internals/dummy';
 import { Service } from '@/entity/service';
 import serviceService from '@/services/service';
 import { TAGLINE_DESCRIPTION } from '@/utils/constant';
@@ -23,7 +25,7 @@ export default function Page() {
     service.service && (
       <div className="grid grid-cols-1 gap-16 mt-12">
         <div className="container mx-auto px-4">
-          <div className="bg-white py-24">
+          <div className="bg-white py-12 mt-6">
             <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="flex flex-col space-y-4 px-4  justify-center order-2 lg:order-1">
                 <TextComponent className={`text-teal text-base font-extrabold ${robot.className}  capitalize`}>#AjukanCepat</TextComponent>
@@ -39,9 +41,11 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex px-4 container mx-auto justify-center">
-          <AdvertiseComponent />
-        </div>
+        {dummyDataSource.length > 0 && (
+          <div className="flex px-4 container mx-auto justify-center">
+            <AdvertiseComponent />
+          </div>
+        )}
         <div className="container mx-auto px-4">
           <div className="px-4 flex flex-col text-center space-y-14">
             <TextComponent className="text-2xl font-bold text-secondary cursor-pointer hover:opacity-90">Yang Akan Anda Dapatkan</TextComponent>
@@ -65,6 +69,13 @@ export default function Page() {
           <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Rekomendasi Lainnya</TextComponent>
         </div>
         <div className="container mx-auto px-4">
+          {services.loading && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <ServiceCardShimmersComponent key={index} />
+              ))}
+            </div>
+          )}
           {services.services.length > 0 && (
             <div className="flex justify-center">
               <div className="w-full ">
