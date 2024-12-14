@@ -1,0 +1,9 @@
+export const DASHBOARD_URL = '/';
+export const SETTINGS_URL = '/settings';
+export const CUSTOMER_URL = '/customer';
+export const ORDER_URL = '/order';
+export const BANNER_URL = '/banner';
+export const SERVICE_URL = '/service';
+export const GALLERY_URL = '/gallery';
+export const REFERENCE_URL = '/reference';
+export const CLIENT_URL = '/client';

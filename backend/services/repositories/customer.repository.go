@@ -32,7 +32,7 @@ func (*CustomerRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Cu
 	limit := 100
 	offset := 0
 
-	k := ctx.Query("k")
+	k := ctx.Query("keyword")
 	query := db.Where("is_deleted = 0").Preload("Order")
 
 	limitQuery := ctx.Query("limit")

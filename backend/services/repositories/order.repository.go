@@ -32,7 +32,7 @@ func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Ord
 
 	startDate := ctx.Query("start-date")
 	endDate := ctx.Query("end-date")
-	query := db.Where("is_deleted = 0").Preload("OrderItems").Preload("Customer")
+	query := db.Where("is_deleted = 0").Preload("OrderItems.Service").Preload("Customer")
 
 	limitQuery := ctx.Query("limit")
 	limitInt, errConvLimit := strconv.Atoi(limitQuery)
@@ -62,7 +62,7 @@ func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Ord
 func (r *OrderRepositoryImpl) FindOne(ctx *fiber.Ctx, db *gorm.DB) (*models.Order, *libs.ErrorResponse) {
 	var order *models.Order
 
-	query := db.Where("id = ? and is_deleted = 0", ctx.Params("id")).Preload("OrderItems").Preload("Customer").First(&order)
+	query := db.Where("id = ? and is_deleted = 0", ctx.Params("id")).Preload("OrderItems.Service").Preload("Customer").First(&order)
 
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
