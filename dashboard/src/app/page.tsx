@@ -5,12 +5,15 @@ import MapComponent from '@/components/Map';
 import TextComponent from '@/components/Text';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Statistic } from '@/entity/Statistic';
+import referenceService from '@/services/refernce.service';
 import dashboardService from '@/services/statistic.service';
 
 import 'leaflet/dist/leaflet.css';
+import { LetterTextIcon, ReceiptIcon, UserIcon } from 'lucide-react';
 
 export default function Page() {
   const statisticService = dashboardService.getStatistic();
+  const reference = referenceService.getReference();
 
   return (
     <div className="grid grid-cols-1 gap-4">
@@ -24,7 +27,11 @@ export default function Page() {
                     <TextComponent className="text-base capitalize font-normal">{e.replace('_', ' ')}</TextComponent>
                     <TextComponent className="text-lg font-bold">{statisticService.statistic![e as keyof Statistic]}</TextComponent>
                   </div>
-                  <div className={`w-24 h-24 rounded-sm border-4 ${i % 2 === 0 ? 'border-blue-hris' : 'border-red-500'} flex justify-center items-center`}></div>
+                  <div className={`w-16 h-16 rounded-xl flex justify-center items-center border-dark dark:border-light border-2`}>
+                    {i === 0 && <UserIcon size={32} />}
+                    {i === 1 && <ReceiptIcon size={32} />}
+                    {i === 2 && <LetterTextIcon size={32} />}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -32,16 +39,18 @@ export default function Page() {
         </div>
       )}
 
-      <div>
-        <Card>
-          <CardHeader>Company Location</CardHeader>
-          <CardContent className="p-0">
-            <div className="grid grid-cols-1 h-[400px]">
-              <MapComponent />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {reference.reference && (
+        <div>
+          <Card>
+            <CardHeader>Company Location</CardHeader>
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 h-[400px]">
+                <MapComponent name={reference.reference.company_name} lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <div className="grid grid-cols-1">
         <CustomerTable />
       </div>

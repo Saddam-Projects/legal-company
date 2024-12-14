@@ -18,23 +18,6 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
       <div className="h-20 flex items-center px-2 md:border-b-1 md:border-b-gray-300">
         <BarMenuComponent active={active} setActive={setActive} />
         <div className="w-full flex items-center px-4 h-full">
-          <div className="hidden w-1/4 lg:flex items-center h-full">
-            <Dialog>
-              <DialogTrigger className="w-full">
-                <div className="border-[1px] border-black dark:border-white rounded-lg py-2 flex justify-start px-2">
-                  <span className="text-black dark:text-white text-sm font-regular">Search...</span>
-                </div>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <span className="text-lg font-medium">Search Feature</span>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <Input placeholder="Search..." />
-                </div>
-              </DialogContent>
-            </Dialog>
-          </div>
           <div className="flex items-center relative z-30 space-x-4 ml-auto h-full">
             {theme && theme.theme ? (
               theme.theme === 'dark' ? (
