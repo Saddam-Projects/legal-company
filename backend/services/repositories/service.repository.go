@@ -18,6 +18,7 @@ type ServiceRepository interface {
 	Update(ctx *fiber.Ctx, db *gorm.DB, service *models.Service) (*models.Service, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Service, *libs.ErrorResponse)
 	FindManyByIds(ctx *fiber.Ctx, db *gorm.DB, ids []string) ([]models.Service, *libs.ErrorResponse)
+	CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse)
 }
 
 type ServiceRepositoryImpl struct {
@@ -158,4 +159,17 @@ func (r *ServiceRepositoryImpl) FindManyByIds(ctx *fiber.Ctx, db *gorm.DB, ids [
 	}
 
 	return services, nil
+}
+
+func (r *ServiceRepositoryImpl) CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse) {
+
+	var count int64
+
+	query := db.Model(&models.Service{}).Where("is_deleted = 0").Count(&count)
+
+	if query.Error != nil {
+		return 0, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return count, nil
 }

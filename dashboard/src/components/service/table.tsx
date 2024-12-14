@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import orderService from '@/services/order.service';
-import { orderColumn } from '@/datasources/externals/order';
+import serviceService from '@/services/service.service';
+import { serviceColumn } from '@/datasources/externals/service';
 
-export function OrderTable() {
+export function ServiceTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -19,13 +19,12 @@ export function OrderTable() {
   const [limit, setLimit] = React.useState(10);
   const [offset, setOffset] = React.useState(0);
   const [keyword, setKeyword] = React.useState('');
-  const serviceOrder = orderService.getOrders(limit, offset, keyword);
 
-  const orders = React.useMemo(() => serviceOrder.orders.map((o) => ({ ...o, order_item: o.order_items[0] })), [serviceOrder.orders]);
+  const service = serviceService.getServices(limit, offset, keyword);
 
   const table = useReactTable({
-    data: orders,
-    columns: orderColumn,
+    data: service.services,
+    columns: serviceColumn,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -45,7 +44,7 @@ export function OrderTable() {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input placeholder="Filter customer..." value={keyword} onChange={(event) => setKeyword(event.target.value)} className="max-w-sm" />
+        <Input placeholder="Filter service..." value={keyword} onChange={(event) => setKeyword(event.target.value)} className="max-w-sm" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto  ">
@@ -86,7 +85,7 @@ export function OrderTable() {
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="text-base p-4" key={cell.id}>
+                    <TableCell className="text-base " key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -94,7 +93,7 @@ export function OrderTable() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={orderColumn.length} className="h-24 text-center">
+                <TableCell colSpan={serviceColumn.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -110,7 +109,7 @@ export function OrderTable() {
           <Button variant="outline" className="" size="sm" onClick={() => setOffset(offset - limit)} disabled={offset < limit}>
             Previous
           </Button>
-          <Button disabled={offset > 0 && serviceOrder.orders.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
+          <Button disabled={offset > 0 && service.services.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
             Next
           </Button>
         </div>

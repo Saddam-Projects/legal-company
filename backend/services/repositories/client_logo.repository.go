@@ -16,6 +16,7 @@ type ClientLogoRepository interface {
 	Create(ctx *fiber.Ctx, db *gorm.DB, clientLogo *models.ClientLogo) (*models.ClientLogo, *libs.ErrorResponse)
 	Update(ctx *fiber.Ctx, db *gorm.DB, clientLogo *models.ClientLogo) (*models.ClientLogo, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB, clientLogo *models.ClientLogo) (*models.ClientLogo, *libs.ErrorResponse)
+	CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse)
 }
 
 type ClientLogoRepositoryImpl struct{}
@@ -91,4 +92,17 @@ func (r *ClientLogoRepositoryImpl) Delete(ctx *fiber.Ctx, db *gorm.DB, clientLog
 	query.Updates(clientLogo)
 
 	return clientLogo, nil
+}
+
+func (r *ClientLogoRepositoryImpl) CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse) {
+
+	var count int64
+
+	query := db.Model(&models.ClientLogo{}).Where("is_deleted = 0").Count(&count)
+
+	if query.Error != nil {
+		return 0, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return count, nil
 }

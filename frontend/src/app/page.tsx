@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ABOUT_US_URL, FORM_URL, SERVICES_URL } from '@/datasources/internals/menus';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import { DESCRIPTION, TITLE } from '@/utils/constant';
+import { ADDRESS, DESCRIPTION, EMAIL, PHONE, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE } from '@/utils/images';
 import Image from 'next/image';
@@ -182,15 +182,15 @@ export default function Page() {
                 <FaMapMarkerAlt className="w-8 p-2 rounded-sm h-8 text-primary bg-teal" />
               </div>
               <TextComponent className="text-teal font-bold text-lg">Our Address</TextComponent>
-              <TextComponent className="text-teal text-base">Lagoon premium office lt.Ug unit 33,lagoon ave pekayon jaya, bekasi selatan kota bekasi jawa barat</TextComponent>
+              <TextComponent className="text-teal text-base">{ADDRESS}</TextComponent>
             </div>
             <div className="flex flex-col space-y-2">
               <div className="p-2 rounded-lg">
                 <FaAddressBook className="w-8 p-2 rounded-sm h-8 text-primary bg-teal" />
               </div>
               <TextComponent className="text-teal font-bold text-lg">Our Contact Info</TextComponent>
-              <TextComponent className="text-teal text-base">6281234567890</TextComponent>
-              <TextComponent className="text-teal text-base">example.com</TextComponent>
+              <TextComponent className="text-teal text-base">{PHONE}</TextComponent>
+              <TextComponent className="text-teal text-base">{EMAIL}</TextComponent>
             </div>
           </div>
         </div>

@@ -18,6 +18,7 @@ type CustomerRepository interface {
 	Update(ctx *fiber.Ctx, db *gorm.DB, customer *models.Customer) (*models.Customer, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Customer, *libs.ErrorResponse)
 	FindEmailAndPhone(ctx *fiber.Ctx, db *gorm.DB, email string, phone string) (*models.Customer, *libs.ErrorResponse)
+	CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse)
 }
 
 type CustomerRepositoryImpl struct{}
@@ -130,4 +131,17 @@ func (*CustomerRepositoryImpl) FindEmailAndPhone(ctx *fiber.Ctx, db *gorm.DB, em
 	}
 
 	return customer, nil
+}
+
+func (*CustomerRepositoryImpl) CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse) {
+
+	var count int64
+
+	query := db.Model(&models.Customer{}).Where("is_deleted = 0").Count(&count)
+
+	if query.Error != nil {
+		return 0, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return count, nil
 }

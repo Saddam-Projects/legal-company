@@ -59,6 +59,9 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	clientLogoHandler := handlers.NewClientLogoHandler(clientLogoRepository, db, uploadLib)
 	clientLogoController := controllers.NewClientLogoController(clientLogoHandler)
 
+	dashboardHandler := handlers.NewDashboardHandler(customerRepository, orderRepository, clientLogoRepository, serviceRepository, db)
+	dashboardController := controllers.NewDashboardController(dashboardHandler)
+
 	api.Get("/service", serviceController.FindAll)
 	api.Get("/service/:id", serviceController.FindById)
 	api.Post("/service", serviceController.Create)
@@ -100,5 +103,7 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	api.Post("/client-logo", clientLogoController.Create)
 	api.Post("/client-logo/:id/update", clientLogoController.Update)
 	api.Post("/client-logo/:id/delete", clientLogoController.Delete)
+
+	api.Get("/dashboard/statistic", dashboardController.GetStatistic)
 
 }

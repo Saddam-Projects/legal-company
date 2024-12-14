@@ -2,8 +2,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Order, OrderItem } from '@/entity/Order';
 import { formatCurrency } from '@/lib/currency';
 import { Checkbox } from '@radix-ui/react-checkbox';
-import ButtonActionComponent from '@/components/ButtonAction';
-import permission from '../internals/permission';
 
 export interface OrderCol extends Order {
   order_item: OrderItem;

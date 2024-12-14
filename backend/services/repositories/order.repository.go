@@ -15,6 +15,7 @@ type OrderRepository interface {
 	FindOne(ctx *fiber.Ctx, db *gorm.DB) (*models.Order, *libs.ErrorResponse)
 	Create(ctx *fiber.Ctx, db *gorm.DB, order *models.Order) (*models.Order, *libs.ErrorResponse)
 	CreateOrderItems(ctx *fiber.Ctx, db *gorm.DB, orderItems []models.OrderItem) *libs.ErrorResponse
+	CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse)
 }
 
 type OrderRepositoryImpl struct{}
@@ -93,4 +94,17 @@ func (r *OrderRepositoryImpl) CreateOrderItems(ctx *fiber.Ctx, db *gorm.DB, orde
 	}
 
 	return nil
+}
+
+func (r *OrderRepositoryImpl) CountData(ctx *fiber.Ctx, db *gorm.DB) (int64, *libs.ErrorResponse) {
+
+	var count int64
+
+	query := db.Model(&models.Order{}).Where("is_deleted = 0").Count(&count)
+
+	if query.Error != nil {
+		return 0, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+	}
+
+	return count, nil
 }

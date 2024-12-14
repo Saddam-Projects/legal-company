@@ -107,7 +107,7 @@ export function CustomerTable() {
           <Button variant="outline" className="" size="sm" onClick={() => setOffset(offset - limit)} disabled={offset < limit}>
             Previous
           </Button>
-          <Button variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
+          <Button disabled={offset > 0 && serviceCustomer.customers.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
             Next
           </Button>
         </div>
