@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/saddam-satria/legal-be/libs"
 	"github.com/saddam-satria/legal-be/services/controllers"
 	"github.com/saddam-satria/legal-be/services/handlers"
 	"github.com/saddam-satria/legal-be/services/repositories"
@@ -24,9 +25,10 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	api.Static("/", "./public")
 
 	// Load Service, Repository, and Handler (from submodule)
+	uploadLib := libs.NewUploadFile()
 
 	serviceRepository := repositories.NewServiceRepository()
-	serviceHandler := handlers.NewServiceHandler(serviceRepository)
+	serviceHandler := handlers.NewServiceHandler(serviceRepository, uploadLib)
 	serviceController := controllers.NewServiceController(serviceHandler, db)
 
 	serviceTermRepository := repositories.NewServiceTermRepository()
@@ -45,6 +47,18 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	referenceHandler := handlers.NewReferenceHandler(referenceRepository)
 	referenceController := controllers.NewReferenceController(referenceHandler, db)
 
+	galleryRepository := repositories.NewGalleryRepository()
+	galleryHandler := handlers.NewGalleryHandler(galleryRepository, db, uploadLib)
+	galleryController := controllers.NewGalleryController(galleryHandler)
+
+	bannerRepository := repositories.NewBannerRepository()
+	bannerHandler := handlers.NewBannerHandler(bannerRepository, db, uploadLib)
+	bannerController := controllers.NewBannerController(bannerHandler)
+
+	clientLogoRepository := repositories.NewClientLogoRepository()
+	clientLogoHandler := handlers.NewClientLogoHandler(clientLogoRepository, db, uploadLib)
+	clientLogoController := controllers.NewClientLogoController(clientLogoHandler)
+
 	api.Get("/service", serviceController.FindAll)
 	api.Get("/service/:id", serviceController.FindById)
 	api.Post("/service", serviceController.Create)
@@ -57,6 +71,9 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 
 	api.Get("/customer", customerController.FindAll)
 	api.Get("/customer/:id", customerController.FindOne)
+	api.Post("/customer", customerController.Create)
+	api.Post("/customer/:id/update", customerController.Update)
+	api.Post("/customer/:id/delete", customerController.Delete)
 
 	api.Post("/service-term", serviceTermController.Create)
 	api.Post("/service-term/:id/update", serviceTermController.Update)
@@ -65,4 +82,23 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	api.Get("/reference", referenceController.FindAll)
 	api.Get("/reference/:id", referenceController.FindOne)
 	api.Post("/reference/:id/update", referenceController.Update)
+
+	api.Get("/gallery", galleryController.FindAll)
+	api.Get("/gallery/:id", galleryController.FindOne)
+	api.Post("/gallery", galleryController.Create)
+	api.Post("/gallery/:id/update", galleryController.Update)
+	api.Post("/gallery/:id/delete", galleryController.Delete)
+
+	api.Get("/banner", bannerController.FindAll)
+	api.Get("/banner/:id", bannerController.FindOne)
+	api.Post("/banner", bannerController.Create)
+	api.Post("/banner/:id/update", bannerController.Update)
+	api.Post("/banner/:id/delete", bannerController.Delete)
+
+	api.Get("/client-logo", clientLogoController.FindAll)
+	api.Get("/client-logo/:id", clientLogoController.FindOne)
+	api.Post("/client-logo", clientLogoController.Create)
+	api.Post("/client-logo/:id/update", clientLogoController.Update)
+	api.Post("/client-logo/:id/delete", clientLogoController.Delete)
+
 }

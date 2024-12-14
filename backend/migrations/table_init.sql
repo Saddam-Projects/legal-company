@@ -4,6 +4,9 @@ DROP TABLE IF EXISTS "order";
 DROP TABLE IF EXISTS service;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS "references";
+DROP TABLE IF EXISTS banner;
+DROP TABLE IF EXISTS gallery;
+DROP TABLE IF EXISTS client_logo;
 
 CREATE TABLE service (
 	name varchar(255) NOT NULL UNIQUE,
@@ -16,6 +19,37 @@ CREATE TABLE service (
   updated_at TIMESTAMP NULL,
   is_deleted SMALLINT default 0,
 	deleted_at TIMESTAMP NULL  
+);
+
+CREATE TABLE banner (
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+	image TEXT NULL,
+  
+	created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
+);
+
+CREATE TABLE client_logo(
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+	image TEXT NULL,
+  "name" VARCHAR(255) NULL,
+  
+	created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
+);
+
+CREATE TABLE gallery(
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+	image TEXT NULL,
+  
+	created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
 );
 
 

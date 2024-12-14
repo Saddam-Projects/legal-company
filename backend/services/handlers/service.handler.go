@@ -1,10 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-	"strings"
-	"time"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/saddam-satria/legal-be/libs"
 	"github.com/saddam-satria/legal-be/services/dtos"
@@ -22,13 +18,16 @@ type ServiceHandler interface {
 }
 type ServiceHandlerImpl struct {
 	serviceRepository repositories.ServiceRepository
+	uploadLib         libs.UploadFile
 }
 
 func NewServiceHandler(
 	serviceRepository repositories.ServiceRepository,
+	uploadLib libs.UploadFile,
 ) ServiceHandler {
 	return &ServiceHandlerImpl{
 		serviceRepository: serviceRepository,
+		uploadLib:         uploadLib,
 	}
 }
 
@@ -40,33 +39,17 @@ func (s *ServiceHandlerImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Serv
 
 func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.ServiceDTO) (*models.Service, *libs.ErrorResponse) {
 
-	var fileName string
-	fileReq, errFileReq := ctx.FormFile("file")
-	if errFileReq == nil {
-		if fileReq.Size > 2<<20 {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "File too large"}
-		}
-		now := time.Now().Format("2006-01-02-230059")
-		fileFormat := strings.Split(fileReq.Filename, ".")
-		extensionFile := string(fileFormat[len(fileFormat)-1])
+	fileName, errFilename := s.uploadLib.Upload(ctx)
 
-		if extensionFile != "jpg" && extensionFile != "png" && extensionFile != "jpeg" {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "Invalid file format"}
-		}
-
-		newFileName := fmt.Sprintf("%s.%s", now, extensionFile)
-
-		err := ctx.SaveFile(fileReq, fmt.Sprintf("./public/uploads/%s", newFileName))
-		if err != nil {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "Failed to save file"}
-		}
-		fileName = fmt.Sprintf("uploads/%s", newFileName)
+	if errFilename != nil {
+		return nil, errFilename
 	}
+
 	newService := models.Service{
 		Name:        dt.Service_name,
 		Price:       float64(dt.Price),
 		Description: dt.Description,
-		Image:       &fileName,
+		Image:       fileName,
 	}
 
 	newTerms := make([]models.ServiceTerm, 0)
@@ -88,29 +71,11 @@ func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 
 func (s *ServiceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.ServiceDTO) (*models.Service, *libs.ErrorResponse) {
 
-	var fileName string
-	fileReq, errFileReq := ctx.FormFile("file")
-	if errFileReq == nil {
-		if fileReq.Size > 2<<20 {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "File too large"}
-		}
-		now := time.Now().Format("2006-01-02-230059")
-		fileFormat := strings.Split(fileReq.Filename, ".")
-		extensionFile := string(fileFormat[len(fileFormat)-1])
+	fileName, errFile := s.uploadLib.Upload(ctx)
 
-		if extensionFile != "jpg" && extensionFile != "png" && extensionFile != "jpeg" {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "Invalid file format"}
-		}
-
-		newFileName := fmt.Sprintf("%s.%s", now, extensionFile)
-
-		err := ctx.SaveFile(fileReq, fmt.Sprintf("./public/uploads/%s", newFileName))
-		if err != nil {
-			return nil, &libs.ErrorResponse{Status: 400, Message: "Failed to save file"}
-		}
-		fileName = fmt.Sprintf("uploads/%s", newFileName)
+	if errFile != nil {
+		return nil, errFile
 	}
-
 	service, err := s.serviceRepository.FindById(ctx, db, ctx.Params("id"))
 
 	if err != nil {
@@ -121,8 +86,8 @@ func (s *ServiceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 	service.Price = float64(dt.Price)
 	service.Description = dt.Description
 
-	if fileName != "" {
-		service.Image = &fileName
+	if fileName != nil {
+		service.Image = fileName
 	}
 
 	updatedService, err := s.serviceRepository.Update(ctx, db, service)
