@@ -74,7 +74,7 @@ export default function Page() {
             <CardHeader>Company Location</CardHeader>
             <CardContent className="p-0">
               <div className="grid grid-cols-1 h-[400px]">
-                <MapComponent name={reference.reference.company_name} lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} />
+                <MapComponent name={reference.reference.address} lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} />
               </div>
             </CardContent>
           </Card>
