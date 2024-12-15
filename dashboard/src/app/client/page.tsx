@@ -9,9 +9,11 @@ import permission from '@/datasources/internals/permission';
 import { ClientLogo } from '@/entity/ClientLogo';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import clientService from '@/services/client.service';
+import fileUploaodService from '@/services/fileupload.service';
+import { CLIENT_LOGO_PATH } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function ClientPage() {
   const meta = {
@@ -42,12 +44,39 @@ export default function ClientPage() {
     setClientActive(null);
     setModalDelete(false);
   };
-  const onUpdateHandler = () => {};
   const openModalDelete = (client: ClientLogo) => {
     setModalDelete(true);
     setClientActive(client);
   };
-  const onCreateHandler = () => {};
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const clickImage = (client?: ClientLogo) => {
+    if (client) {
+      setClientActive(client);
+    }
+    fileRef.current?.click();
+  };
+
+  const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+
+      const newClient = new FormData();
+      newClient.append('file', file);
+
+      fileUploaodService.fileUpload(
+        newClient,
+        CLIENT_LOGO_PATH,
+        (loading) => serviceClient.setLoading(loading),
+        (error) => serviceClient.setError(error),
+        () => serviceClient.fetch(),
+        clientActive ? clientActive.id : undefined
+      );
+
+      e.target.value = '';
+      setClientActive(null);
+    }
+  };
 
   const navigate = useNavigateTo();
 
@@ -57,7 +86,7 @@ export default function ClientPage() {
 
       <div className="flex items-center">
         <div className="flex space-x-2 items-center">
-          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(CUSTOMER_URL)} />
+          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => clickImage()} />
         </div>
       </div>
 
@@ -68,7 +97,7 @@ export default function ClientPage() {
               <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-[200px]">
                 <div className="ml-auto p-2 flex space-x-2">
                   <Trash2Icon onClick={() => openModalDelete(client)} className="text-red-hris cursor-pointer" />
-                  <PencilIcon className="text-blue-hris cursor-pointer" />
+                  <PencilIcon onClick={() => clickImage(client)} className="text-blue-hris cursor-pointer" />
                 </div>
                 <img className="w-full h-full object-cover" alt="Page Not Found" src={`${BASE_API_URL}/${client.image}`} />
               </CardContent>
@@ -77,6 +106,7 @@ export default function ClientPage() {
         </div>
       </div>
 
+      <input className="hidden" ref={fileRef} type="file" onChange={(e) => onChangeImage(e)} />
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
     </div>
   );

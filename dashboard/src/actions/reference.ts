@@ -34,8 +34,6 @@ export const updateReference = async (id: string, formData: FormData) => {
 
     return data;
   } catch (error) {
-    console.error(error);
-
     throw error;
   }
 };
