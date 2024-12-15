@@ -11,6 +11,7 @@ export interface Order {
   customer: Customer;
   description: string | null;
   order_items: OrderItem[];
+  message: string | null;
 }
 
 export interface OrderItem {

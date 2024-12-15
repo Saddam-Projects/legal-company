@@ -1,5 +1,6 @@
 'use server';
 
+import { CustomerDto } from '@/dtos/customer';
 import { CUSTOMER_PATH } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 
@@ -66,6 +67,49 @@ export const deleteCustomer = async (id: string) => {
   try {
     const response = await fetch(`${BASE_API_URL}${CUSTOMER_PATH}/${id}/delete`, {
       method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const createCustomer = async (customer: CustomerDto) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${CUSTOMER_PATH}`, {
+      method: 'POST',
+      body: JSON.stringify(customer),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateCustomer = async (customer: CustomerDto, id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${CUSTOMER_PATH}/${id}/update`, {
+      method: 'POST',
+      body: JSON.stringify(customer),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {

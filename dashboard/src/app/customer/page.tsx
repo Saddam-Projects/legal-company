@@ -23,6 +23,7 @@ export default function CustomerPage() {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigateTo();
 
   const onDeleteHandler = () => {
     if (customer) {
@@ -40,13 +41,13 @@ export default function CustomerPage() {
     }
     setIsModalDeleteOpen(false);
   };
-  const onUpdateHandler = () => {};
+  const onUpdateHandler = (customer: Customer) => {
+    navigate(`${CUSTOMER_URL}/${customer.id}/update`);
+  };
   const openModalDelete = (customer: Customer) => {
     setIsModalDeleteOpen(true);
     setCustomer(customer);
   };
-
-  const navigate = useNavigateTo();
 
   return (
     <div className="grid gap-6 grid-cols-1">
@@ -54,7 +55,7 @@ export default function CustomerPage() {
 
       <div className="flex items-center">
         <div className="flex space-x-2 items-center">
-          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(CUSTOMER_URL)} />
+          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(`${CUSTOMER_URL}/create`)} />
         </div>
       </div>
 

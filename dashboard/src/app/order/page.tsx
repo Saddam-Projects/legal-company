@@ -22,7 +22,7 @@ export default function OrderPage() {
 
       <div className="flex items-center">
         <div className="flex space-x-2 items-center">
-          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(ORDER_URL)} />
+          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(`${ORDER_URL}/create`)} />
         </div>
       </div>
 
