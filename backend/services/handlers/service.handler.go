@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"strings"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/saddam-satria/legal-be/libs"
 	"github.com/saddam-satria/legal-be/services/dtos"
@@ -39,10 +41,17 @@ func (s *ServiceHandlerImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Serv
 
 func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.ServiceDTO) (*models.Service, *libs.ErrorResponse) {
 
-	fileName, errFilename := s.uploadLib.Upload(ctx)
+	var fileName *string
 
-	if errFilename != nil {
-		return nil, errFilename
+	_, errFile := ctx.FormFile("file")
+
+	if errFile == nil {
+		currFile, errFilename := s.uploadLib.Upload(ctx)
+
+		if errFilename != nil {
+			return nil, errFilename
+		}
+		fileName = currFile
 	}
 
 	newService := models.Service{
@@ -52,8 +61,9 @@ func (s *ServiceHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 		Image:       fileName,
 	}
 
+	terms := strings.Split(dt.Terms, ",")
 	newTerms := make([]models.ServiceTerm, 0)
-	for _, service := range dt.Terms {
+	for _, service := range terms {
 		newTerms = append(newTerms, models.ServiceTerm{
 			TermName:   service,
 			Service_id: newService.Id.String(),
@@ -81,10 +91,18 @@ func (s *ServiceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Servic
 	if err != nil {
 		return nil, err
 	}
-
+	terms := strings.Split(dt.Terms, ",")
+	newTerms := make([]models.ServiceTerm, 0)
+	for _, term := range terms {
+		newTerms = append(newTerms, models.ServiceTerm{
+			TermName:   term,
+			Service_id: service.Id.String(),
+		})
+	}
 	service.Name = dt.Service_name
 	service.Price = float64(dt.Price)
 	service.Description = dt.Description
+	service.ServiceTerms = newTerms
 
 	if fileName != nil {
 		service.Image = fileName

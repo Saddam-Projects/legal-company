@@ -4,7 +4,7 @@ import ButtonActionComponent from '@/components/ButtonAction';
 import { CustomerTable } from '@/components/customer/table';
 import HeaderContentComponent from '@/components/HeaderContent';
 import { ServiceTable } from '@/components/service/table';
-import { CUSTOMER_URL } from '@/datasources/internals/menus';
+import { CUSTOMER_URL, SERVICE_URL } from '@/datasources/internals/menus';
 import permission from '@/datasources/internals/permission';
 import useNavigateTo from '@/hooks/useNavigateTo';
 
@@ -23,7 +23,7 @@ export default function ServicePage() {
 
       <div className="flex items-center">
         <div className="flex space-x-2 items-center">
-          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(CUSTOMER_URL)} />
+          <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(`${SERVICE_URL}/create`)} />
         </div>
       </div>
 

@@ -96,3 +96,21 @@ export const createService = async (service: FormData) => {
     throw error;
   }
 };
+export const updateService = async (id: string, service: FormData) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${SERVICE_PATH}/${id}/update`, {
+      method: 'POST',
+      body: service,
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

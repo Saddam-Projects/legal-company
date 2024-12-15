@@ -106,8 +106,28 @@ func (r *ServiceRepositoryImpl) FindById(ctx *fiber.Ctx, db *gorm.DB, id string)
 
 func (r *ServiceRepositoryImpl) Create(ctx *fiber.Ctx, db *gorm.DB, service *models.Service) (*models.Service, *libs.ErrorResponse) {
 
-	if err := db.Where("name = ?", service.Name).First(&models.Service{}).Error; err == nil {
-		return nil, &libs.ErrorResponse{Status: 400, Message: "Service name already exists"}
+	var prevService *models.Service
+	db.Where("name = ?", service.Name).Preload("ServiceTerms").First(&prevService)
+	if prevService != nil {
+		prevService.Price = service.Price
+		prevService.Image = service.Image
+		prevService.BaseModel.Deleted_at = nil
+		prevService.Description = service.Description
+		prevService.BaseModel.Is_deleted = 0
+
+		newServiceTerm := make([]models.ServiceTerm, 0)
+		for _, serviceTerm := range service.ServiceTerms {
+			serviceTerm.Service_id = prevService.Id.String()
+			newServiceTerm = append(newServiceTerm, serviceTerm)
+		}
+
+		db.Model(&models.ServiceTerm{}).Where("service_id = ?", prevService.Id).Delete(&models.ServiceTerm{})
+		db.Model(&models.ServiceTerm{}).CreateInBatches(newServiceTerm, len(newServiceTerm))
+		prevService.ServiceTerms = newServiceTerm
+		if err := db.Model(&models.Service{}).Where("id = ?", prevService.Id).Updates(prevService).Update("is_deleted", 0).Error; err != nil {
+			return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to create data"}
+		}
+		return prevService, nil
 	}
 
 	query := db.Create(&service)
@@ -148,6 +168,7 @@ func (r *ServiceRepositoryImpl) Update(ctx *fiber.Ctx, db *gorm.DB, service *mod
 		return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to update data"}
 	}
 
+	db.Model(&models.ServiceTerm{}).Where("service_id = ?", service.Id).Delete(&models.ServiceTerm{})
 	query.Updates(service)
 
 	return service, nil

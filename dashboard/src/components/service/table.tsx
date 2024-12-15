@@ -13,6 +13,8 @@ import { generateServiceColumn } from '@/datasources/externals/service';
 import { Service } from '@/entity/Service';
 import DetailService from './detail';
 import ModalConfirmationComponent from '../ModalConfirmation';
+import useNavigateTo from '@/hooks/useNavigateTo';
+import { SERVICE_URL } from '@/datasources/internals/menus';
 
 export function ServiceTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -22,6 +24,7 @@ export function ServiceTable() {
   const [limit, setLimit] = React.useState(10);
   const [offset, setOffset] = React.useState(0);
   const [keyword, setKeyword] = React.useState('');
+  const navigate = useNavigateTo();
 
   const [serviceActive, setServiceActive] = React.useState<Service | null>(null);
   const [viewDetail, setViewDetail] = React.useState(false);
@@ -41,7 +44,9 @@ export function ServiceTable() {
     setModalDelete(false);
     setServiceActive(null);
   };
-  const onUpdateHandler = () => {};
+  const onUpdateHandler = (service: Service) => {
+    navigate(`${SERVICE_URL}/${service.id}/update`);
+  };
   const onViewDetailHandler = (service: Service) => {
     setViewDetail(true);
     setServiceActive(service);

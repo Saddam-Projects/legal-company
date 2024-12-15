@@ -1,4 +1,4 @@
-import { createService, deleteService, getService, getServices } from '@/actions/service';
+import { createService, deleteService, getService, getServices, updateService } from '@/actions/service';
 import { Service } from '@/entity/Service';
 import { useEffect, useState } from 'react';
 
@@ -86,12 +86,25 @@ const createServiceService = async (service: FormData, setLoading: (loading: boo
     setLoading(false);
   }
 };
+const updateServiceService = async (id: string, service: FormData, setLoading: (loading: boolean) => void, setError: (error: string) => void, cb: () => void) => {
+  try {
+    setLoading(true);
+    await updateService(id, service);
+
+    cb();
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    setLoading(false);
+  }
+};
 
 const serviceService = {
   getServices: getServicesService,
   getService: serviceGetServiceData,
   deleteService: serviceServiceDelete,
   createService: createServiceService,
+  updateService: updateServiceService,
 };
 
 export default serviceService;
