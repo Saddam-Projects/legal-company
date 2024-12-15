@@ -54,12 +54,10 @@ func (r *ReferenceControllerImpl) FindOne(ctx *fiber.Ctx) error {
 
 func (r *ReferenceControllerImpl) Update(ctx *fiber.Ctx) error {
 	var dt dtos.ReferenceDTO
-
 	if err := ctx.BodyParser(&dt); err != nil {
-		ctx.Status(400).JSON(err.Error())
+		ctx.Status(400).JSON(err)
 		return nil
 	}
-
 	reference, err := r.referenceHandler.Update(ctx, r.db, &dt)
 
 	if err != nil {

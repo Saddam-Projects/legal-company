@@ -45,6 +45,7 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
         file: reference.company_logo,
         from: 'BE',
       });
+      form.setValue('file', null);
     }
   }, [reference]);
 

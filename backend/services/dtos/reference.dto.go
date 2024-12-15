@@ -5,7 +5,7 @@ import "mime/multipart"
 type ReferenceDTO struct {
 	Company_phone string                `form:"company_phone"`
 	Company_email string                `form:"company_email"`
-	Company_logo  *multipart.FileHeader `form:"file"`
+	File          *multipart.FileHeader `form:"file" binding:"omitempty"`
 	Address       string                `form:"address"`
 	Address_lat   string                `form:"address_lat"`
 	Address_long  string                `form:"address_long"`

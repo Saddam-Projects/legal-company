@@ -41,7 +41,9 @@ func (r *ReferenceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Refe
 
 	var fileName *string
 
-	if dt.Company_logo != nil {
+	_, errFile := ctx.FormFile("file")
+
+	if errFile == nil {
 		currFile, errFile := r.uploadFile.Upload(ctx)
 
 		if errFile != nil {
@@ -57,7 +59,7 @@ func (r *ReferenceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Refe
 	reference.Address_lat = dt.Address_lat
 	reference.Address_long = dt.Address_long
 	reference.Company_name = dt.Company_name
-	reference.Company_logo = *fileName
+	reference.Company_logo = fileName
 
 	return r.referenceRepository.Update(ctx, db, reference)
 }
