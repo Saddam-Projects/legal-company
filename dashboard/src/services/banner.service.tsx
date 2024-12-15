@@ -1,4 +1,4 @@
-import { getBanners } from '@/actions/banner';
+import { deleteBanner, getBanners } from '@/actions/banner';
 import { Banner } from '@/entity/Banner';
 import { useEffect, useState } from 'react';
 
@@ -28,8 +28,22 @@ const getBannersService = (limit?: number, offset?: number, keyword?: string, so
   return { banners, error, loading, fetch, setLoading, setError, setBanners };
 };
 
+const serviceBannerDelete = async (banner: Banner, setError: (error: string) => void, setLoading: (loading: boolean) => void, cb: () => void) => {
+  try {
+    setLoading(true);
+    await deleteBanner(banner.id);
+
+    cb();
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    setLoading(false);
+  }
+};
+
 const bannerService = {
   getBanners: getBannersService,
+  deleteBanner: serviceBannerDelete,
 };
 
 export default bannerService;

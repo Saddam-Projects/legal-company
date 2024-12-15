@@ -3,15 +3,47 @@
 import ButtonActionComponent from '@/components/ButtonAction';
 import { CustomerTable } from '@/components/customer/table';
 import HeaderContentComponent from '@/components/HeaderContent';
+import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { CUSTOMER_URL } from '@/datasources/internals/menus';
 import permission from '@/datasources/internals/permission';
+import { Customer } from '@/entity/Customer';
 import useNavigateTo from '@/hooks/useNavigateTo';
+import customerService from '@/services/customer.service';
+import { useState } from 'react';
 
 export default function CustomerPage() {
   const meta = {
     title: 'customer',
     resourceName: permission.resources.EMPLOYEE,
     description: "customer's list",
+  };
+
+  const [onReload, setOnReload] = useState(false);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onDeleteHandler = () => {
+    if (customer) {
+      customerService.deleteCustomer(
+        customer,
+        (error) => setError(error),
+        (loading) => {
+          setLoading(loading);
+        },
+        () => {
+          console.log('customer deleted');
+          setOnReload(true);
+        }
+      );
+    }
+    setIsModalDeleteOpen(false);
+  };
+  const onUpdateHandler = () => {};
+  const openModalDelete = (customer: Customer) => {
+    setIsModalDeleteOpen(true);
+    setCustomer(customer);
   };
 
   const navigate = useNavigateTo();
@@ -27,8 +59,10 @@ export default function CustomerPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <CustomerTable />
+        <CustomerTable onDelete={openModalDelete} onUpdate={onUpdateHandler} reload={onReload} onReload={(reload) => setOnReload(reload)} />
       </div>
+
+      <ModalConfirmationComponent cancel={() => setIsModalDeleteOpen(false)} open={isModalDeleteOpen} submit={onDeleteHandler} />
     </div>
   );
 }

@@ -61,3 +61,21 @@ export const getCustomerData = async (id: string) => {
     throw error;
   }
 };
+
+export const deleteCustomer = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${CUSTOMER_PATH}/${id}/delete`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

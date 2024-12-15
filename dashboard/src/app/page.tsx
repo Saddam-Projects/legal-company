@@ -2,18 +2,47 @@
 
 import { CustomerTable } from '@/components/customer/table';
 import MapComponent from '@/components/Map';
+import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import TextComponent from '@/components/Text';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Customer } from '@/entity/Customer';
 import { Statistic } from '@/entity/Statistic';
+import customerService from '@/services/customer.service';
 import referenceService from '@/services/refernce.service';
 import dashboardService from '@/services/statistic.service';
 
 import 'leaflet/dist/leaflet.css';
 import { LetterTextIcon, ReceiptIcon, UserIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Page() {
   const statisticService = dashboardService.getStatistic();
   const reference = referenceService.getReference();
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [onReload, setOnReload] = useState(false);
+
+  const updateHandler = () => {};
+
+  const deleteHandler = () => {
+    if (customer) {
+      customerService.deleteCustomer(
+        customer,
+        (error) => statisticService.setError(error),
+        (loading) => statisticService.setLoading(loading),
+        () => {
+          setOnReload(true);
+        }
+      );
+    }
+
+    setIsModalDeleteOpen(false);
+  };
+
+  const openModalDelete = (customer: Customer) => {
+    setCustomer(customer);
+    setIsModalDeleteOpen(true);
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4">
@@ -40,7 +69,7 @@ export default function Page() {
       )}
 
       {reference.reference && (
-        <div>
+        <div className="z-0">
           <Card>
             <CardHeader>Company Location</CardHeader>
             <CardContent className="p-0">
@@ -52,8 +81,10 @@ export default function Page() {
         </div>
       )}
       <div className="grid grid-cols-1">
-        <CustomerTable />
+        <CustomerTable reload={onReload} onReload={(reload) => setOnReload(reload)} onDelete={openModalDelete} onUpdate={updateHandler} />
       </div>
+
+      <ModalConfirmationComponent open={isModalDeleteOpen} cancel={() => setIsModalDeleteOpen(false)} submit={deleteHandler} />
     </div>
   );
 }

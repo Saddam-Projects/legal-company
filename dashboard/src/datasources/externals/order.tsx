@@ -44,4 +44,10 @@ export const orderColumn: ColumnDef<OrderCol>[] = [
     id: 'order_item.service.name',
     cell: ({ row }) => <div className="uppercase">{row.getValue('order_item.service.name')}</div>,
   },
+  {
+    accessorKey: 'message',
+    header: 'Message',
+    id: 'message',
+    cell: ({ row }) => <div className="uppercase">{row.getValue('message') ?? '-'}</div>,
+  },
 ];

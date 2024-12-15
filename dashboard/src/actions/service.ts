@@ -41,3 +41,39 @@ export const getServices = async (limit?: number, offset?: number, keyword?: str
     throw error;
   }
 };
+
+export const getService = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${SERVICE_PATH}/${id}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteService = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${SERVICE_PATH}/${id}/delete`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

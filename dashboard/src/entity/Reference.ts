@@ -6,4 +6,5 @@ export interface Reference {
   address_lat: string;
   company_logo: string;
   address_long: string;
+  id?: string;
 }

@@ -9,7 +9,10 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import serviceService from '@/services/service.service';
-import { serviceColumn } from '@/datasources/externals/service';
+import { generateServiceColumn } from '@/datasources/externals/service';
+import { Service } from '@/entity/Service';
+import DetailService from './detail';
+import ModalConfirmationComponent from '../ModalConfirmation';
 
 export function ServiceTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -20,7 +23,36 @@ export function ServiceTable() {
   const [offset, setOffset] = React.useState(0);
   const [keyword, setKeyword] = React.useState('');
 
+  const [serviceActive, setServiceActive] = React.useState<Service | null>(null);
+  const [viewDetail, setViewDetail] = React.useState(false);
+  const [modalDelete, setModalDelete] = React.useState(false);
+
   const service = serviceService.getServices(limit, offset, keyword);
+
+  const onDeleteHandler = () => {
+    if (serviceActive) {
+      serviceService.deleteService(
+        serviceActive,
+        (error) => service.setError(error),
+        (loading) => service.setLoading(loading),
+        () => service.fetch()
+      );
+    }
+    setModalDelete(false);
+    setServiceActive(null);
+  };
+  const onUpdateHandler = () => {};
+  const onViewDetailHandler = (service: Service) => {
+    setViewDetail(true);
+    setServiceActive(service);
+  };
+
+  const openModalDelete = (service: Service) => {
+    setModalDelete(true);
+    setServiceActive(service);
+  };
+
+  const serviceColumn = React.useMemo(() => generateServiceColumn(openModalDelete, onUpdateHandler, onViewDetailHandler), []);
 
   const table = useReactTable({
     data: service.services,
@@ -114,6 +146,16 @@ export function ServiceTable() {
           </Button>
         </div>
       </div>
+
+      <DetailService
+        onClose={() => {
+          setViewDetail(false);
+          setServiceActive(null);
+        }}
+        open={viewDetail}
+        service={serviceActive}
+      />
+      <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
     </div>
   );
 }

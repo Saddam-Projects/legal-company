@@ -1,3 +1,5 @@
+import { OrderItem } from './Order';
+
 export interface Service {
   id: string;
   is_deleted: number;
@@ -7,6 +9,12 @@ export interface Service {
   price: number;
   description: string;
   image: string;
-  service_terms: any | null;
-  order_items: any | null;
+  service_terms: ServiceTerm[];
+  order_items: OrderItem[];
+}
+
+export interface ServiceTerm {
+  id: string;
+  is_deleted: boolean;
+  term_name: string;
 }

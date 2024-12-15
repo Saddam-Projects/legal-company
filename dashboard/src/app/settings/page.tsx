@@ -14,7 +14,26 @@ export default function SettingReferencePage() {
     description: 'setting reference',
   };
   const reference = referenceService.getReference();
-  const submit = (values: z.infer<typeof referenceSchema>) => {};
+  const submit = (values: z.infer<typeof referenceSchema>) => {
+    const currentRef = new FormData();
+    const id = reference.reference?.id ?? '';
+
+    currentRef.append('company_name', values.company_name);
+    currentRef.append('company_email', values.company_email);
+    currentRef.append('company_phone', values.company_phone);
+    if (values.file) currentRef.append('file', values.file);
+    currentRef.append('address', values.address);
+    currentRef.append('address_lat', values.address_lat ?? '');
+    currentRef.append('address_long', values.address_long ?? '');
+
+    referenceService.updateReference(
+      id,
+      currentRef,
+      (loading) => reference.setLoading(loading),
+      (error) => reference.setError(error),
+      () => reference.fetch()
+    );
+  };
 
   return (
     <div className="grid grid-cols-1 gap-6">

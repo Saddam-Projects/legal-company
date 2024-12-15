@@ -31,7 +31,7 @@ func (r *ServiceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.S
 	var services []models.Service
 	query := db.Where("is_deleted = 0").Preload("ServiceTerms", "is_deleted = 0").Order("created_at DESC")
 
-	k := ctx.Query("k")
+	k := ctx.Query("keyword")
 
 	sortCtx := ctx.Query("sort")
 	unknownPrice := ctx.Query("is-unknown-price")
@@ -56,6 +56,10 @@ func (r *ServiceRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.S
 
 	if unknownPrice == "false" {
 		query.Where("price>0")
+	}
+
+	if sortCtx == "" {
+		query.Order("created_at DESC")
 	}
 
 	if sortCtx == "old" {

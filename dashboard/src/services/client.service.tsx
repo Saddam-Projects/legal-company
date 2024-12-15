@@ -1,5 +1,5 @@
 import { getBanners } from '@/actions/banner';
-import { getClientLogos } from '@/actions/clientLogo';
+import { deleteClient, getClientLogos } from '@/actions/clientLogo';
 import { Banner } from '@/entity/Banner';
 import { ClientLogo } from '@/entity/ClientLogo';
 import { useEffect, useState } from 'react';
@@ -29,9 +29,22 @@ const getClientsService = (limit?: number, offset?: number, keyword?: string, so
 
   return { clients, error, loading, fetch, setLoading, setError, setClients };
 };
+const serviceClientDelete = async (client: ClientLogo, setError: (error: string) => void, setLoading: (loading: boolean) => void, cb: () => void) => {
+  try {
+    setLoading(true);
+    await deleteClient(client.id);
+
+    cb();
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    setLoading(false);
+  }
+};
 
 const clientService = {
   getClients: getClientsService,
+  deleteClient: serviceClientDelete,
 };
 
 export default clientService;

@@ -17,10 +17,11 @@ type ReferenceHandler interface {
 
 type ReferenceHandlerImpl struct {
 	referenceRepository repositories.ReferenceRepository
+	uploadFile          libs.UploadFile
 }
 
-func NewReferenceHandler(referenceRepository repositories.ReferenceRepository) ReferenceHandler {
-	return &ReferenceHandlerImpl{referenceRepository: referenceRepository}
+func NewReferenceHandler(referenceRepository repositories.ReferenceRepository, uploadFile libs.UploadFile) ReferenceHandler {
+	return &ReferenceHandlerImpl{referenceRepository: referenceRepository, uploadFile: uploadFile}
 }
 
 func (r *ReferenceHandlerImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Reference, *libs.ErrorResponse) {
@@ -38,13 +39,25 @@ func (r *ReferenceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Refe
 		return nil, err
 	}
 
+	var fileName *string
+
+	if dt.Company_logo != nil {
+		currFile, errFile := r.uploadFile.Upload(ctx)
+
+		if errFile != nil {
+			return nil, errFile
+		}
+
+		fileName = currFile
+	}
+
 	reference.Company_email = dt.Company_email
 	reference.Company_phone = dt.Company_phone
-	reference.Company_logo = dt.Company_logo
 	reference.Address = dt.Address
 	reference.Address_lat = dt.Address_lat
 	reference.Address_long = dt.Address_long
 	reference.Company_name = dt.Company_name
+	reference.Company_logo = *fileName
 
 	return r.referenceRepository.Update(ctx, db, reference)
 }

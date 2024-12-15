@@ -10,9 +10,15 @@ import { Button } from '../ui/button';
 import { referenceSchema } from '@/schema/reference';
 import { Reference } from '@/entity/Reference';
 import { Textarea } from '../ui/textarea';
-import { useEffect } from 'react';
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
+import Image from 'next/image';
+import { BASE_API_URL } from '@/utils/constant';
 
 export default function ReferenceForm({ submit, reference }: { submit: (values: z.infer<typeof referenceSchema>) => void; reference: Reference | null }) {
+  const [fileName, setFileName] = useState<{
+    file: string;
+    from: 'BE' | 'FE';
+  } | null>(null);
   const form = useForm<z.infer<typeof referenceSchema>>({
     resolver: zodResolver(referenceSchema),
     defaultValues: {
@@ -23,6 +29,7 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
       company_logo: '',
       company_name: '',
       company_phone: '',
+      file: null,
     },
   });
 
@@ -34,97 +41,130 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
       form.setValue('address', reference.address);
       form.setValue('address_lat', reference.address_lat);
       form.setValue('address_long', reference.address_long);
+      setFileName({
+        file: reference.company_logo,
+        from: 'BE',
+      });
     }
   }, [reference]);
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="company_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Company Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="company_email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Company Email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="company_phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Phone</FormLabel>
-              <FormControl>
-                <Input placeholder="Company Phone" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Address</FormLabel>
-              <FormControl>
-                <Textarea rows={12} className="resize-none" placeholder="Company Address" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address_lat"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Address Lat</FormLabel>
-              <FormControl>
-                <Input placeholder="Address Lat" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address_long"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company Address Long</FormLabel>
-              <FormControl>
-                <Input placeholder="Address Long" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+  const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
 
-        <div className="flex justify-end space-x-4">
-          <Button size={'sm'} className="bg-blue-hris text-white hover:bg-blue-hris hover:opacity-90" type="submit">
-            Save
-          </Button>
-        </div>
-      </form>
-    </Form>
+      const fileUrl = URL.createObjectURL(file);
+      setFileName({
+        file: fileUrl,
+        from: 'FE',
+      });
+      form.setValue('file', file);
+    }
+  };
+
+  return (
+    <div className="flex flex-col space-y-3">
+      {fileName && <img src={fileName.from === 'BE' ? `${BASE_API_URL}/${fileName.file}` : fileName.file} className="w-full h-[300px] object-cover" alt="Company Logo" />}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="file"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Logo</FormLabel>
+                <FormControl>
+                  <Input onChange={fileHandler} type="file" placeholder="Company Logo" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Company Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company_email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="Company Email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company_phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="Company Phone" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Address</FormLabel>
+                <FormControl>
+                  <Textarea rows={12} className="resize-none" placeholder="Company Address" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address_lat"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Address Lat</FormLabel>
+                <FormControl>
+                  <Input placeholder="Address Lat" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address_long"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Address Long</FormLabel>
+                <FormControl>
+                  <Input placeholder="Address Long" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex justify-end space-x-4">
+            <Button size={'sm'} className="bg-blue-hris text-white hover:bg-blue-hris hover:opacity-90" type="submit">
+              Save
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }

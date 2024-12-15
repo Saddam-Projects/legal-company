@@ -8,4 +8,5 @@ export const referenceSchema = z.object({
   address_lat: z.string().optional(),
   company_logo: z.string(),
   address_long: z.string().optional(),
+  file: z.any(),
 });

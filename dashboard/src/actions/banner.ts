@@ -41,3 +41,21 @@ export const getBanners = async (limit?: number, offset?: number, keyword?: stri
     throw error;
   }
 };
+
+export const deleteBanner = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${BANNER_PATH}/${id}/delete`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -8,10 +8,11 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { customerColumn } from '@/datasources/externals/customer';
 import customerService from '@/services/customer.service';
+import { generateCustomerColumn } from '@/datasources/externals/customer';
+import { Customer } from '@/entity/Customer';
 
-export function CustomerTable() {
+export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDelete: (customer: Customer) => void; onUpdate: (customer: Customer) => void; reload: boolean; onReload: (reload: boolean) => void }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -20,6 +21,17 @@ export function CustomerTable() {
   const [offset, setOffset] = React.useState(0);
   const [keyword, setKeyword] = React.useState('');
   const serviceCustomer = customerService.getCustomers(limit, offset, keyword);
+
+  const customerColumn = React.useMemo(() => generateCustomerColumn(onDelete, onUpdate), []);
+
+  React.useEffect(() => {
+    console.log(reload);
+
+    if (reload) serviceCustomer.fetch();
+
+    onReload(false);
+  }, [reload]);
+
   const table = useReactTable({
     data: serviceCustomer.customers,
     columns: customerColumn,

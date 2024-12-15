@@ -102,8 +102,7 @@ func (*CustomerRepositoryImpl) Update(ctx *fiber.Ctx, db *gorm.DB, customer *mod
 func (*CustomerRepositoryImpl) Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Customer, *libs.ErrorResponse) {
 	var customerDeleted *models.Customer
 
-	query := db.Model(&models.Customer{}).Where("id = ? and is_deleted = 0", ctx.Params("id"))
-	query.First(&customerDeleted)
+	query := db.Model(&models.Customer{}).Where("id = ? and is_deleted = 0", ctx.Params("id")).First(&customerDeleted)
 
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
@@ -113,7 +112,10 @@ func (*CustomerRepositoryImpl) Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Cust
 	}
 
 	now := time.Now()
-	query.Update("is_deleted", 1).Update("deleted_at", now)
+
+	customerDeleted.Is_deleted = 1
+	customerDeleted.Deleted_at = &now
+	db.Updates(customerDeleted)
 
 	return customerDeleted, nil
 }

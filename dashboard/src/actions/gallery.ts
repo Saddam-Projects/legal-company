@@ -41,3 +41,21 @@ export const getGalleries = async (limit?: number, offset?: number, keyword?: st
     throw error;
   }
 };
+
+export const deleteGallery = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${GALLERY_PATH}/${id}/delete`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

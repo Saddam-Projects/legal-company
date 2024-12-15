@@ -44,7 +44,7 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	orderController := controllers.NewOrderController(orderHandler, db)
 
 	referenceRepository := repositories.NewReferenceRepository()
-	referenceHandler := handlers.NewReferenceHandler(referenceRepository)
+	referenceHandler := handlers.NewReferenceHandler(referenceRepository, uploadLib)
 	referenceController := controllers.NewReferenceController(referenceHandler, db)
 
 	galleryRepository := repositories.NewGalleryRepository()

@@ -1,6 +1,4 @@
-import { getBanners } from '@/actions/banner';
-import { getServices } from '@/actions/service';
-import { Banner } from '@/entity/Banner';
+import { deleteService, getService, getServices } from '@/actions/service';
 import { Service } from '@/entity/Service';
 import { useEffect, useState } from 'react';
 
@@ -30,8 +28,57 @@ const getServicesService = (limit?: number, offset?: number, keyword?: string, s
   return { services, error, loading, fetch, setLoading, setError, setServices };
 };
 
+const serviceGetServiceData = (id: string) => {
+  const [service, setService] = useState<Service | null>(null);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetch = async () => {
+    try {
+      const response = await getService(id);
+      if (!response) {
+        throw new Error('Failed to fetch data');
+      }
+      setService(response);
+    } catch (error) {
+      setError(error as string);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetch();
+    }
+  }, [id]);
+
+  return {
+    service,
+    error,
+    loading,
+    fetch,
+    setLoading,
+    setError,
+    setService,
+  };
+};
+
+const serviceServiceDelete = async (service: Service, setError: (error: string) => void, setLoading: (loading: boolean) => void, cb: () => void) => {
+  try {
+    setLoading(true);
+    await deleteService(service.id);
+
+    cb();
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    setLoading(false);
+  }
+};
+
 const serviceService = {
   getServices: getServicesService,
+  getService: serviceGetServiceData,
+  deleteService: serviceServiceDelete,
 };
 
 export default serviceService;

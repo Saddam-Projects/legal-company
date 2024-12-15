@@ -1,4 +1,5 @@
-import { getReference } from '@/actions/reference';
+import { getReference, updateReference } from '@/actions/reference';
+import { ReferenceDto } from '@/dtos/reference';
 import { Reference } from '@/entity/Reference';
 import { useEffect, useState } from 'react';
 
@@ -29,8 +30,21 @@ const getReferenceData = () => {
   return { reference, error, loading, fetch, setLoading, setError, setReference };
 };
 
+const updateReferenceData = async (id: string, formData: FormData, setLoading: (loading: boolean) => void, setError: (error: string) => void, cb: () => void) => {
+  try {
+    await updateReference(id, formData);
+
+    cb();
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    setLoading(false);
+  }
+};
+
 const referenceService = {
   getReference: getReferenceData,
+  updateReference: updateReferenceData,
 };
 
 export default referenceService;

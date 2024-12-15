@@ -18,3 +18,24 @@ export const getReference = async () => {
     throw error;
   }
 };
+
+export const updateReference = async (id: string, formData: FormData) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${REFERENCE_PATH}/${id}/update`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+};
