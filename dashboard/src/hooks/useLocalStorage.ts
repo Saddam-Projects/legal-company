@@ -6,6 +6,12 @@ const useLocalStorage = {
     const result = window.localStorage.getItem(key);
     return result ? JSON.parse(result) : null;
   },
+  remove: (key: string) => {
+    window.localStorage.removeItem(key);
+  },
+  clear: () => {
+    window.localStorage.clear();
+  },
 };
 
 export default useLocalStorage;

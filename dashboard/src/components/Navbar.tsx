@@ -1,17 +1,18 @@
 import BooleanInterface from '@/interfaces/components/shared/BooleanInterface';
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { Input } from './ui/input';
 import * as fa from 'react-icons/fa';
 import ContainerComponent from './Container';
 import BarMenuComponent from './BarMenu';
 import useContextApi from '@/hooks/useContextApi';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { THEME_KEY } from '@/utils/constant';
+import { AUTH_URL } from '@/datasources/internals/menus';
+import useNavigateTo from '@/hooks/useNavigateTo';
 
 export default function NavbarComponent({ active, setActive }: BooleanInterface) {
   const { theme } = useContextApi();
-  const { set } = useLocalStorage;
+  const { set, clear } = useLocalStorage;
+  const navigate = useNavigateTo();
 
   return (
     <ContainerComponent className="h-20 bg-light dark:bg-dark">
@@ -61,7 +62,15 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
                 <fa.FaRegUser />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem className="text-base">Profile</DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-base"
+                  onClick={() => {
+                    clear();
+                    navigate(AUTH_URL);
+                  }}
+                >
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
