@@ -6,6 +6,7 @@ import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import { dummyDataSource } from '@/datasources/internals/dummy';
 import { Service } from '@/entity/service';
+import bannerService from '@/services/banner';
 import serviceService from '@/services/service';
 import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
@@ -20,6 +21,7 @@ export default function Page() {
   const service = serviceService.getService(param.id as string);
 
   const services = serviceService.getData(10, 0, undefined, 'new');
+  const banner = bannerService.getBanners(5, 0, undefined, 'new');
 
   return (
     service.service && (
@@ -41,9 +43,9 @@ export default function Page() {
             </div>
           </div>
         </div>
-        {dummyDataSource.length > 0 && (
+        {banner.banners.length > 2 && (
           <div className="flex px-4 container mx-auto justify-center">
-            <AdvertiseComponent />
+            <AdvertiseComponent banners={banner.banners} />
           </div>
         )}
         <div className="container mx-auto px-4">

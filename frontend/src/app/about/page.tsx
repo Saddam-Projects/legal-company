@@ -6,8 +6,10 @@ import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import { dummyDataSource } from '@/datasources/internals/dummy';
+import clientService from '@/services/client';
+import galleryService from '@/services/gallery';
 import serviceService from '@/services/service';
-import { TAGLINE_DESCRIPTION, TITLE } from '@/utils/constant';
+import { TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { HANDSHAKE_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
@@ -15,6 +17,8 @@ import { FaPhone, FaRocket, FaSmile, FaSpeakerDeck, FaStar, FaThumbsUp } from 'r
 
 export default function AboutPage() {
   const service = serviceService.getData(3, 0, undefined, 'expensive');
+  const client = clientService.getClient(10, 0);
+  const gallery = galleryService.getGalleries(30, 0);
   return (
     <div className="grid grid-cols-1 gap-16 mt-12">
       <div className="container mx-auto px-4">
@@ -86,14 +90,14 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      {dummyDataSource.length > 0 && (
+      {client.clients.length > 2 && (
         <div className="py-12 mx-auto px-4 container">
           <div className="flex flex-col space-y-12 text-center">
             <div className=" flex  flex-col">
               <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">You're Next</TextComponent>
               <TextComponent className="text-small font-bold text-teal hover:opacity-90">jadilah client kebanggaan kami, kami siap membantu anda</TextComponent>
             </div>
-            <ClientComponent />
+            <ClientComponent clients={client.clients} />
           </div>
         </div>
       )}
@@ -142,9 +146,9 @@ export default function AboutPage() {
           <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Testimoni</TextComponent>
         </div>
       )}
-      {dummyDataSource.length > 0 && (
+      {gallery.galleries.length > 2 && (
         <div className="px-4 container mx-auto">
-          <GalleryComponent />
+          <GalleryComponent galleries={gallery.galleries} />
         </div>
       )}
     </div>

@@ -6,13 +6,19 @@ import TextComponent from './Text';
 import Image from 'next/image';
 import { COMPANY_LOGO } from '@/utils/images';
 import { usePathname } from 'next/navigation';
-import { TITLE } from '@/utils/constant';
+import { BASE_API_URL, TITLE } from '@/utils/constant';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { useState } from 'react';
 import { SERVICES_URL } from '@/datasources/internals/menus';
 import DropdownService from './DropdownService';
+import referenceService from '@/services/refernce.service';
 
-export default function NavbarComponent({ active, setActive }: BooleanInterface) {
+interface NavbarInterface extends BooleanInterface {
+  logo: string;
+  name: string;
+}
+
+export default function NavbarComponent({ active, setActive, name, logo }: NavbarInterface) {
   const pathname = usePathname();
   const navigateTo = useNavigateTo();
   const [dropDownService, setDropdownService] = useState(false);
@@ -30,8 +36,8 @@ export default function NavbarComponent({ active, setActive }: BooleanInterface)
     <ContainerComponent className="fixed top-0 left-0 w-full bg-teal z-30 h-20">
       <div className="flex items-center h-full pr-8">
         <div className="flex space-x-2 items-center">
-          <Image src={COMPANY_LOGO} width={120} height={120} alt="Company Logo" priority className="z-50" />
-          <TextComponent className="hidden lg:flex text-lg font-bold text-primary capitalize">{TITLE}</TextComponent>
+          <Image src={logo} width={120} height={120} alt="Company Logo" priority className="z-50" />
+          <TextComponent className="hidden lg:flex text-lg font-bold text-primary capitalize">{name}</TextComponent>
         </div>
         <div className="ml-auto">
           <BarMenuComponent active={active} setActive={setActive} />

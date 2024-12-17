@@ -23,11 +23,13 @@ import DialogSuccessComponent from '@/components/DialogSuccess';
 import { useState } from 'react';
 import orderAction from '@/actions/order.action';
 import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
+import referenceService from '@/services/refernce.service';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
   const navigateTo = useNavigateTo();
   const service = serviceService.getData(6, 0, undefined, 'new');
+  const reference = referenceService.getReference();
   const [success, setSuccess] = useState<boolean>(false);
 
   const handlerSubmit = (values: z.infer<typeof contactSchema>) => {
@@ -182,22 +184,24 @@ export default function Page() {
                 <FaMapMarkerAlt className="w-8 p-2 rounded-sm h-8 text-primary bg-teal" />
               </div>
               <TextComponent className="text-teal font-bold text-lg">Our Address</TextComponent>
-              <TextComponent className="text-teal text-base">{ADDRESS}</TextComponent>
+              <TextComponent className="text-teal text-base">{reference.reference ? reference.reference.address : '-'}</TextComponent>
             </div>
             <div className="flex flex-col space-y-2">
               <div className="p-2 rounded-lg">
                 <FaAddressBook className="w-8 p-2 rounded-sm h-8 text-primary bg-teal" />
               </div>
               <TextComponent className="text-teal font-bold text-lg">Our Contact Info</TextComponent>
-              <TextComponent className="text-teal text-base">{PHONE}</TextComponent>
-              <TextComponent className="text-teal text-base">{EMAIL}</TextComponent>
+              <TextComponent className="text-teal text-base">{reference.reference ? reference.reference.company_phone : '-'}</TextComponent>
+              <TextComponent className="text-teal text-base">{reference.reference ? reference.reference.company_email : '-'}</TextComponent>
             </div>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 h-[400px] z-0">
-        <MapComponent />
-      </div>
+      {reference.reference && (
+        <div className="grid grid-cols-1 h-[400px] z-0">
+          <MapComponent lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} name={reference.reference.address} />
+        </div>
+      )}
       <div className="py-2 bg-white container px-4 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex ">

@@ -1,32 +1,36 @@
+import { useMemo } from 'react';
 import ContainerComponent from './Container';
 import TextComponent from './Text';
 import * as Fa from 'react-icons/fa';
 
-export const CONTACT = [
-  {
-    icon: <Fa.FaWhatsapp className="text-xl" />,
-    title: 'Whatsapp',
-    name: 'wa',
-    color: 'bg-primary',
-    url: 'https://wa.me/628888888888',
-  },
+export default function BottomBarComponent({ email, phone }: { email: string; phone: string }) {
+  const CONTACT = useMemo(
+    () => [
+      {
+        icon: <Fa.FaWhatsapp className="text-xl" />,
+        title: 'Whatsapp',
+        name: 'wa',
+        color: 'bg-primary',
+        url: `https://wa.me/${phone.replace('0', '62')}`,
+      },
 
-  {
-    icon: <Fa.FaPhoneAlt className="text-xl" />,
-    title: 'Phone',
-    name: 'phone',
-    color: 'bg-secondary',
-    url: 'https://wa.me/628888888888',
-  },
-  {
-    icon: <Fa.FaEnvelope className="text-xl" />,
-    title: 'Email',
-    name: 'mail',
-    color: 'bg-gold',
-    url: 'mailto:example.com',
-  },
-];
-export default function BottomBarComponent() {
+      {
+        icon: <Fa.FaPhoneAlt className="text-xl" />,
+        title: 'Phone',
+        name: 'phone',
+        color: 'bg-secondary',
+        url: `tel:${phone}`,
+      },
+      {
+        icon: <Fa.FaEnvelope className="text-xl" />,
+        title: 'Email',
+        name: 'mail',
+        color: 'bg-gold',
+        url: `mailto:${email}`,
+      },
+    ],
+    [email, phone]
+  );
   return (
     <ContainerComponent className="fixed bottom-0 left-0 w-full bg-white z-30">
       <div className="flex justify-between">

@@ -1,14 +1,15 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { BASE_API_URL } from '@/utils/constant';
+import { ClientLogo } from '@/entity/ClientLogo';
 
-export function ClientComponent() {
+export function ClientComponent({ clients }: { clients: ClientLogo[] }) {
   return (
     <Carousel>
       <CarouselContent>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <CarouselItem key={item} className="basis-1/2 lg:basis-1/6">
-            <img src={`${BASE_API_URL}/banner.jpg`} className="w-[180px] h-[180px] object-contain" />
+        {clients.map((item, index) => (
+          <CarouselItem key={index} className="basis-1/2 lg:basis-1/6">
+            <img src={`${BASE_API_URL}/${item.image}`} className="w-[180px] h-[180px] object-contain" />
           </CarouselItem>
         ))}
       </CarouselContent>

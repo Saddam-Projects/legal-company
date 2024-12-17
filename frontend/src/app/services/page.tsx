@@ -11,9 +11,11 @@ import { AdvertiseComponent } from '@/components/Advertise';
 import DialogErrorComponent from '@/components/DialogError';
 import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import { dummyDataSource } from '@/datasources/internals/dummy';
+import bannerService from '@/services/banner';
 
 export default function Page() {
   const service = serviceService.getData(undefined, 0, undefined, 'new');
+  const banner = bannerService.getBanners(5, 0, undefined, 'new');
 
   return (
     <div className="grid grid-cols-1 gap-16 mt-12">
@@ -36,9 +38,9 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {dummyDataSource.length > 0 && (
+      {banner.banners.length > 2 && (
         <div className="flex px-4 container mx-auto justify-center">
-          <AdvertiseComponent />
+          <AdvertiseComponent banners={banner.banners} />
         </div>
       )}
       <div className="container mx-auto px-4">
