@@ -107,8 +107,8 @@ func (r *ServiceRepositoryImpl) FindById(ctx *fiber.Ctx, db *gorm.DB, id string)
 func (r *ServiceRepositoryImpl) Create(ctx *fiber.Ctx, db *gorm.DB, service *models.Service) (*models.Service, *libs.ErrorResponse) {
 
 	var prevService *models.Service
-	db.Where("name = ?", service.Name).Preload("ServiceTerms").First(&prevService)
-	if prevService != nil {
+	queryPrev := db.Where("name = ?", service.Name).Preload("ServiceTerms").First(&prevService)
+	if queryPrev.Error == nil {
 		prevService.Price = service.Price
 		prevService.Image = service.Image
 		prevService.BaseModel.Deleted_at = nil
@@ -129,7 +129,6 @@ func (r *ServiceRepositoryImpl) Create(ctx *fiber.Ctx, db *gorm.DB, service *mod
 		}
 		return prevService, nil
 	}
-
 	query := db.Create(&service)
 
 	if query.Error != nil {
