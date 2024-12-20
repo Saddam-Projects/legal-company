@@ -94,12 +94,12 @@ export default function BannerPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {serviceBanner.banners.map((banner, index) => (
             <Card key={index}>
-              <CardContent className=" flex flex-col items-center p-0 h-full dark:bg-light">
+              <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-[300px]">
                 <div className="ml-auto p-2 flex space-x-2">
                   <Trash2Icon onClick={() => openModalDelete(banner)} className="text-red-hris cursor-pointer" />
                   <PencilIcon onClick={() => clickImage(banner)} className="text-blue-hris cursor-pointer" />
                 </div>
-                <img className="w-full h-[200px] object-cover" alt="Page Not Found" src={`${BASE_API_URL}/${banner.image}`} />
+                <img className="w-[100%] h-[80%] object-contain" alt="Page Not Found" src={`${BASE_API_URL}/${banner.image}`} />
               </CardContent>
             </Card>
           ))}

@@ -91,15 +91,15 @@ export default function ClientPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {serviceClient.clients.map((client, index) => (
             <Card key={index}>
-              <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-[200px]">
+              <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-[300px]">
                 <div className="ml-auto p-2 flex space-x-2">
                   <Trash2Icon onClick={() => openModalDelete(client)} className="text-red-hris cursor-pointer" />
                   <PencilIcon onClick={() => clickImage(client)} className="text-blue-hris cursor-pointer" />
                 </div>
-                <img className="w-full h-full object-cover" alt="Page Not Found" src={`${BASE_API_URL}/${client.image}`} />
+                <img className="w-[100%] h-[80%] object-contain" alt="Page Not Found" src={`${BASE_API_URL}/${client.image}`} />
               </CardContent>
             </Card>
           ))}

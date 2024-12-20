@@ -89,15 +89,15 @@ export default function GalleryPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {galleryBanner.galleries.map((gallery, index) => (
             <Card key={index}>
-              <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-full">
+              <CardContent className=" dark:bg-light rounded-sm flex flex-col items-center p-0 h-[300px]">
                 <div className="ml-auto p-2 flex space-x-2">
                   <Trash2Icon onClick={() => openModalDelete(gallery)} className="text-red-hris cursor-pointer" />
                   <PencilIcon onClick={() => clickImage(gallery)} className="text-blue-hris cursor-pointer" />
                 </div>
-                <img className="w-full h-[200px] object-cover" alt="Page Not Found" src={`${BASE_API_URL}/${gallery.image}`} />
+                <img className="w-[100%] h-[80%] object-contain" alt="Page Not Found" src={`${BASE_API_URL}/${gallery.image}`} />
               </CardContent>
             </Card>
           ))}
