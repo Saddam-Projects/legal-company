@@ -1,13 +1,12 @@
 'use client';
-import orderAction from '@/actions/order.action';
 import FormComponent from '@/components/Form';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import contactSchema from '@/dtos/contact';
 import { OrderDto } from '@/dtos/order';
-import { ADDRESS, BASE_API_URL, EMAIL, PHONE, TAGLINE_DESCRIPTION } from '@/utils/constant';
+import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, BUILDING_IMAGE_2, BUILDING_IMAGE_3, CONTACT_IMAGE, IMAGE_HEADER } from '@/utils/images';
+import { BUILDING_IMAGE_3, CONTACT_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaAddressBook, FaClock, FaInfinity, FaMapMarkerAlt, FaShieldAlt, FaStar, FaTeamspeak, FaUsers } from 'react-icons/fa';
@@ -15,6 +14,10 @@ import { z } from 'zod';
 import referenceService from '@/services/refernce.service';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
+import orderService from '@/services/order';
+import serviceFormSchema from '@/dtos/service';
+import DialogErrorComponent from '@/components/DialogError';
+import DialogSuccessComponent from '@/components/DialogSuccess';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function ContactPage() {
@@ -23,15 +26,21 @@ export default function ContactPage() {
   const [success, setSuccess] = useState<boolean>(false);
   const reference = referenceService.getReference();
   const handlerSubmit = (values: z.infer<typeof contactSchema>) => {
-    const orderDto: OrderDto = {
-      ...values,
-      order_items: [],
+    const data: z.infer<typeof serviceFormSchema> = {
+      email: values.email,
+      message: values.message,
+      name: values.name,
+      phone: values.phone,
+      service: '',
     };
 
-    orderAction.create(orderDto, setLoading, setError).then(() => setSuccess(true));
+    orderService.createOrder(data, setLoading, setError, () => setSuccess(true));
   };
   return (
     <div className="grid grid-cols-1 gap-16 mt-16">
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} />
+      <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
+
       <div className="mx-auto px-4 container mt-12">
         <div className="grid grid-cols-1 gap-4">
           <div className="bg-white">

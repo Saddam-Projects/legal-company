@@ -21,9 +21,10 @@ import { z } from 'zod';
 import { OrderDto } from '@/dtos/order';
 import DialogSuccessComponent from '@/components/DialogSuccess';
 import { useState } from 'react';
-import orderAction from '@/actions/order.action';
 import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import referenceService from '@/services/refernce.service';
+import orderService from '@/services/order';
+import serviceFormSchema from '@/dtos/service';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -33,12 +34,15 @@ export default function Page() {
   const [success, setSuccess] = useState<boolean>(false);
 
   const handlerSubmit = (values: z.infer<typeof contactSchema>) => {
-    const orderDto: OrderDto = {
-      ...values,
-      order_items: [],
+    const data: z.infer<typeof serviceFormSchema> = {
+      email: values.email,
+      message: values.message,
+      name: values.name,
+      phone: values.phone,
+      service: '',
     };
 
-    orderAction.create(orderDto, service.setLoading, service.setError).then(() => setSuccess(true));
+    orderService.createOrder(data, service.setLoading, service.setError, () => setSuccess(true));
   };
 
   return (

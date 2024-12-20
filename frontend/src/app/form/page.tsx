@@ -13,8 +13,9 @@ import { z } from 'zod';
 import serviceFormSchema from '@/dtos/service';
 import { useSearchParams } from 'next/navigation';
 import { OrderDto } from '@/dtos/order';
-import orderAction from '@/actions/order.action';
 import DialogSuccessComponent from '@/components/DialogSuccess';
+import orderService from '@/services/order';
+import DialogErrorComponent from '@/components/DialogError';
 
 export default function Page() {
   const searchParam = useSearchParams();
@@ -24,20 +25,14 @@ export default function Page() {
   const [success, setSuccess] = useState<boolean>(false);
 
   const submit = (values: z.infer<typeof serviceFormSchema>) => {
-    const orderDto: OrderDto = {
-      email: values.email,
-      message: values.message,
-      name: values.name,
-      phone: values.phone,
-      order_items: [values.service],
-    };
-
-    orderAction.create(orderDto, setLoading, setError).then(() => setSuccess(true));
+    orderService.createOrder(values, setLoading, setError, () => setSuccess(true));
   };
 
   return (
     <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} />
+
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-teal py-8">
           <div className="container px-4 mx-auto">

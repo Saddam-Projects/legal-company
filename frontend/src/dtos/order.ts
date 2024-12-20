@@ -3,5 +3,5 @@ export interface OrderDto {
   email: string;
   phone: string;
   message: string;
-  order_items: string[];
+  order_items?: string[];
 }
