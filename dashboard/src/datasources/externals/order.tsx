@@ -18,7 +18,7 @@ export const orderColumn: ColumnDef<OrderCol>[] = [
   {
     accessorKey: 'total_price',
     header: 'Total Price',
-    cell: ({ row }) => <div className="capitalize">{formatCurrency(row.getValue('total_price'))}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue('total_price') ? formatCurrency(row.getValue('total_price')) : 'Hubungi Langsung'}</div>,
   },
   {
     accessorKey: 'customer.name',
@@ -45,9 +45,9 @@ export const orderColumn: ColumnDef<OrderCol>[] = [
     cell: ({ row }) => <div className="uppercase">{row.getValue('order_item.service.name')}</div>,
   },
   {
-    accessorKey: 'message',
+    accessorKey: 'description',
     header: 'Message',
-    id: 'message',
-    cell: ({ row }) => <div className="uppercase">{row.getValue('message') ?? '-'}</div>,
+    id: 'description',
+    cell: ({ row }) => <div className="uppercase">{row.getValue('description') ?? '-'}</div>,
   },
 ];

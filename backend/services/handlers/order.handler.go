@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/saddam-satria/legal-be/libs"
 	"github.com/saddam-satria/legal-be/services/dtos"
@@ -73,9 +75,11 @@ func (h *OrderHandlerImpl) Create(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.OrderDTO
 
 	totalPrice := 0
 
+	fmt.Println(dt.Message)
 	newOrderItems := make([]models.OrderItem, 0)
 	newOrder := models.Order{
 		Customer_id: customerId,
+		Description: dt.Message,
 	}
 	for _, service := range services {
 		totalPrice += int(service.Price)

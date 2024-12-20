@@ -84,7 +84,7 @@ export default function OrderForm({ submit, order }: { submit: (values: z.infer<
               <FormItem>
                 <FormLabel>Message</FormLabel>
                 <FormControl>
-                  <Textarea rows={12} className="resize-none" placeholder="Company Address" {...field} />
+                  <Textarea rows={12} className="resize-none" placeholder="Message..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
