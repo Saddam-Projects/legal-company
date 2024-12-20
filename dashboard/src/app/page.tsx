@@ -1,7 +1,6 @@
 'use client';
 
 import { CustomerTable } from '@/components/customer/table';
-import MapComponent from '@/components/Map';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import TextComponent from '@/components/Text';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -10,10 +9,11 @@ import { Statistic } from '@/entity/Statistic';
 import customerService from '@/services/customer.service';
 import referenceService from '@/services/refernce.service';
 import dashboardService from '@/services/statistic.service';
-
-import 'leaflet/dist/leaflet.css';
+const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 import { LetterTextIcon, ReceiptIcon, UserIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import 'leaflet/dist/leaflet.css';
 
 export default function Page() {
   const statisticService = dashboardService.getStatistic();

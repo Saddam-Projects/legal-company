@@ -13,7 +13,7 @@ import { TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { HANDSHAKE_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
-import { FaPhone, FaRocket, FaSmile, FaSpeakerDeck, FaStar, FaThumbsUp } from 'react-icons/fa';
+import { FaPhone, FaRocket, FaSmile, FaThumbsUp } from 'react-icons/fa';
 
 export default function AboutPage() {
   const service = serviceService.getData(3, 0, undefined, 'expensive');
@@ -134,7 +134,7 @@ export default function AboutPage() {
             <div className="w-full">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {service.services.map((item, index) => (
-                  <ServiceCardComponent item={item} index={index} />
+                  <ServiceCardComponent key={index} item={item} index={index} />
                 ))}
               </div>
             </div>

@@ -1,7 +1,6 @@
 'use client';
 import orderAction from '@/actions/order.action';
 import FormComponent from '@/components/Form';
-import MapComponent from '@/components/Map';
 import TextComponent from '@/components/Text';
 import { Card, CardContent } from '@/components/ui/card';
 import contactSchema from '@/dtos/contact';
@@ -13,8 +12,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaAddressBook, FaClock, FaInfinity, FaMapMarkerAlt, FaShieldAlt, FaStar, FaTeamspeak, FaUsers } from 'react-icons/fa';
 import { z } from 'zod';
-import 'leaflet/dist/leaflet.css';
 import referenceService from '@/services/refernce.service';
+import 'leaflet/dist/leaflet.css';
+import dynamic from 'next/dynamic';
+const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function ContactPage() {
   const [loading, setLoading] = useState<boolean>(false);

@@ -56,7 +56,7 @@ export default function Page() {
             <div className="px-2 w-full ">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {service.services.map((item, index) => (
-                  <ServiceCardComponent item={item} index={index} />
+                  <ServiceCardComponent key={index} item={item} index={index} />
                 ))}
               </div>
             </div>

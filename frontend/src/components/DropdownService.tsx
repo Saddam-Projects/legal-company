@@ -26,7 +26,7 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
                       navigateTo(`${SERVICES_URL}/${item.id}`);
                       closeDropdownService();
                     }}
-                    className="text-teal text-base capitalize"
+                    className="text-teal text-base uppercase font-semibold"
                   >
                     {item.name}
                   </TextComponent>
