@@ -3,5 +3,17 @@ export interface Blog {
   title: string;
   cover: string;
   content: string;
-  category: string;
+  category: Category;
+  category_id: string;
+  author: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+}
+
+export interface BlogImage {
+  id: string;
+  url: string;
 }

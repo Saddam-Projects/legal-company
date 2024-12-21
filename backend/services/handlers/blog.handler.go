@@ -96,17 +96,30 @@ func (b *BlogHandlerImpl) Update(ctx *fiber.Ctx, dt *dtos.BlogDTO) (*models.Blog
 		return nil, err
 	}
 
-	mediaUrl, err := b.uploadLib.Upload(ctx)
+	var fileName *string
 
-	if err != nil {
-		return nil, err
+	_, errFile := ctx.FormFile("file")
+
+	if errFile == nil {
+		mediaUrl, err := b.uploadLib.Upload(ctx)
+
+		if err != nil {
+			return nil, err
+		}
+
+		fileName = mediaUrl
 	}
+
 	newCategory := &models.Category{
 		Name: dt.Category,
 	}
 	prevBlog.Title = dt.Title
 	prevBlog.Content = dt.Content
-	prevBlog.Cover = mediaUrl
+
+	if fileName != nil {
+		prevBlog.Cover = fileName
+	}
+
 	prevBlog.Category = *newCategory
 	prevBlog.Author = dt.Author
 

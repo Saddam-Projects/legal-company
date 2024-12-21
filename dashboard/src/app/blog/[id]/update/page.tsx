@@ -21,17 +21,19 @@ import { BASE_API_URL } from '@/utils/constant';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { useParams } from 'next/navigation';
 import { BLOG_URL } from '@/datasources/internals/menus';
+import blogService from '@/services/blog.service';
 
 export default function Blog() {
   const id = useParams().id;
   const navigate = useNavigateTo();
+
+  const serviceBlog = blogService.getBlog(id as string);
+
   useEffect(() => {
     if (!id) {
       navigate(BLOG_URL);
       return;
     }
-
-    // fetch to backend
   }, [id]);
 
   const [fileName, setFileName] = useState<{
@@ -79,7 +81,45 @@ export default function Blog() {
     },
   });
 
-  const submit = (values: z.infer<typeof blogSchema>) => {};
+  useEffect(() => {
+    if (serviceBlog.blog) {
+      form.setValue('title', serviceBlog.blog.title);
+      if (serviceBlog.blog.cover) {
+        setFileName({
+          file: serviceBlog.blog.cover,
+          from: 'BE',
+        });
+      }
+      if (serviceBlog.blog.author) {
+        form.setValue('author', serviceBlog.blog.author);
+      }
+      form.setValue('category', serviceBlog.blog.category.name);
+
+      if (serviceBlog.blog.content && editor) {
+        form.setValue('content', serviceBlog.blog.content);
+        editor.chain().focus().setContent(serviceBlog.blog.content).run();
+      }
+    }
+  }, [serviceBlog.blog, editor]);
+
+  const submit = (values: z.infer<typeof blogSchema>) => {
+    const data = new FormData();
+
+    data.append('title', values.title);
+    data.append('author', values.author);
+    data.append('category', values.category);
+    data.append('content', values.content);
+
+    if (values.file) data.append('file', values.file);
+
+    blogService.updateBlog(
+      id as string,
+      data,
+      (loading) => serviceBlog.setLoading(loading),
+      (error) => serviceBlog.setError(error),
+      () => serviceBlog.fetch()
+    );
+  };
 
   const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -151,15 +191,17 @@ export default function Blog() {
               </FormItem>
             )}
           />
-          <RichTextEditorComponent editor={editor} />
 
           <div className="flex justify-end space-x-4">
             <Button size={'sm'} className="bg-blue-hris text-white hover:bg-blue-hris hover:opacity-90" type="submit">
-              Save
+              Publish
             </Button>
           </div>
         </form>
       </Form>
+      <div className="my-4">
+        <RichTextEditorComponent editor={editor} />
+      </div>
     </div>
   );
 }

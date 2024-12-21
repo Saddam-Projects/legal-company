@@ -7,3 +7,5 @@ export const REFERENCE_PATH = '/reference';
 export const SERVICE_PATH = '/service';
 export const SERVICE_TERM_PATH = '/service-term';
 export const STATISTIC_PATH = '/dashboard/statistic';
+export const BLOG_PATH = '/blog';
+export const BLOG_IMAGE_PATH = '/blog-image';

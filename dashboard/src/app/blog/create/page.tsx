@@ -18,12 +18,19 @@ import BulletList from '@tiptap/extension-bullet-list';
 import ImageExt from '@tiptap/extension-image';
 import { ChangeEvent, useState } from 'react';
 import { BASE_API_URL } from '@/utils/constant';
+import blogService from '@/services/blog.service';
+import useNavigateTo from '@/hooks/useNavigateTo';
+import { BLOG_URL } from '@/datasources/internals/menus';
+import DialogErrorComponent from '@/components/DialogError';
 
 export default function Blog() {
   const [fileName, setFileName] = useState<{
     file: string;
     from: 'BE' | 'FE';
   } | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const form = useForm<z.infer<typeof blogSchema>>({
     resolver: zodResolver(blogSchema),
@@ -36,6 +43,8 @@ export default function Blog() {
       author: '',
     },
   });
+
+  const navigateTo = useNavigateTo();
 
   const editor = useEditor({
     extensions: [
@@ -65,7 +74,23 @@ export default function Blog() {
     },
   });
 
-  const submit = (values: z.infer<typeof blogSchema>) => {};
+  const submit = (values: z.infer<typeof blogSchema>) => {
+    const data = new FormData();
+
+    data.append('title', values.title);
+    data.append('author', values.author);
+    data.append('category', values.category);
+    data.append('content', values.content);
+
+    if (values.file) data.append('file', values.file);
+
+    blogService.createBlog(
+      data,
+      (loading) => setLoading(loading),
+      (error) => setError(error),
+      () => navigateTo(BLOG_URL)
+    );
+  };
 
   const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -137,15 +162,19 @@ export default function Blog() {
               </FormItem>
             )}
           />
-          <RichTextEditorComponent editor={editor} />
 
           <div className="flex justify-end space-x-4">
             <Button size={'sm'} className="bg-blue-hris text-white hover:bg-blue-hris hover:opacity-90" type="submit">
-              Save
+              Publish
             </Button>
           </div>
         </form>
       </Form>
+      <div className="my-4">
+        <RichTextEditorComponent editor={editor} />
+      </div>
+
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

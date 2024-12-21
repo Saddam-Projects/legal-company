@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { type Editor } from '@tiptap/react';
 import { Toggle } from './ui/toggle';
-import { Bold, Heading5, Heading6, Heading1, Heading3, Heading4, Heading2, Italic, List, ListOrdered, StrikethroughIcon, Image, ImageIcon } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, StrikethroughIcon, ImageIcon } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from './ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Level } from '@tiptap/extension-heading';
@@ -13,6 +13,9 @@ import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader } from './ui/dialog';
 import { Button } from './ui/button';
 import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons';
+import blogService from '@/services/blog.service';
+import { BASE_API_URL } from '@/utils/constant';
+import DialogErrorComponent from './DialogError';
 
 type Props = {
   editor: Editor | null;
@@ -25,7 +28,7 @@ function ToolBar({ editor }: Props) {
 
   const ref = useRef<HTMLInputElement>(null);
   const [modalUploadImage, setModalUploadImage] = useState(false);
-  const [image, setImages] = useState<string[]>([]);
+  const serviceImages = blogService.getImages();
 
   const addImage = () => {
     ref.current!.click();
@@ -37,9 +40,11 @@ function ToolBar({ editor }: Props) {
     if (files && files.length > 0) {
       const file = files[0];
 
-      const objUrl = URL.createObjectURL(file);
+      const data = new FormData();
 
-      setImages([...image, objUrl]);
+      data.append('file', file);
+
+      blogService.uploadImage(data, serviceImages.setError, serviceImages.setLoading, () => serviceImages.fetch());
     }
   };
 
@@ -61,9 +66,9 @@ function ToolBar({ editor }: Props) {
             </div>
           </DialogHeader>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 p-4">
-            {image.map((item, index) => (
-              <div key={index} onClick={() => selectImage(item)} className="rounded-lg items-center flex justify-center p-2 border-1 border-gray-400">
-                <img className="w-full h-full object-contain" alt="image" src={item} />
+            {serviceImages.images.map((item, index) => (
+              <div key={index} onClick={() => selectImage(`${BASE_API_URL}/${item.url}`)} className="rounded-lg cursor-pointer items-center flex justify-center p-2 border-1 border-gray-400">
+                <img className="w-full h-full object-contain" alt="image" src={`${BASE_API_URL}/${item.url}`} />
               </div>
             ))}
             <div onClick={addImage} className="rounded-lg items-center flex justify-center p-2 border-1 border-gray-400">
@@ -189,6 +194,8 @@ function ToolBar({ editor }: Props) {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+
+      <DialogErrorComponent active={serviceImages.error !== ''} onClose={() => serviceImages.setError('')} message={serviceImages.error} />
     </div>
   );
 }

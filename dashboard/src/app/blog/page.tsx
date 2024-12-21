@@ -9,7 +9,7 @@ import { BLOG_URL } from '@/datasources/internals/menus';
 import permission from '@/datasources/internals/permission';
 import { Blog } from '@/entity/Blog';
 import useNavigateTo from '@/hooks/useNavigateTo';
-import clientService from '@/services/client.service';
+import blogService from '@/services/blog.service';
 import { useState } from 'react';
 
 export default function BlogPage() {
@@ -19,24 +19,23 @@ export default function BlogPage() {
     description: "blog's list",
   };
 
-  const [limit, setLimit] = useState(10);
-  const [offset, setOffset] = useState(0);
-  const [keyword, setKeyword] = useState('');
-
-  const serviceClient = clientService.getClients(limit, offset, keyword);
-
   const [modalDelete, setModalDelete] = useState(false);
   const [blogActive, setBlogActive] = useState<Blog | null>(null);
   const navigate = useNavigateTo();
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
   const onDeleteHandler = () => {
     if (blogActive) {
-      // clientService.deleteClient(
-      //   blogActive,
-      //   (error) => serviceClient.setError(error),
-      //   (loading) => serviceClient.setLoading(loading),
-      //   () => serviceClient.fetch()
-      // );
+      blogService.deleteBlog(
+        blogActive,
+        (error) => setError(error),
+        (loading) => setLoading(loading),
+        () => {
+          setOnReload(true);
+        }
+      );
     }
 
     setBlogActive(null);
@@ -69,7 +68,7 @@ export default function BlogPage() {
       </div>
 
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
-      <DialogErrorComponent active={serviceClient.error !== ''} onClose={() => serviceClient.setError('')} message={serviceClient.error} />
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

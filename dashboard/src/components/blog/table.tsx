@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { generateBlogColumn } from '@/datasources/externals/blog';
 import { Blog } from '@/entity/Blog';
+import blogService from '@/services/blog.service';
 
 export function BlogTable({ onDelete, onUpdate, reload, onReload }: { onDelete: (blog: Blog) => void; onUpdate: (blog: Blog) => void; reload: boolean; onReload: (reload: boolean) => void }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -22,15 +23,16 @@ export function BlogTable({ onDelete, onUpdate, reload, onReload }: { onDelete: 
 
   const blogColumn = React.useMemo(() => generateBlogColumn(onDelete, onUpdate), []);
 
-  // React.useEffect(() => {
-  //   if (reload) serviceCustomer.fetch();
+  const serviceBlog = blogService.getBlogs(limit, offset, keyword);
 
-  //   onReload(false);
-  // }, [reload]);
-  const [blogs, setBlogs] = React.useState<Blog[]>([]);
+  React.useEffect(() => {
+    if (reload) serviceBlog.fetch();
+
+    onReload(false);
+  }, [reload]);
 
   const table = useReactTable({
-    data: blogs,
+    data: serviceBlog.blogs,
     columns: blogColumn,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -116,7 +118,7 @@ export function BlogTable({ onDelete, onUpdate, reload, onReload }: { onDelete: 
           <Button variant="outline" className="" size="sm" onClick={() => setOffset(offset - limit)} disabled={offset < limit}>
             Previous
           </Button>
-          <Button disabled={offset > 0 && blogs.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
+          <Button disabled={offset > 0 && serviceBlog.blogs.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
             Next
           </Button>
         </div>

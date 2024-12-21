@@ -24,8 +24,9 @@ export const generateBlogColumn = (deleteHandler: (blog: Blog) => void, updateHa
       cell: ({ row }) => <div className="capitalize">{row.getValue('author')}</div>,
     },
     {
-      accessorKey: 'category',
+      accessorKey: 'category.name',
       header: 'kategori',
+      id: 'category',
       cell: ({ row }) => <div className="capitalize">{row.getValue('category')}</div>,
     },
     {
