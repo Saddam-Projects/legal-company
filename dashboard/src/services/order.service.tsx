@@ -2,6 +2,7 @@
 import { createOrder, getOrdersData } from '@/actions/order';
 import { OrderDto } from '@/dtos/order';
 import { Order } from '@/entity/Order';
+import errorHandler from '@/lib/errorHandler';
 import { orderSchema } from '@/schema/order';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -19,7 +20,7 @@ const serviceGetOrdersData = (limit?: number, offset?: number, keyword?: string,
       }
       setOrders(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     }
   };
 
@@ -52,7 +53,7 @@ const createOrderService = async (order: z.infer<typeof orderSchema>, setLoading
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

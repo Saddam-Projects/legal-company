@@ -27,13 +27,14 @@ func NewOrderRepository() OrderRepository {
 func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Order, *libs.ErrorResponse) {
 
 	orders := make([]models.Order, 0)
+	k := ctx.Query("keyword")
 
 	limit := 100
 	offset := 0
 
 	startDate := ctx.Query("start-date")
 	endDate := ctx.Query("end-date")
-	query := db.Where("is_deleted = 0").Preload("OrderItems.Service").Preload("Customer")
+	query := db.Where(`"order".is_deleted = 0`).Preload("OrderItems.Service").Preload("Customer")
 
 	limitQuery := ctx.Query("limit")
 	limitInt, errConvLimit := strconv.Atoi(limitQuery)
@@ -45,6 +46,10 @@ func (r *OrderRepositoryImpl) FindAll(ctx *fiber.Ctx, db *gorm.DB) ([]models.Ord
 	offsetInt, errConvOffset := strconv.Atoi(offsetQuery)
 	if errConvOffset == nil && offsetInt > 0 {
 		offset = offsetInt
+	}
+
+	if k != "" {
+		query.Joins("Customer").Where("name like ? OR phone like ? OR email like ?", "%"+k+"%", "%"+k+"%", "%"+k+"%")
 	}
 
 	if startDate != "" {

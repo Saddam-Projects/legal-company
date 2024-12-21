@@ -2,6 +2,7 @@
 import { createCustomer, deleteCustomer, getCustomerData, getCustomersData, updateCustomer } from '@/actions/customer';
 import { CustomerDto } from '@/dtos/customer';
 import { Customer } from '@/entity/Customer';
+import errorHandler from '@/lib/errorHandler';
 import { customerSchema } from '@/schema/customer';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -19,7 +20,7 @@ const serviceGetCustomersData = (limit?: number, offset?: number, keyword?: stri
       }
       setCustomers(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     }
   };
 
@@ -45,7 +46,7 @@ const serviceCustomerDelete = async (customer: Customer, setError: (error: strin
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }
@@ -63,7 +64,7 @@ const serviceGetCustomerData = (id?: string) => {
       }
       setCustomer(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     }
   };
 
@@ -96,7 +97,7 @@ const createCustomerService = async (customer: z.infer<typeof customerSchema>, s
     await createCustomer(newCustomer);
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }
@@ -114,7 +115,7 @@ const updateCustomerService = async (id: string, customer: z.infer<typeof custom
     await updateCustomer(newCustomer, id);
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

@@ -1,6 +1,7 @@
 'use client';
 
 import ButtonActionComponent from '@/components/ButtonAction';
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { Card, CardContent } from '@/components/ui/card';
@@ -78,8 +79,6 @@ export default function ClientPage() {
     }
   };
 
-  const navigate = useNavigateTo();
-
   return (
     <div className="grid gap-6 grid-cols-1">
       <HeaderContentComponent title={meta.title} description={meta.description} />
@@ -108,6 +107,7 @@ export default function ClientPage() {
 
       <input className="hidden" ref={fileRef} type="file" onChange={(e) => onChangeImage(e)} />
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
+      <DialogErrorComponent active={serviceClient.error !== ''} onClose={() => serviceClient.setError('')} message={serviceClient.error} />
     </div>
   );
 }

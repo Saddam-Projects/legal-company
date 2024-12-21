@@ -1,5 +1,6 @@
 'use client';
 
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import OrderForm from '@/components/order/form';
 import { ORDER_URL } from '@/datasources/internals/menus';
@@ -36,6 +37,8 @@ export default function CreateOrderPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <OrderForm submit={submit} order={null} />
       </div>
+
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

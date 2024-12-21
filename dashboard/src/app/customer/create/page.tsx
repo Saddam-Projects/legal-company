@@ -1,6 +1,7 @@
 'use client';
 
 import CustomerForm from '@/components/customer/form';
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import { CUSTOMER_URL } from '@/datasources/internals/menus';
 import permission from '@/datasources/internals/permission';
@@ -36,6 +37,8 @@ export default function CreateCustomerPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <CustomerForm submit={submit} customer={null} />
       </div>
+
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

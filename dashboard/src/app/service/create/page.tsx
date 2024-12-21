@@ -1,5 +1,6 @@
 'use client';
 
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ServiceForm from '@/components/service/form';
 import { SERVICE_URL } from '@/datasources/internals/menus';
@@ -44,6 +45,8 @@ export default function CreateServicePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <ServiceForm submit={submit} service={null} />
       </div>
+
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

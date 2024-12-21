@@ -1,5 +1,6 @@
 'use client';
 
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ReferenceForm from '@/components/reference/form';
 import permission from '@/datasources/internals/permission';
@@ -41,6 +42,8 @@ export default function SettingReferencePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <ReferenceForm submit={submit} reference={reference.reference} />
       </div>
+
+      <DialogErrorComponent active={reference.error !== ''} onClose={() => reference.setError('')} message={reference.error} />
     </div>
   );
 }

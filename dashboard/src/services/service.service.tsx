@@ -1,5 +1,6 @@
 import { createService, deleteService, getService, getServices, updateService } from '@/actions/service';
 import { Service } from '@/entity/Service';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getServicesService = (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -15,7 +16,7 @@ const getServicesService = (limit?: number, offset?: number, keyword?: string, s
       }
       setServices(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
@@ -41,7 +42,7 @@ const serviceGetServiceData = (id: string) => {
       }
       setService(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     }
   };
 
@@ -69,7 +70,7 @@ const serviceServiceDelete = async (service: Service, setError: (error: string) 
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }
@@ -81,7 +82,7 @@ const createServiceService = async (service: FormData, setLoading: (loading: boo
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }
@@ -93,7 +94,7 @@ const updateServiceService = async (id: string, service: FormData, setLoading: (
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

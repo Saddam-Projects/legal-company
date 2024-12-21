@@ -1,6 +1,7 @@
 import { getReference, updateReference } from '@/actions/reference';
 import { ReferenceDto } from '@/dtos/reference';
 import { Reference } from '@/entity/Reference';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getReferenceData = () => {
@@ -17,7 +18,7 @@ const getReferenceData = () => {
 
       setReference(response[0]);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,7 @@ const updateReferenceData = async (id: string, formData: FormData, setLoading: (
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

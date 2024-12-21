@@ -2,6 +2,7 @@
 
 import ButtonActionComponent from '@/components/ButtonAction';
 import { CustomerTable } from '@/components/customer/table';
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -108,6 +109,7 @@ export default function BannerPage() {
 
       <input className="hidden" ref={fileRef} type="file" onChange={(e) => onChangeImage(e)} />
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
+      <DialogErrorComponent active={serviceBanner.error !== ''} onClose={() => serviceBanner.setError('')} message={serviceBanner.error} />
     </div>
   );
 }

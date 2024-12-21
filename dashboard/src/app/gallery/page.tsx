@@ -1,6 +1,7 @@
 'use client';
 
 import ButtonActionComponent from '@/components/ButtonAction';
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { Card, CardContent } from '@/components/ui/card';
@@ -106,6 +107,7 @@ export default function GalleryPage() {
 
       <input className="hidden" ref={fileRef} type="file" onChange={(e) => onChangeImage(e)} />
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
+      <DialogErrorComponent active={galleryBanner.error !== ''} onClose={() => galleryBanner.setError('')} message={galleryBanner.error} />
     </div>
   );
 }

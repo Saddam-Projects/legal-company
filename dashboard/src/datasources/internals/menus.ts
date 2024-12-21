@@ -8,3 +8,4 @@ export const GALLERY_URL = '/gallery';
 export const REFERENCE_URL = '/reference';
 export const CLIENT_URL = '/client';
 export const AUTH_URL = '/auth';
+export const BLOG_URL = '/blog';

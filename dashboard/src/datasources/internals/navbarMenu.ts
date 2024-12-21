@@ -1,5 +1,5 @@
-import { BackpackIcon, CardStackIcon, CardStackPlusIcon, CubeIcon, ExitIcon, FileIcon, GearIcon, HomeIcon, StackIcon } from '@radix-ui/react-icons';
-import { BANNER_URL, CLIENT_URL, CUSTOMER_URL, DASHBOARD_URL, GALLERY_URL, ORDER_URL, SERVICE_URL, SETTINGS_URL } from './menus';
+import { BackpackIcon, CardStackIcon, CardStackPlusIcon, CubeIcon, ExitIcon, FileIcon, GearIcon, HomeIcon, StackIcon, TextIcon } from '@radix-ui/react-icons';
+import { BANNER_URL, BLOG_URL, CLIENT_URL, CUSTOMER_URL, DASHBOARD_URL, GALLERY_URL, ORDER_URL, SERVICE_URL, SETTINGS_URL } from './menus';
 import { INavbarMenu } from '@/interfaces/components/MenuInterface';
 import permission from './permission';
 
@@ -34,10 +34,16 @@ const navbarMenus: INavbarMenu[] = [
     title: 'Banner Promo',
     icon: CubeIcon,
   },
+
   {
     to: CLIENT_URL,
     title: 'Client',
     icon: CardStackPlusIcon,
+  },
+  {
+    to: BLOG_URL,
+    title: 'Blog',
+    icon: TextIcon,
   },
   {
     to: SETTINGS_URL,

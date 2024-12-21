@@ -2,6 +2,7 @@
 
 import ButtonActionComponent from '@/components/ButtonAction';
 import { CustomerTable } from '@/components/customer/table';
+import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { CUSTOMER_URL } from '@/datasources/internals/menus';
@@ -64,6 +65,7 @@ export default function CustomerPage() {
       </div>
 
       <ModalConfirmationComponent cancel={() => setIsModalDeleteOpen(false)} open={isModalDeleteOpen} submit={onDeleteHandler} />
+      <DialogErrorComponent active={error !== ''} onClose={() => setError('')} message={error} />
     </div>
   );
 }

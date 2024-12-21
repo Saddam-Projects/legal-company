@@ -1,5 +1,6 @@
 import { deleteBanner, getBanners } from '@/actions/banner';
 import { Banner } from '@/entity/Banner';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getBannersService = (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -15,7 +16,7 @@ const getBannersService = (limit?: number, offset?: number, keyword?: string, so
       }
       setBanners(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
@@ -35,7 +36,7 @@ const serviceBannerDelete = async (banner: Banner, setError: (error: string) => 
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

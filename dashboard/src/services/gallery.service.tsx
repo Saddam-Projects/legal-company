@@ -1,6 +1,7 @@
 import { deleteGallery, getGalleries } from '@/actions/gallery';
 import { Banner } from '@/entity/Banner';
 import { Gallery } from '@/entity/Gallery';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getGalleriesService = (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -16,7 +17,7 @@ const getGalleriesService = (limit?: number, offset?: number, keyword?: string, 
       }
       setGalleries(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,7 @@ const serviceGalleryDelete = async (gallery: Gallery, setError: (error: string) 
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

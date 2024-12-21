@@ -2,6 +2,7 @@ import { getBanners } from '@/actions/banner';
 import { deleteClient, getClientLogos } from '@/actions/clientLogo';
 import { Banner } from '@/entity/Banner';
 import { ClientLogo } from '@/entity/ClientLogo';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getClientsService = (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -17,7 +18,7 @@ const getClientsService = (limit?: number, offset?: number, keyword?: string, so
       }
       setClients(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,7 @@ const serviceClientDelete = async (client: ClientLogo, setError: (error: string)
 
     cb();
   } catch (error) {
-    setError(error as string);
+    setError(errorHandler(error));
   } finally {
     setLoading(false);
   }

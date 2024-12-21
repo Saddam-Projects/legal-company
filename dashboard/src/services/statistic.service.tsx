@@ -1,6 +1,6 @@
-import { getClientLogos } from '@/actions/clientLogo';
 import { getStatistic } from '@/actions/statistic';
 import { Statistic } from '@/entity/Statistic';
+import errorHandler from '@/lib/errorHandler';
 import { useEffect, useState } from 'react';
 
 const getStatisticService = () => {
@@ -16,7 +16,7 @@ const getStatisticService = () => {
       }
       setStatistic(response);
     } catch (error) {
-      setError(error as string);
+      setError(errorHandler(error));
     } finally {
       setLoading(false);
     }
