@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS "references";
 DROP TABLE IF EXISTS banner;
 DROP TABLE IF EXISTS gallery;
 DROP TABLE IF EXISTS client_logo;
+DROP TABLE IF EXISTS blog;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS cloud_image;
 
 CREATE TABLE service (
 	name varchar(255) NOT NULL UNIQUE,
@@ -124,6 +127,48 @@ CREATE TABLE "references" (
 	deleted_at TIMESTAMP NULL
 
 );
+
+CREATE TABLE "blog" (
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  "content" TEXT NOT NULL,
+  author VARCHAR(255) NULL,
+  category_id varchar(36),
+  cover TEXT NULL,
+  
+  created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
+
+);
+
+CREATE TABLE "cloud_image" (
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+ 	url TEXT,
+  
+  created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
+
+);
+
+CREATE TABLE "category" (
+	id VARCHAR(36) DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+  category_name VARCHAR(255) NOT NULL,
+  
+  created_at TIMESTAMP default CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL,
+  is_deleted SMALLINT default 0,
+	deleted_at TIMESTAMP NULL
+
+);
+
+
+ALTER TABLE blog
+ADD CONSTRAINT fk_blog_category
+FOREIGN KEY (category_id) REFERENCES category(id);
 
 
 INSERT INTO "references"(

@@ -27,6 +27,9 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	// Load Service, Repository, and Handler (from submodule)
 	uploadLib := libs.NewUploadFile()
 
+	cloudImageRepository := repositories.NewCloudImageRepository()
+	categoryRepository := repositories.NewCategoryRepository()
+
 	serviceRepository := repositories.NewServiceRepository()
 	serviceHandler := handlers.NewServiceHandler(serviceRepository, uploadLib)
 	serviceController := controllers.NewServiceController(serviceHandler, db)
@@ -61,6 +64,10 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 
 	dashboardHandler := handlers.NewDashboardHandler(customerRepository, orderRepository, clientLogoRepository, serviceRepository, db)
 	dashboardController := controllers.NewDashboardController(dashboardHandler)
+
+	blogRepository := repositories.NewBlogRepository()
+	blogHandler := handlers.NewBlogHandler(blogRepository, db, cloudImageRepository, uploadLib, categoryRepository)
+	blogController := controllers.NewBlogController(blogHandler)
 
 	api.Get("/service", serviceController.FindAll)
 	api.Get("/service/:id", serviceController.FindById)
@@ -106,4 +113,12 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 
 	api.Get("/dashboard/statistic", dashboardController.GetStatistic)
 
+	api.Get("/blog", blogController.FindAll)
+	api.Get("/blog/:id", blogController.FindOne)
+	api.Post("/blog", blogController.Create)
+	api.Post("/blog/:id/update", blogController.Update)
+	api.Post("/blog/:id/delete", blogController.Delete)
+	api.Get("/blog-image", blogController.FindImages)
+	api.Post("/blog-image", blogController.UploadImage)
+	api.Get("/category", blogController.FindCategories)
 }
