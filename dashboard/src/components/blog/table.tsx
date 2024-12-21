@@ -8,11 +8,10 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import customerService from '@/services/customer.service';
-import { generateCustomerColumn } from '@/datasources/externals/customer';
-import { Customer } from '@/entity/Customer';
+import { generateBlogColumn } from '@/datasources/externals/blog';
+import { Blog } from '@/entity/Blog';
 
-export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDelete: (customer: Customer) => void; onUpdate: (customer: Customer) => void; reload: boolean; onReload: (reload: boolean) => void }) {
+export function BlogTable({ onDelete, onUpdate, reload, onReload }: { onDelete: (blog: Blog) => void; onUpdate: (blog: Blog) => void; reload: boolean; onReload: (reload: boolean) => void }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -20,19 +19,19 @@ export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDele
   const [limit, setLimit] = React.useState(10);
   const [offset, setOffset] = React.useState(0);
   const [keyword, setKeyword] = React.useState('');
-  const serviceCustomer = customerService.getCustomers(limit, offset, keyword);
 
-  const customerColumn = React.useMemo(() => generateCustomerColumn(onDelete, onUpdate), []);
+  const blogColumn = React.useMemo(() => generateBlogColumn(onDelete, onUpdate), []);
 
-  React.useEffect(() => {
-    if (reload) serviceCustomer.fetch();
+  // React.useEffect(() => {
+  //   if (reload) serviceCustomer.fetch();
 
-    onReload(false);
-  }, [reload]);
+  //   onReload(false);
+  // }, [reload]);
+  const [blogs, setBlogs] = React.useState<Blog[]>([]);
 
   const table = useReactTable({
-    data: serviceCustomer.customers,
-    columns: customerColumn,
+    data: blogs,
+    columns: blogColumn,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -52,7 +51,7 @@ export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDele
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input placeholder="Filter customer..." value={keyword} onChange={(event) => setKeyword(event.target.value)} className="max-w-sm" />
+        <Input placeholder="Filter blog..." value={keyword} onChange={(event) => setKeyword(event.target.value)} className="max-w-sm" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto  ">
@@ -101,7 +100,7 @@ export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDele
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={customerColumn.length} className="h-24 text-center">
+                <TableCell colSpan={blogColumn.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -117,7 +116,7 @@ export function CustomerTable({ onDelete, onUpdate, reload, onReload }: { onDele
           <Button variant="outline" className="" size="sm" onClick={() => setOffset(offset - limit)} disabled={offset < limit}>
             Previous
           </Button>
-          <Button disabled={offset > 0 && serviceCustomer.customers.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
+          <Button disabled={offset > 0 && blogs.length < 1} variant="outline" className="" size="sm" onClick={() => setOffset(offset + limit)}>
             Next
           </Button>
         </div>

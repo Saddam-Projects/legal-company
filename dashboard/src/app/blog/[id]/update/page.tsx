@@ -16,10 +16,24 @@ import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
 import BulletList from '@tiptap/extension-bullet-list';
 import ImageExt from '@tiptap/extension-image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { BASE_API_URL } from '@/utils/constant';
+import useNavigateTo from '@/hooks/useNavigateTo';
+import { useParams } from 'next/navigation';
+import { BLOG_URL } from '@/datasources/internals/menus';
 
 export default function Blog() {
+  const id = useParams().id;
+  const navigate = useNavigateTo();
+  useEffect(() => {
+    if (!id) {
+      navigate(BLOG_URL);
+      return;
+    }
+
+    // fetch to backend
+  }, [id]);
+
   const [fileName, setFileName] = useState<{
     file: string;
     from: 'BE' | 'FE';

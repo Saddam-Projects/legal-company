@@ -1,12 +1,13 @@
 'use client';
 
+import { BlogTable } from '@/components/blog/table';
 import ButtonActionComponent from '@/components/ButtonAction';
 import DialogErrorComponent from '@/components/DialogError';
 import HeaderContentComponent from '@/components/HeaderContent';
 import ModalConfirmationComponent from '@/components/ModalConfirmation';
 import { BLOG_URL } from '@/datasources/internals/menus';
 import permission from '@/datasources/internals/permission';
-import { ClientLogo } from '@/entity/ClientLogo';
+import { Blog } from '@/entity/Blog';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import clientService from '@/services/client.service';
 import { useState } from 'react';
@@ -25,25 +26,32 @@ export default function BlogPage() {
   const serviceClient = clientService.getClients(limit, offset, keyword);
 
   const [modalDelete, setModalDelete] = useState(false);
-  const [clientActive, setClientActive] = useState<ClientLogo | null>(null);
+  const [blogActive, setBlogActive] = useState<Blog | null>(null);
   const navigate = useNavigateTo();
 
   const onDeleteHandler = () => {
-    if (clientActive) {
-      clientService.deleteClient(
-        clientActive,
-        (error) => serviceClient.setError(error),
-        (loading) => serviceClient.setLoading(loading),
-        () => serviceClient.fetch()
-      );
+    if (blogActive) {
+      // clientService.deleteClient(
+      //   blogActive,
+      //   (error) => serviceClient.setError(error),
+      //   (loading) => serviceClient.setLoading(loading),
+      //   () => serviceClient.fetch()
+      // );
     }
 
-    setClientActive(null);
+    setBlogActive(null);
     setModalDelete(false);
   };
-  const openModalDelete = (client: ClientLogo) => {
+
+  const [onReload, setOnReload] = useState(false);
+
+  const openModalDelete = (blog: Blog) => {
     setModalDelete(true);
-    setClientActive(client);
+    setBlogActive(blog);
+  };
+
+  const onUpdateHandler = (blog: Blog) => {
+    navigate(`${BLOG_URL}/${blog.id}/update`);
   };
 
   return (
@@ -54,6 +62,10 @@ export default function BlogPage() {
         <div className="flex space-x-2 items-center">
           <ButtonActionComponent buttonType={permission.permissionAction.ADD} currentResource={meta.resourceName} onClick={() => navigate(`${BLOG_URL}/create`)} />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        <BlogTable onDelete={openModalDelete} onUpdate={onUpdateHandler} reload={onReload} onReload={(reload: boolean) => setOnReload(reload)} />
       </div>
 
       <ModalConfirmationComponent open={modalDelete} cancel={() => setModalDelete(false)} submit={onDeleteHandler} />
