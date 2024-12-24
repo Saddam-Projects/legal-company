@@ -12,20 +12,13 @@ import { Service } from '@/entity/service';
 export default function ServiceCardComponent({ item, index }: { item: Service; index: number }): JSX.Element {
   const navigateTo = useNavigateTo();
 
-  const defaultImage = () => {
-    if (index % 2 === 0) return 'starter.svg';
-    if (index % 3 === 0) return 'medium.svg';
-    if (item.image && item.image !== 'default.png') return item.image;
-    return 'pro.svg';
-  };
-
   return (
     <Card key={index} className="bg-white shadow-none border-1 border-gray-200 rounded-md w-full h-full">
       <CardContent className="h-full py-8">
         <div className="flex flex-col items-center justify-between h-full">
           <div className="flex flex-col items-center space-y-8">
             <TextComponent className="text-black font-bold text-lg uppercase text-center">{item.name}</TextComponent>
-            <Image objectFit="cover" quality={100} src={`${BASE_API_URL}/${defaultImage()}`} width={120} height={120} alt="Page Not Found" priority />
+            <Image objectFit="cover" quality={100} src={`${BASE_API_URL}/${item.image}`} width={120} height={120} alt="Page Not Found" priority />
           </div>
           <div className="py-4">
             <TextComponent className="text-base font-bold text-teal">{item.price > 0 ? convertToCurrency(item.price) : 'Hubungi Langsung'}</TextComponent>
