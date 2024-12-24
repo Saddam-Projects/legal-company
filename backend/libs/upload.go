@@ -24,7 +24,7 @@ func (l *UploadFileImpl) Upload(ctx *fiber.Ctx) (*string, *ErrorResponse) {
 		if fileReq.Size > 2<<60 {
 			return nil, &ErrorResponse{Status: 400, Message: "File too large"}
 		}
-		now := time.Now().Format("2006-01-02-230059")
+		now := time.Now().Format("2006-01-02-23005900")
 		fileFormat := strings.Split(fileReq.Filename, ".")
 		extensionFile := string(fileFormat[len(fileFormat)-1])
 

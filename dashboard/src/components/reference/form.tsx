@@ -3,15 +3,13 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import permission from '@/datasources/internals/permission';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { referenceSchema } from '@/schema/reference';
 import { Reference } from '@/entity/Reference';
 import { Textarea } from '../ui/textarea';
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
-import Image from 'next/image';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { BASE_API_URL } from '@/utils/constant';
 
 export default function ReferenceForm({ submit, reference }: { submit: (values: z.infer<typeof referenceSchema>) => void; reference: Reference | null }) {
@@ -29,6 +27,7 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
       company_logo: '',
       company_name: '',
       company_phone: '',
+      company_nickname: '',
       file: null,
     },
   });
@@ -41,6 +40,7 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
       form.setValue('address', reference.address);
       form.setValue('address_lat', reference.address_lat);
       form.setValue('address_long', reference.address_long);
+      form.setValue('company_nickname', reference.company_nickname);
       setFileName({
         file: reference.company_logo,
         from: 'BE',
@@ -114,6 +114,19 @@ export default function ReferenceForm({ submit, reference }: { submit: (values: 
                 <FormLabel>Company Phone</FormLabel>
                 <FormControl>
                   <Input placeholder="Company Phone" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company_nickname"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Nickname</FormLabel>
+                <FormControl>
+                  <Input placeholder="Company Nickname" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -26,6 +26,7 @@ export default function SettingReferencePage() {
     currentRef.append('address', values.address);
     currentRef.append('address_lat', values.address_lat ?? '');
     currentRef.append('address_long', values.address_long ?? '');
+    currentRef.append('company_nickname', values.company_nickname);
 
     referenceService.updateReference(
       id,

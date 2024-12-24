@@ -25,7 +25,7 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
             <div className="h-full w-full flex">
               <SidebarComponent active={burgerMenuActive} setActive={setBurgerMenuActive} />
               <div className="w-full h-full flex-col ">
-                <NavbarComponent name={reference.reference.company_name} logo={`${BASE_API_URL}/${reference.reference.company_logo}`} active={burgerMenuActive} setActive={setBurgerMenuActive} />
+                <NavbarComponent name={reference.reference.company_nickname} logo={`${BASE_API_URL}/${reference.reference.company_logo}`} active={burgerMenuActive} setActive={setBurgerMenuActive} />
                 <ScrollArea style={{ height: '100%' }} onClick={() => setBurgerMenuActive(false)}>
                   <ContainerComponent className="h-full w-full ">
                     <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>

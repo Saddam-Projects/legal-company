@@ -9,4 +9,5 @@ export const referenceSchema = z.object({
   company_logo: z.string(),
   address_long: z.string().optional(),
   file: z.any(),
+  company_nickname: z.string(),
 });

@@ -7,4 +7,5 @@ export interface Reference {
   company_logo: string;
   address_long: string;
   id?: string;
+  company_nickname: string;
 }

@@ -5,6 +5,7 @@ import { FaBuilding, FaRegBuilding } from 'react-icons/fa';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { SERVICES_URL } from '@/datasources/internals/menus';
 import referenceService from '@/services/refernce.service';
+import { BASE_API_URL } from '@/utils/constant';
 
 export default function DropdownService({ closeDropdownService }: { closeDropdownService: () => void }) {
   const service = serviceService.getData(10, 0, undefined, 'new');
@@ -20,7 +21,7 @@ export default function DropdownService({ closeDropdownService }: { closeDropdow
             <Card key={index} className="w-full h-full bg-transparent border-none shadow-none cursor-pointer hover:opacity-80">
               <CardContent className="py-4 w-full">
                 <div className="flex space-x-4 items-center">
-                  {index % 2 === 0 ? <FaBuilding className="text-teal" size={40} /> : <FaRegBuilding className="text-teal" size={40} />}
+                  <img src={`${BASE_API_URL}/${item.image}`} alt="icon" className="w-14 h-14 object-contain" />
                   <TextComponent
                     onClick={() => {
                       navigateTo(`${SERVICES_URL}/${item.id}`);

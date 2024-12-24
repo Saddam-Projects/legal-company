@@ -60,6 +60,7 @@ func (r *ReferenceHandlerImpl) Update(ctx *fiber.Ctx, db *gorm.DB, dt *dtos.Refe
 	reference.Address_long = dt.Address_long
 	reference.Company_name = dt.Company_name
 	reference.Company_logo = fileName
+	reference.Company_nickname = dt.Company_nickname
 
 	return r.referenceRepository.Update(ctx, db, reference)
 }
