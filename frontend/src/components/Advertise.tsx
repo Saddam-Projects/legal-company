@@ -3,20 +3,6 @@ import { BASE_API_URL } from '@/utils/constant';
 import { Banner } from '@/entity/Banner';
 import Autoplay from 'embla-carousel-autoplay';
 
-export function Example() {
-  return (
-    <Carousel
-      plugins={[
-        Autoplay({
-          delay: 2000,
-        }),
-      ]}
-    >
-      // ...
-    </Carousel>
-  );
-}
-
 export function AdvertiseComponent({ banners }: { banners: Banner[] }) {
   return (
     <Carousel
