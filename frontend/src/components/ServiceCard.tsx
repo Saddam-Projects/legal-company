@@ -18,7 +18,7 @@ export default function ServiceCardComponent({ item, index }: { item: Service; i
         <div className="flex flex-col items-center justify-between h-full">
           <div className="flex flex-col items-center space-y-8">
             <TextComponent className="text-black font-bold text-lg uppercase text-center">{item.name}</TextComponent>
-            <Image objectFit="cover" quality={100} src={`${BASE_API_URL}/${item.image}`} width={120} height={120} alt="Page Not Found" priority />
+            <img className="object-contain" src={`${BASE_API_URL}/${item.image}`} width={120} height={120} alt="Image Not Found" />
           </div>
           <div className="py-4">
             <TextComponent className="text-base font-bold text-teal">{item.price > 0 ? convertToCurrency(item.price) : 'Hubungi Langsung'}</TextComponent>

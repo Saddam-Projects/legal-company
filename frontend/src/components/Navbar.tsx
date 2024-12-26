@@ -36,7 +36,7 @@ export default function NavbarComponent({ active, setActive, name, logo }: Navba
     <ContainerComponent className="fixed top-0 left-0 w-full bg-teal z-30 h-20">
       <div className="flex items-center h-full pr-8">
         <div className="flex space-x-2 items-center">
-          <Image src={logo} width={120} height={120} alt="Company Logo" priority className="z-50" />
+          <img src={logo} width={120} height={120} alt="Company Logo" className="z-50 object-contain" />
           <TextComponent className="hidden lg:flex text-lg font-bold text-primary capitalize">{name}</TextComponent>
         </div>
         <div className="ml-auto">
