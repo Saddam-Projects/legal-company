@@ -58,7 +58,7 @@ export default function BlogPage() {
         <Card className="bg-white p-0 border-none h-full shadow-none grid grid-cols-1 gap-4">
           <CardHeader className="p-0">
             <div className="w-full h-full">
-              <img className="object-cover rounded-lg w-full h-[400px]" src="https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?cs=srgb&dl=pexels-christian-heitz-285904-842711.jpg&fm=jpg" alt="cover" />
+              <img className="object-cover rounded-lg w-full h-[400px]" src={blog.blog.cover} alt="cover" />
             </div>
           </CardHeader>
           <CardContent onClick={() => {}} className="p-0 border-none bg-white outline-none w-full h-full">
