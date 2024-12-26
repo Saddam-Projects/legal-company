@@ -4,24 +4,20 @@ WORKDIR /app
 
 ENV GO111MODULE=on
 
-RUN echo "legal:x:10001:10001:Legal User:/:/sbin/nologin" > /etc/minimal-passwd
-
 COPY . .
 
 RUN --mount=type=cache,mode=0755,target=/go/pkg/mod go mod vendor
 
-RUN go build -o binary
+RUN go build -o binary cmd/api.go
 
 FROM alpine:latest AS runner 
 
 WORKDIR /app 
 
-COPY --from=builder /etc/minimal-passwd /etc/passwd
-
-USER legal
-
 COPY --from=builder /app/binary ./
 
-EXPOSE 8080
+COPY public ./public
+
+EXPOSE 8000
 
 ENTRYPOINT ["/app/binary"]

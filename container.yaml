@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  admin:
+    build:
+      context: dashboard
+      dockerfile: Dockerfile
+    ports:
+      - '8081:5000'
+    depends_on:
+      - db
+      - backend
+    networks:
+      - legal
+    container_name: admin
+    restart: always
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    networks:
+      - legal
+    container_name: backend
+    environment:
+      DB_NAME: legal
+      DB_USERNAME: legal
+      DB_PASSWORD: legal
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: legal
+    restart: always
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - legal
+    depends_on:
+      - db
+      - backend
+    container_name: frontend
+    restart: always
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: legal
+      POSTGRES_DB: legal
+      POSTGRES_USER: legal
+    ports:
+      - '8888:5432'
+    container_name: db
+    networks:
+      - legal
+
+networks:
+  legal:
+    driver: bridge

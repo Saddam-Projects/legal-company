@@ -10,7 +10,6 @@ import serviceService from '@/services/service';
 import { AdvertiseComponent } from '@/components/Advertise';
 import DialogErrorComponent from '@/components/DialogError';
 import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
-import { dummyDataSource } from '@/datasources/internals/dummy';
 import bannerService from '@/services/banner';
 
 export default function Page() {

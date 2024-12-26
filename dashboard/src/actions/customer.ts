@@ -1,5 +1,3 @@
-'use server';
-
 import { CustomerDto } from '@/dtos/customer';
 import { CUSTOMER_PATH } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';

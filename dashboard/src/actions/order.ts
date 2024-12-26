@@ -1,5 +1,3 @@
-'use server';
-
 import { OrderDto } from '@/dtos/order';
 import { ORDER_PATH } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';

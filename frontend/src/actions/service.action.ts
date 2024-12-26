@@ -1,5 +1,3 @@
-'use server';
-
 import { API_SERVICE } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 

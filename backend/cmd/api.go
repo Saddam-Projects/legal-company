@@ -35,5 +35,5 @@ func main() {
 
 	// Register Routes (from submodule)
 	services.NewLegalRoutes().Register(http, conn)
-	httpLib.Connect("localhost", 8080)
+	httpLib.Connect("0.0.0.0", 8000)
 }
