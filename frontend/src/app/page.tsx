@@ -115,7 +115,7 @@ export default function Page() {
                   <div className="flex flex-col items-center space-y-2">
                     <FaStar className="text-4xl text-primary" />
                     <TextComponent className="text-lg font-bold text-teal">Kualitas</TextComponent>
-                    <TextComponent className="text-teal font-medium text-base text-center">Kebanggaan kami ada pada system perijinan yang Sesuai dengan kenutuhan anda.</TextComponent>
+                    <TextComponent className="text-teal font-medium text-base text-center">Kebanggan kami ada pada saat system perizinan sesuai dengan kebutuhan anda yang di bentuk secara profesional</TextComponent>
                   </div>
                 </div>
               </CardContent>
