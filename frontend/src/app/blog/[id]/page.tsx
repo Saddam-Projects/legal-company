@@ -14,6 +14,7 @@ import Paragraph from '@tiptap/extension-paragraph';
 import BulletList from '@tiptap/extension-bullet-list';
 import ImageExt from '@tiptap/extension-image';
 import { useEffect } from 'react';
+import { BASE_API_URL } from '@/utils/constant';
 
 export default function BlogPage() {
   const id = useParams().id;
@@ -58,7 +59,7 @@ export default function BlogPage() {
         <Card className="bg-white p-0 border-none h-full shadow-none grid grid-cols-1 gap-4">
           <CardHeader className="p-0">
             <div className="w-full h-full">
-              <img className="object-cover rounded-lg w-full h-[400px]" src={blog.blog.cover} alt="cover" />
+              <img className="object-cover rounded-lg w-full h-[400px]" src={`${BASE_API_URL}/${blog.blog.cover}`} alt="cover" />
             </div>
           </CardHeader>
           <CardContent onClick={() => {}} className="p-0 border-none bg-white outline-none w-full h-full">
