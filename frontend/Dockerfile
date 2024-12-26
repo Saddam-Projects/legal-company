@@ -8,8 +8,6 @@ COPY . .
 
 RUN pnpm i
 
-ENV BASE_API_URL=http://127.0.0.1:8000
-
 RUN pnpm build 
 
 EXPOSE 8080
