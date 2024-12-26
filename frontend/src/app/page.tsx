@@ -25,6 +25,8 @@ import ServiceCardShimmersComponent from '@/components/shimmers/ServiceCard';
 import referenceService from '@/services/refernce.service';
 import orderService from '@/services/order';
 import serviceFormSchema from '@/dtos/service';
+import bannerService from '@/services/banner';
+import { AdvertiseComponent } from '@/components/Advertise';
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Page() {
@@ -45,6 +47,8 @@ export default function Page() {
     orderService.createOrder(data, service.setLoading, service.setError, () => setSuccess(true));
   };
 
+  const banner = bannerService.getBanners(5, 0, undefined, 'new');
+
   return (
     <div className="grid grid-cols-1 gap-16 mt-12">
       <DialogSuccessComponent active={success} onClose={() => setSuccess(false)} message="Kami sudah menerima permintaan anda, tunggu sebentar, tim kami akan menghubungi anda" />
@@ -53,7 +57,7 @@ export default function Page() {
         <div className="container mx-auto px-4">
           <div className="grid h-full container mx-auto grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
-              <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {TITLE} </TextComponent>
+              {reference.reference && <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {reference.reference.company_nickname} </TextComponent>}
               <TextComponent className="text-white text-base font-regular">
                 Kami adalah perusahaan yang terkemuka dalam bidang pendirian perusahaan, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka
               </TextComponent>
@@ -131,6 +135,14 @@ export default function Page() {
         </div>
       </div>
 
+      <div>
+        {banner.banners.length > 2 && (
+          <div className="flex px-4 container mx-auto justify-center">
+            <AdvertiseComponent banners={banner.banners} />
+          </div>
+        )}
+      </div>
+
       <div className="flex justify-center ">
         <TextComponent className="text-2xl font-bold text-secondary hover:opacity-90">Our Services</TextComponent>
       </div>
@@ -159,10 +171,10 @@ export default function Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex justify-center">
               <div className="flex flex-col space-y-4 ">
-                <TextComponent className={`text-white text-xl lg:text-2xl font-medium italic capitalize`}>Pengurusan cepat, lancar dan terpercaya</TextComponent>
+                <TextComponent className={`text-white text-xl lg:text-2xl font-medium italic capitalize`}>legalitas, solusi cerdas!</TextComponent>
                 <TextComponent className="text-base text-justify text-white lowercase">
-                  komitmen kami untuk memberikan pelayanan yang efektif, efisien, dan dapat diandalkan. Kami berdedikasi untuk memenuhi kebutuhan Anda dengan cepat, akurat, dan profesional, sehingga Anda dapat merasa nyaman dan percaya diri
-                  dengan pilihan Anda
+                  Segera tingkatkan kualitas bisnis usahamu dengan membuat usahamu menjadi legal dan sesuai peraturan di indonesia. AIM CONSULTANT hadir untuk membantu bisnismu menjadi semakin terintegrasi dan kredibilitas dengan waktu yang
+                  cepat dan profesional AIM CONSULTANT sudah sangat berpengalaman. Segara urus legalitas usahamu dan tunggu apalagi segera hubungi kami
                 </TextComponent>
               </div>
             </div>

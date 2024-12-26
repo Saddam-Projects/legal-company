@@ -1,11 +1,31 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
 import { BASE_API_URL } from '@/utils/constant';
 import { Banner } from '@/entity/Banner';
+import Autoplay from 'embla-carousel-autoplay';
+
+export function Example() {
+  return (
+    <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
+      // ...
+    </Carousel>
+  );
+}
 
 export function AdvertiseComponent({ banners }: { banners: Banner[] }) {
   return (
-    <Carousel>
+    <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {banners.map((item, index) => (
           <CarouselItem key={index} className="lg:basis-1/2">

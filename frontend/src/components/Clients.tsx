@@ -1,11 +1,17 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
+import Autoplay from 'embla-carousel-autoplay';
 import { BASE_API_URL } from '@/utils/constant';
 import { ClientLogo } from '@/entity/ClientLogo';
 
 export function ClientComponent({ clients }: { clients: ClientLogo[] }) {
   return (
-    <Carousel>
+    <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {clients.map((item, index) => (
           <CarouselItem key={index} className="basis-1/2 lg:basis-1/6">

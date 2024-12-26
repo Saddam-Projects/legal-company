@@ -51,7 +51,7 @@ export default function NavbarComponent({ active, setActive, name, logo }: Navba
                 onClick={() => {
                   navigateTo(item.to);
                 }}
-                className={`cursor-pointer capitalize text-lg font-medium text-primary ${pathname === item.to ? 'font-bold' : 'font-regular'}`}
+                className={`cursor-pointer capitalize text-lg font-medium text-white ${pathname === item.to ? 'font-bold' : 'font-regular'}`}
               >
                 {item.title}
               </TextComponent>
