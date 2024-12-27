@@ -10,7 +10,7 @@ import clientService from '@/services/client';
 import galleryService from '@/services/gallery';
 import referenceService from '@/services/refernce.service';
 import serviceService from '@/services/service';
-import { TITLE } from '@/utils/constant';
+import { BASE_API_URL, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
 import { HANDSHAKE_IMAGE, IMAGE_HEADER } from '@/utils/images';
 import Image from 'next/image';
@@ -38,9 +38,11 @@ export default function AboutPage() {
                   memiliki pengalaman cukup Panjang dalam bisang perizinan di Indonesia pada bulan November 2024. dan di sahkan oleh notaris Lindra Nelly. S.H., M.Kn dan sudah memiliki izin lengkap.
                 </TextComponent>
               </div>
-              <div className="flex justify-end order-1 lg:order-2">
-                <Image src={HANDSHAKE_IMAGE} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
-              </div>
+              {reference.reference && (
+                <div className="flex justify-end order-1 lg:order-2">
+                  <Image src={`${BASE_API_URL}/${reference.reference.company_logo}`} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+                </div>
+              )}
             </div>
           </div>
         </div>
