@@ -191,12 +191,12 @@ export default function Page() {
       </div>
       <div className="bg-white container mx-auto px-4 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="flex flex-col space-y-4 justify-center">
-            <div className="flex lg:space-x-8 flex-col lg:flex-row space-y-4 lg:space-y-0">
-              <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
-              <img src={QR_IMAGE} width={100} height={100} className="object-contain" alt="" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="flex flex-col justify-center space-y-4">
+              <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>Contact us, okay!</TextComponent>
+              <TextComponent className="text-teal text-base font-regular">We're happy to hear from you. If you have any questions, need support, or want to know more about our services, our team is ready to help.</TextComponent>
             </div>
-            <TextComponent className="text-teal text-base font-regular">We're happy to hear from you. If you have any questions, need support, or want to know more about our services, our team is ready to help.</TextComponent>
+            <img src={QR_IMAGE} width={150} height={150} className="object-contain" alt="" />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col  space-y-2">
