@@ -40,7 +40,7 @@ export default function AboutPage() {
               </div>
               {reference.reference && (
                 <div className="flex justify-end order-1 lg:order-2">
-                  <Image src={`${BASE_API_URL}/${reference.reference.company_logo}`} className="object-cover" width={400} height={400} alt="Page Not Found" priority />
+                  <img src={`${BASE_API_URL}/${reference.reference.company_logo}`} className="object-cover" width={400} height={400} alt="Page Not Found" />
                 </div>
               )}
             </div>
