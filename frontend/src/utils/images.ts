@@ -16,4 +16,4 @@ export const HANDSHAKE_IMAGE = '/handshake.png';
 export const CONTACT_IMAGE = '/contact.jpg';
 export const CS_IMAGE = '/cs.jpg';
 export const DOC_IMAGE = '/doc.jpg';
-export const QR_IMAGE = '/qr.jpg';
+export const QR_IMAGE = '/qr.png';
