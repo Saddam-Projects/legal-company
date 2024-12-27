@@ -7,7 +7,7 @@ import { ABOUT_US_URL, FORM_URL, SERVICES_URL } from '@/datasources/internals/me
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { ADDRESS, DESCRIPTION, EMAIL, PHONE, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE } from '@/utils/images';
+import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE, QR_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
@@ -59,7 +59,8 @@ export default function Page() {
             <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
               {reference.reference && <TextComponent className={`text-white text-4xl font-bold ${robot.className} italic`}>Selamat datang di {reference.reference.company_nickname} </TextComponent>}
               <TextComponent className="text-white text-base font-regular">
-                Kami adalah perusahaan yang terkemuka dalam bidang pendirian perusahaan, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka
+                Kami adalah consultant yang terkemuka dalam bidang perizinan di Indonesia, dengan reputasi yang baik dalam membantu klien kami mencapai tujuan bisnis mereka. kami siap membantu UMKM, Kelas Menengah dan Usaha Asing untuk
+                berbisnis di seluruh wilayah Indonesia secara formal dan berintegritas sesuai dengan peraturan perundang-undangan di indonesia
               </TextComponent>
               <div className="flex space-x-2">
                 <Button onClick={() => navigateTo(ABOUT_US_URL)} className="border-1 border-primary bg-transparent text-white hover:bg-transparent hover:opacity-90">
@@ -191,8 +192,11 @@ export default function Page() {
       <div className="bg-white container mx-auto px-4 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 justify-center">
-            <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
-            <TextComponent className="text-teal text-base font-regular">We'd love to hear from youl Whether you have questions, need support, or want to learn more about our services, our team is here to help</TextComponent>
+            <div className="flex lg:space-x-8 flex-col lg:flex-row space-y-4 lg:space-y-0">
+              <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
+              <img src={QR_IMAGE} width={100} height={100} className="object-contain" alt="" />
+            </div>
+            <TextComponent className="text-teal text-base font-regular">We're happy to hear from you. If you have any questions, need support, or want to know more about our services, our team is ready to help.</TextComponent>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col  space-y-2">

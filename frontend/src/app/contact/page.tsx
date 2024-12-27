@@ -6,7 +6,7 @@ import contactSchema from '@/dtos/contact';
 import { OrderDto } from '@/dtos/order';
 import { TAGLINE_DESCRIPTION } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE_3, CONTACT_IMAGE, IMAGE_HEADER } from '@/utils/images';
+import { BUILDING_IMAGE_3, CONTACT_IMAGE, IMAGE_HEADER, QR_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaAddressBook, FaClock, FaInfinity, FaMapMarkerAlt, FaShieldAlt, FaStar, FaTeamspeak, FaUsers } from 'react-icons/fa';
@@ -103,8 +103,11 @@ export default function ContactPage() {
       <div className="bg-white container mx-auto px-4 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4 justify-center">
-            <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
-            <TextComponent className="text-teal text-base font-regular">We'd love to hear from youl Whether you have questions, need support, or want to learn more about our services, our team is here to help</TextComponent>
+            <div className="flex lg:space-x-8 flex-col lg:flex-row space-y-4 lg:space-y-0">
+              <TextComponent className={`text-black text-4xl capitalize font-bold ${robot.className} italic`}>get in touch</TextComponent>
+              <img src={QR_IMAGE} width={100} height={100} className="object-contain" alt="" />
+            </div>
+            <TextComponent className="text-teal text-base font-regular">We're happy to hear from you. If you have any questions, need support, or want to know more about our services, our team is ready to help.</TextComponent>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col  space-y-2">
