@@ -173,7 +173,7 @@ export default function Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex justify-center">
               <div className="flex flex-col space-y-4">
-                <TextComponent className={`text-blue-800 text-xl lg:text-2xl font-medium italic lower`}>aim-consultant.id</TextComponent>
+                <TextComponent className={`text-blue-800 text-xl lg:text-[28px] font-medium italic lower`}>aim-consultant.id</TextComponent>
                 <TextComponent className="text-base text-justify text-teal capitalize">
                   Telah Terdaftar sebagai <b>Penyelenggara Sistem Elektronik (PSE)</b> berdasarkan <b>Peraturan Menteri Komunikasi dan Informatika (Permenkominfo) Nomor 5 Tahun 2020</b> tentang Penyelenggaraan Sistem Elektronik, yang
                   menegaskan bahwa kami telah memenuhi semua persyaratan dan ketentuan yang berlaku untuk menjadi penyelenggara sistem elektronik yang sah dan terpercaya
@@ -242,7 +242,7 @@ export default function Page() {
       </div>
       {reference.reference && (
         <div className="grid grid-cols-1 h-[400px] z-0">
-          <MapComponent lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} name={reference.reference.address} />
+          {/* <MapComponent lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} name={reference.reference.address} /> */}
         </div>
       )}
       <div className="py-2 bg-white container px-4 mx-auto">
