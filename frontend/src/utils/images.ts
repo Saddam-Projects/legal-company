@@ -17,3 +17,5 @@ export const CONTACT_IMAGE = '/contact.jpg';
 export const CS_IMAGE = '/cs.jpg';
 export const DOC_IMAGE = '/doc.jpg';
 export const QR_IMAGE = '/qr.png';
+export const QR_PSE_IMAGE = '/qr-pse.png';
+export const LOGO_KOMINFO_IMAGE = '/kominfo.png';

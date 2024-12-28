@@ -7,7 +7,7 @@ import { ABOUT_US_URL, FORM_URL, SERVICES_URL } from '@/datasources/internals/me
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { ADDRESS, DESCRIPTION, EMAIL, PHONE, TITLE } from '@/utils/constant';
 import { robot } from '@/utils/fonts';
-import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE, QR_IMAGE } from '@/utils/images';
+import { BUILDING_IMAGE, IMAGE_GRIDS, LAW_IMAGE, LOGO_KOMINFO_IMAGE, QR_IMAGE, QR_PSE_IMAGE } from '@/utils/images';
 import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 import dynamic from 'next/dynamic';
@@ -167,6 +167,28 @@ export default function Page() {
           </div>
         )}
       </div>
+
+      <div className="py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="flex justify-center">
+              <div className="flex flex-col space-y-4">
+                <TextComponent className={`text-blue-800 text-xl lg:text-2xl font-medium italic lower`}>aim-consultant.id</TextComponent>
+                <TextComponent className="text-base text-justify text-teal capitalize">
+                  Telah Terdaftar sebagai <b>Penyelenggara Sistem Elektronik (PSE)</b> berdasarkan <b>Peraturan Menteri Komunikasi dan Informatika (Permenkominfo) Nomor 5 Tahun 2020</b> tentang Penyelenggaraan Sistem Elektronik, yang
+                  menegaskan bahwa kami telah memenuhi semua persyaratan dan ketentuan yang berlaku untuk menjadi penyelenggara sistem elektronik yang sah dan terpercaya
+                </TextComponent>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="lg:ml-auto lg:px-12">
+                <img src={QR_PSE_IMAGE} width={180} height={180} className="object-contain" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className=" bg-teal py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -189,6 +211,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+
       <div className="bg-white container mx-auto px-4 ">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
