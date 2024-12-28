@@ -242,7 +242,7 @@ export default function Page() {
       </div>
       {reference.reference && (
         <div className="grid grid-cols-1 h-[400px] z-0">
-          {/* <MapComponent lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} name={reference.reference.address} /> */}
+          <MapComponent lat={reference.reference.address_lat as unknown as number} long={reference.reference.address_long as unknown as number} name={reference.reference.address} />
         </div>
       )}
       <div className="py-2 bg-white container px-4 mx-auto">
