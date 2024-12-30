@@ -181,7 +181,8 @@ export default function Page() {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="lg:ml-auto lg:px-12">
+              <div className="lg:ml-auto lg:px-12 flex">
+                <img src={LOGO_KOMINFO_IMAGE} width={150} height={150} className="object-contain" />
                 <img src={QR_PSE_IMAGE} width={180} height={180} className="object-contain" />
               </div>
             </div>
