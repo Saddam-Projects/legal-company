@@ -9,11 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <Head>
-        <script
-          type="text/javascript"
-          src="https://nextdev.id/rentetan-script/aim-consultant/rentetan-code.js
-"
-        ></script>
+        <script type="text/javascript" src="https://nextdev.id/rentetan-script/aim-consultant/rentetan-code.js"></script>
       </Head>
       <body className={montserrat.className}>
         <LayoutComponent>{children}</LayoutComponent>
