@@ -41,8 +41,8 @@ export default function BlogPage() {
           <Card key={index} className="bg-white  border-none h-full grid grid-cols-1 gap-4">
             <CardHeader className="p-0">
               <div className="w-full h-full">
-                <img className="object-cover  w-full h-[400px]" src={i.cover} alt="cover" />
-              </div>  
+                <img className="object-cover  w-full h-[400px]" src={`${BASE_API_URL}/${i.cover}`} alt="cover" />
+              </div>
             </CardHeader>
             <CardContent onClick={() => navigate(`/blog/${i.id}`)} className="py-0 px-4 border-none bg-white outline-none w-full h-full">
               <TextComponent className="text-xl text-justify cursor-pointer font-bold text-black">{i.title.slice(0, 50)}</TextComponent>
