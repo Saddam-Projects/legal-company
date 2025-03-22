@@ -165,6 +165,14 @@ CREATE TABLE "category" (
 
 );
 
+ALTER TABLE blog
+ADD COLUMN keywords TEXT NULL;
+
+ALTER TABLE blog
+ADD COLUMN description TEXT NULL;
+
+ALTER TABLE blog
+ADD COLUMN slug TEXT NULL;
 
 ALTER TABLE blog
 ADD CONSTRAINT fk_blog_category

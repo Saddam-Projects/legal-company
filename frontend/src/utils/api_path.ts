@@ -7,3 +7,4 @@ export const API_BANNER = '/banner';
 export const CUSTOMER_PATH = '/customer';
 export const ORDER_PATH = '/order';
 export const BLOG_PATH = '/blog';
+export const BLOG_SLUG_PATH = '/blog-slug';

@@ -24,7 +24,7 @@ export default function BlogPage() {
               <img className="object-cover rounded-lg w-full h-[400px]" src={`${BASE_API_URL}/${blog.cover}`} alt="cover" />
             </div>
           </CardHeader>
-          <CardContent onClick={() => navigate(`/blog/${blog.id}`)} className="p-0 border-none bg-white outline-none w-full h-full">
+          <CardContent onClick={() => navigate(`/blog/${blog.slug ? blog.slug : blog.id}`)} className="p-0 border-none bg-white outline-none w-full h-full">
             <TextComponent className="text-xl cursor-pointer font-bold text-black">{blog.title.slice(0, 50)}</TextComponent>
           </CardContent>
           <CardContent className="p-0 border-none bg-white outline-none w-full h-full flex space-x-4">
@@ -44,7 +44,7 @@ export default function BlogPage() {
                 <img className="object-cover  w-full h-[400px]" src={`${BASE_API_URL}/${i.cover}`} alt="cover" />
               </div>
             </CardHeader>
-            <CardContent onClick={() => navigate(`/blog/${i.id}`)} className="py-0 px-4 border-none bg-white outline-none w-full h-full">
+            <CardContent onClick={() => navigate(`/blog/${i.slug ? i.slug : i.id}`)} className="py-0 px-4 border-none bg-white outline-none w-full h-full">
               <TextComponent className="text-xl text-justify cursor-pointer font-bold text-black">{i.title.slice(0, 50)}</TextComponent>
             </CardContent>
             <CardContent className="py-0 px-4 border-none mb-8 bg-white outline-none w-full h-full flex space-x-4">

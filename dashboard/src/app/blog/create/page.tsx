@@ -22,6 +22,7 @@ import blogService from '@/services/blog.service';
 import useNavigateTo from '@/hooks/useNavigateTo';
 import { BLOG_URL } from '@/datasources/internals/menus';
 import DialogErrorComponent from '@/components/DialogError';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Blog() {
   const [fileName, setFileName] = useState<{
@@ -81,6 +82,11 @@ export default function Blog() {
     data.append('author', values.author);
     data.append('category', values.category);
     data.append('content', values.content);
+
+    if (values.description) data.append('description', values.description);
+    if (values.keywords) data.append('keywords', values.keywords);
+
+    data.append('slug', values.slug);
 
     if (values.file) data.append('file', values.file);
 
@@ -157,6 +163,46 @@ export default function Blog() {
                 <FormLabel>Cover Artikel</FormLabel>
                 <FormControl>
                   <Input onChange={fileHandler} type="file" placeholder="Company Logo" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Custom Url</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" placeholder="Custom Url" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="keywords"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Keyword</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" placeholder="Keyword" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={6} placeholder="Meta Description" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

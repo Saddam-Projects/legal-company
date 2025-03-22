@@ -7,6 +7,9 @@ export interface Blog {
   category_id: string;
   author: string;
   created_at: string;
+  slug: string;
+  description: string;
+  keywords: string;
 }
 
 export interface Category {

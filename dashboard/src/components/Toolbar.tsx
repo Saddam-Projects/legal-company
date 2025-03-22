@@ -54,7 +54,7 @@ function ToolBar({ editor }: Props) {
   };
 
   return (
-    <div className="flex gap-3 border bg-light text-dark border-input rounded-lg py-1 px-3 my-2">
+    <div className="grid grid-cols-4 lg:grid-cols-12 gap-2 border bg-light text-dark border-input rounded-lg py-1 px-3 my-2">
       <Input onChange={onChangeImage} ref={ref} className="hidden" type="file" />
       <Dialog open={modalUploadImage}>
         <DialogContent className="dark:bg-dark bg-light dark:text-white text-dark p-0 shadow-none border-none">

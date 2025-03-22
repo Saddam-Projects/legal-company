@@ -15,6 +15,7 @@ type BlogController interface {
 	FindImages(ctx *fiber.Ctx) error
 	UploadImage(ctx *fiber.Ctx) error
 	FindCategories(ctx *fiber.Ctx) error
+	FindBySlug(ctx *fiber.Ctx) error
 }
 type BlogControllerImpl struct {
 	blogHandler handlers.BlogHandler
@@ -140,5 +141,18 @@ func (b *BlogControllerImpl) FindCategories(ctx *fiber.Ctx) error {
 	}
 
 	ctx.Status(200).JSON(categories)
+	return nil
+}
+
+func (b *BlogControllerImpl) FindBySlug(ctx *fiber.Ctx) error {
+
+	blog, err := b.blogHandler.FindBySlug(ctx)
+
+	if err != nil {
+		ctx.Status(err.Status).JSON(err)
+		return nil
+	}
+
+	ctx.Status(200).JSON(blog)
 	return nil
 }

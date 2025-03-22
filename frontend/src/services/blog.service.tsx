@@ -1,4 +1,4 @@
-import { getBlogs, getBlog } from '@/actions/blog';
+import { getBlogs, getBlog, getBlogBySlug } from '@/actions/blog';
 import { Blog, BlogImage } from '@/entity/Blog';
 import { useEffect, useState } from 'react';
 
@@ -29,14 +29,23 @@ const getBlogsService = (limit?: number, offset?: number, keyword?: string, sort
   return { blogs, error, loading, fetch, setLoading, setError, setBlogs };
 };
 
-const getBlogService = (id: string) => {
+const getBlogService = (id: string, isUUID: boolean) => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
   const fetch = async () => {
     try {
-      const response = await getBlog(id);
+      let response: Blog | null = null;
+
+      if (!isUUID) {
+        response = await getBlogBySlug(id);
+      }
+
+      if (isUUID) {
+        response = await getBlog(id);
+      }
+
       if (!response) {
         throw new Error('Failed to fetch data');
       }

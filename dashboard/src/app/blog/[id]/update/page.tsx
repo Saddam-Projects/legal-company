@@ -22,6 +22,7 @@ import useNavigateTo from '@/hooks/useNavigateTo';
 import { useParams } from 'next/navigation';
 import { BLOG_URL } from '@/datasources/internals/menus';
 import blogService from '@/services/blog.service';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Blog() {
   const id = useParams().id;
@@ -94,6 +95,15 @@ export default function Blog() {
         form.setValue('author', serviceBlog.blog.author);
       }
       form.setValue('category', serviceBlog.blog.category.name);
+      form.setValue('slug', serviceBlog.blog.slug);
+
+      if (serviceBlog.blog.description) {
+        form.setValue('description', serviceBlog.blog.description);
+      }
+
+      if (serviceBlog.blog.keywords) {
+        form.setValue('keywords', serviceBlog.blog.keywords);
+      }
 
       if (serviceBlog.blog.content && editor) {
         form.setValue('content', serviceBlog.blog.content);
@@ -110,6 +120,11 @@ export default function Blog() {
     data.append('category', values.category);
     data.append('content', values.content);
 
+    if (values.description) data.append('description', values.description);
+    if (values.keywords) data.append('keywords', values.keywords);
+
+    data.append('slug', values.slug);
+
     if (values.file) data.append('file', values.file);
 
     blogService.updateBlog(
@@ -117,7 +132,10 @@ export default function Blog() {
       data,
       (loading) => serviceBlog.setLoading(loading),
       (error) => serviceBlog.setError(error),
-      () => serviceBlog.fetch()
+      () => {
+        serviceBlog.fetch();
+        navigate(BLOG_URL);
+      }
     );
   };
 
@@ -186,6 +204,46 @@ export default function Blog() {
                 <FormLabel>Cover Artikel</FormLabel>
                 <FormControl>
                   <Input onChange={fileHandler} type="file" placeholder="Company Logo" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Custom Url</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" placeholder="Custom Url" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="keywords"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Keyword</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" placeholder="Keyword" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={6} placeholder="Meta Description" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

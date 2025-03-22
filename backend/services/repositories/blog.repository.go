@@ -17,6 +17,7 @@ type BlogRepository interface {
 	Create(ctx *fiber.Ctx, db *gorm.DB, blog *models.Blog) (*models.Blog, *libs.ErrorResponse)
 	Update(ctx *fiber.Ctx, db *gorm.DB, blog *models.Blog) (*models.Blog, *libs.ErrorResponse)
 	Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Blog, *libs.ErrorResponse)
+	FindBySlug(ctx *fiber.Ctx, db *gorm.DB, slug string) (*models.Blog, *libs.ErrorResponse)
 }
 
 type BlogRepositoryImpl struct{}
@@ -84,6 +85,10 @@ func (*BlogRepositoryImpl) Create(ctx *fiber.Ctx, db *gorm.DB, blog *models.Blog
 
 	queryCategory := db.Where("category_name = ?", blog.Category.Name).First(&category)
 
+	if err := db.Model(&models.Blog{}).Where("slug = ? and is_deleted = 0", blog.Slug).First(&models.Blog{}); err == nil {
+		return nil, &libs.ErrorResponse{Status: 400, Message: "Slug already exists"}
+	}
+
 	if queryCategory.Error != nil {
 		newCategory := models.Category{
 			Name: blog.Category.Name,
@@ -150,4 +155,20 @@ func (*BlogRepositoryImpl) Delete(ctx *fiber.Ctx, db *gorm.DB) (*models.Blog, *l
 	db.Updates(blogDeleted)
 
 	return blogDeleted, nil
+}
+
+func (*BlogRepositoryImpl) FindBySlug(ctx *fiber.Ctx, db *gorm.DB, slug string) (*models.Blog, *libs.ErrorResponse) {
+	var blog *models.Blog
+
+	query := db.Where("slug = ? and is_deleted = 0", slug).Preload("Category").First(&blog)
+
+	if query.Error != nil {
+		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
+			return nil, &libs.ErrorResponse{Status: 404, Message: "Data not found"}
+		}
+		return nil, &libs.ErrorResponse{Status: 500, Message: "Failed to get data"}
+
+	}
+
+	return blog, nil
 }

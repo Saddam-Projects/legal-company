@@ -114,6 +114,7 @@ func (r *LegalRoutesImpl) Register(api *fiber.App, db *gorm.DB) {
 	api.Get("/dashboard/statistic", dashboardController.GetStatistic)
 
 	api.Get("/blog", blogController.FindAll)
+	api.Get("/blog-slug/:slug", blogController.FindBySlug)
 	api.Get("/blog/:id", blogController.FindOne)
 	api.Post("/blog", blogController.Create)
 	api.Post("/blog/:id/update", blogController.Update)

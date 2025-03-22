@@ -18,6 +18,7 @@ type BlogHandler interface {
 	FindImages(ctx *fiber.Ctx) (*[]models.CloudImage, *libs.ErrorResponse)
 	UploadImage(ctx *fiber.Ctx, dt *dtos.FileUploadDTO) (*models.CloudImage, *libs.ErrorResponse)
 	FindCategories(ctx *fiber.Ctx) (*[]models.Category, *libs.ErrorResponse)
+	FindBySlug(ctx *fiber.Ctx) (*models.Blog, *libs.ErrorResponse)
 }
 
 type BlogHandlerImpl struct {
@@ -72,11 +73,14 @@ func (b *BlogHandlerImpl) Create(ctx *fiber.Ctx, dt *dtos.BlogDTO) (*models.Blog
 	}
 
 	newBlog := &models.Blog{
-		Title:    dt.Title,
-		Content:  dt.Content,
-		Cover:    mediaUrl,
-		Category: *newCategory,
-		Author:   dt.Author,
+		Title:       dt.Title,
+		Content:     dt.Content,
+		Cover:       mediaUrl,
+		Category:    *newCategory,
+		Author:      dt.Author,
+		Description: dt.Description,
+		Slug:        dt.Slug,
+		Keywords:    dt.Keywords,
 	}
 
 	createdBlog, err := b.blogRepository.Create(ctx, b.db, newBlog)
@@ -115,6 +119,9 @@ func (b *BlogHandlerImpl) Update(ctx *fiber.Ctx, dt *dtos.BlogDTO) (*models.Blog
 	}
 	prevBlog.Title = dt.Title
 	prevBlog.Content = dt.Content
+	prevBlog.Slug = dt.Slug
+	prevBlog.Description = dt.Description
+	prevBlog.Keywords = dt.Keywords
 
 	if fileName != nil {
 		prevBlog.Cover = fileName
@@ -165,4 +172,9 @@ func (b *BlogHandlerImpl) FindCategories(ctx *fiber.Ctx) (*[]models.Category, *l
 	categories, err := b.categoryRepository.FindAll(ctx, b.db)
 
 	return &categories, err
+}
+
+func (b *BlogHandlerImpl) FindBySlug(ctx *fiber.Ctx) (*models.Blog, *libs.ErrorResponse) {
+	blog, err := b.blogRepository.FindBySlug(ctx, b.db, ctx.Params("slug"))
+	return blog, err
 }

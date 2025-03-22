@@ -1,4 +1,4 @@
-import { BLOG_PATH } from '@/utils/api_path';
+import { BLOG_PATH, BLOG_SLUG_PATH } from '@/utils/api_path';
 import { BASE_API_URL } from '@/utils/constant';
 
 export const getBlogs = async (limit?: number, offset?: number, keyword?: string, sort?: string) => {
@@ -45,6 +45,23 @@ export const getBlogs = async (limit?: number, offset?: number, keyword?: string
 export const getBlog = async (id: string) => {
   try {
     const response = await fetch(`${BASE_API_URL}${BLOG_PATH}/${id}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getBlogBySlug = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_API_URL}${BLOG_SLUG_PATH}/${id}`, {
       method: 'GET',
     });
 

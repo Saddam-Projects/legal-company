@@ -30,6 +30,24 @@ export const generateBlogColumn = (deleteHandler: (blog: Blog) => void, updateHa
       cell: ({ row }) => <div className="capitalize">{row.getValue('category')}</div>,
     },
     {
+      accessorKey: 'slug',
+      header: 'custom url',
+      id: 'slug',
+      cell: ({ row }) => <div className="capitalize">{row.original.slug}</div>,
+    },
+    {
+      accessorKey: 'description',
+      header: 'meta desc',
+      id: 'description',
+      cell: ({ row }) => <div className="capitalize">{row.original.description}</div>,
+    },
+    {
+      accessorKey: 'keywords',
+      header: 'keyword',
+      id: 'keywords',
+      cell: ({ row }) => <div className="capitalize">{row.original.keywords}</div>,
+    },
+    {
       accessorKey: 'action',
       header: () => <div className="text-right"></div>,
       cell: ({ row }) => {

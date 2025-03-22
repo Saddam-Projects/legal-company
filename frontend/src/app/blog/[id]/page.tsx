@@ -13,11 +13,14 @@ import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
 import BulletList from '@tiptap/extension-bullet-list';
 import ImageExt from '@tiptap/extension-image';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BASE_API_URL } from '@/utils/constant';
+import { validate } from 'uuid';
 
 export default function BlogPage() {
   const id = useParams().id;
+
+  const isUuid = useMemo(() => validate(id), [id]);
 
   const editor = useEditor({
     extensions: [
@@ -44,7 +47,8 @@ export default function BlogPage() {
     },
     editable: false,
   });
-  const blog = blogService.getBlog(id as string);
+
+  const blog = blogService.getBlog(id as string, isUuid);
 
   useEffect(() => {
     if (blog.blog && editor) {
