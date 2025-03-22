@@ -8,14 +8,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { blogSchema } from '@/schema/blog';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Heading from '@tiptap/extension-heading';
-import { cn } from '@/lib/utils';
-import ListItem from '@tiptap/extension-list-item';
-import Paragraph from '@tiptap/extension-paragraph';
-import BulletList from '@tiptap/extension-bullet-list';
-import ImageExt from '@tiptap/extension-image';
 import { ChangeEvent, useState } from 'react';
 import { BASE_API_URL } from '@/utils/constant';
 import blogService from '@/services/blog.service';
@@ -23,6 +15,7 @@ import useNavigateTo from '@/hooks/useNavigateTo';
 import { BLOG_URL } from '@/datasources/internals/menus';
 import DialogErrorComponent from '@/components/DialogError';
 import { Textarea } from '@/components/ui/textarea';
+import { useEditorProvider } from '@/hooks/useEditor';
 
 export default function Blog() {
   const [fileName, setFileName] = useState<{
@@ -46,32 +39,10 @@ export default function Blog() {
   });
 
   const navigateTo = useNavigateTo();
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({}),
-      Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
-      }),
-      Paragraph,
-      ListItem,
-      BulletList,
-      ImageExt.configure({
-        allowBase64: true,
-        inline: true,
-      }),
-    ],
-    content: form.getValues('content'),
-    editorProps: {
-      attributes: {
-        class: cn(
-          'prose max-w-none prose-a:text-blue-500 prose-a:no-underline prose-a:underline-offset-4 [&_ol]:list-decimal [&_ul]:list-disc prose-img:mx-auto prose-img:my-2 prose-img:rounded prose-img:shadow-lg prose-img:object-contain prose-img:object-center [&_ol]:text-light [&_ul]:text-light [&_ol]:pl-5 [&_ul]:pl-5',
-          'rounded-md text-sm p-0 border min-h-[550px] bg-light border-input focus:ring-offset-2 disabled:cursor-not-allows disabled:opacity-50 p-2'
-        ),
-      },
-    },
-    onUpdate({ editor }) {
-      form.setValue('content', editor.getHTML());
+  const editor = useEditorProvider({
+    content: '',
+    onUpdate: (content) => {
+      form.setValue('content', content);
     },
   });
 

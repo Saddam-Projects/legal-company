@@ -24,6 +24,27 @@ import { BLOG_URL } from '@/datasources/internals/menus';
 import blogService from '@/services/blog.service';
 import { Textarea } from '@/components/ui/textarea';
 
+import Bold from '@tiptap/extension-bold';
+import Blockquote from '@tiptap/extension-blockquote';
+import CodeBlock from '@tiptap/extension-code-block';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import Strike from '@tiptap/extension-strike';
+import Text from '@tiptap/extension-text';
+import HardBreak from '@tiptap/extension-hard-break';
+import Link from '@tiptap/extension-link';
+import OrderedList from '@tiptap/extension-ordered-list';
+import Italic from '@tiptap/extension-italic';
+import Youtube from '@tiptap/extension-youtube';
+import Underline from '@tiptap/extension-underline';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
+import TextStyle from '@tiptap/extension-text-style';
+import { useEditorProvider } from '@/hooks/useEditor';
+
 export default function Blog() {
   const id = useParams().id;
   const navigate = useNavigateTo();
@@ -54,34 +75,12 @@ export default function Blog() {
     },
   });
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({}),
-      Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
-      }),
-      Paragraph,
-      ListItem,
-      BulletList,
-      ImageExt.configure({
-        allowBase64: true,
-        inline: true,
-      }),
-    ],
-    content: form.getValues('content'),
-    editorProps: {
-      attributes: {
-        class: cn(
-          'prose max-w-none prose-a:text-blue-500 prose-a:no-underline prose-a:underline-offset-4 [&_ol]:list-decimal [&_ul]:list-disc prose-img:mx-auto prose-img:my-2 prose-img:rounded prose-img:shadow-lg prose-img:object-contain prose-img:object-center [&_ol]:text-light [&_ul]:text-light [&_ol]:pl-5 [&_ul]:pl-5',
-          'rounded-md text-sm p-0 border min-h-[550px] bg-light border-input focus:ring-offset-2 disabled:cursor-not-allows disabled:opacity-50 p-2'
-        ),
-      },
-    },
-    onUpdate({ editor }) {
-      form.setValue('content', editor.getHTML());
+  const editor = useEditorProvider({
+    content: '',
+    onUpdate: (content) => {
+      form.setValue('content', content);
     },
   });
-
   useEffect(() => {
     if (serviceBlog.blog) {
       form.setValue('title', serviceBlog.blog.title);

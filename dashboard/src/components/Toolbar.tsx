@@ -1,8 +1,8 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { type Editor } from '@tiptap/react';
 import { Toggle } from './ui/toggle';
-import { Bold, Italic, List, ListOrdered, StrikethroughIcon, ImageIcon } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, StrikethroughIcon, ImageIcon, BlocksIcon, QuoteIcon, Dot, Code, FlipHorizontal, Link, Underline, Youtube } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from './ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Level } from '@tiptap/extension-heading';
@@ -12,10 +12,11 @@ import { TooltipContent } from '@radix-ui/react-tooltip';
 import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader } from './ui/dialog';
 import { Button } from './ui/button';
-import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons';
+import { Cross2Icon, EnterIcon, PlusIcon } from '@radix-ui/react-icons';
 import blogService from '@/services/blog.service';
 import { BASE_API_URL } from '@/utils/constant';
 import DialogErrorComponent from './DialogError';
+import { FaTasks } from 'react-icons/fa';
 
 type Props = {
   editor: Editor | null;
@@ -51,6 +52,37 @@ function ToolBar({ editor }: Props) {
   const selectImage = (url: string) => {
     editor.chain().focus().setImage({ src: url }).run();
     setModalUploadImage(false);
+  };
+
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
+
+    if (url === null) {
+      return;
+    }
+
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+
+      return;
+    }
+
+    try {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+    } catch (e: any) {
+      alert(e.message);
+    }
+  }, [editor]);
+
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL');
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+      });
+    }
   };
 
   return (
@@ -191,6 +223,110 @@ function ToolBar({ editor }: Props) {
           </TooltipTrigger>
           <TooltipContent>
             <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">list number</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" pressed={editor.isActive('blockquote')} onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}>
+              <QuoteIcon className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">block quote</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={() => editor.chain().focus().setCodeBlock().run()}>
+              <Code className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">bullet list</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" onPressedChange={() => editor.chain().focus().setHardBreak().run()}>
+              {'<br/>'}
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">hard break</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      {/* <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" onPressedChange={() => editor.chain().focus().setHorizontalRule().run()}>
+              <FlipHorizontal className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">horizontal rule</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider> */}
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" onPressedChange={addYoutubeVideo}>
+              <Youtube className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">youtube embed</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" pressed={editor.isActive('underline')} onPressedChange={() => editor.chain().focus().toggleUnderline().run()}>
+              <Underline className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">Underline</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" pressed={editor.isActive('link')} onPressedChange={setLink}>
+              <Link className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">Link</TextComponent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Toggle size="sm" pressed={editor.isActive('taskList')} onPressedChange={() => editor.chain().focus().toggleTaskList().run()}>
+              <FaTasks className="h-4 w-4" />
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TextComponent className="text-base p-2 dark:bg-dark bg-light dark:text-white text-dark">Taskbar</TextComponent>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
