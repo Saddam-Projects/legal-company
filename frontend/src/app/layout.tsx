@@ -12,6 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={montserrat.className}>
         <LayoutComponent>{children}</LayoutComponent>
         <GoogleTagManager gtmId="GTM-P8GK9V7Q" />
+        <meta name="google-site-verification" content="sSmeW29_AgPgK0I_LaEDIHvRY1znUtYfNdydAYPnmKg" />
+        <link rel="canonical" href="https://aim-consultant.id" />
       </body>
     </html>
   );
