@@ -19,4 +19,5 @@ export interface Category {
 export interface BlogImage {
   id: string;
   url: string;
+  alt: string;
 }

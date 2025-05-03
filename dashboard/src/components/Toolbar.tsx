@@ -17,6 +17,7 @@ import blogService from '@/services/blog.service';
 import { BASE_API_URL } from '@/utils/constant';
 import DialogErrorComponent from './DialogError';
 import { FaTasks } from 'react-icons/fa';
+import { Label } from './ui/label';
 
 type Props = {
   editor: Editor | null;
@@ -29,10 +30,17 @@ function ToolBar({ editor }: Props) {
 
   const ref = useRef<HTMLInputElement>(null);
   const [modalUploadImage, setModalUploadImage] = useState(false);
+  const [modalUpload, setModalUpload] = useState(false);
   const serviceImages = blogService.getImages();
 
-  const addImage = () => {
-    ref.current!.click();
+  const [selectedUpload, setSelectedUpload] = useState<{ alt: string; file: File | null }>({ alt: '', file: null });
+
+  const submitHandler = () => {
+    const data = new FormData();
+    if (selectedUpload.file) data.append('file', selectedUpload.file);
+    data.append('alt', selectedUpload.alt);
+    setModalUpload(false);
+    blogService.uploadImage(data, serviceImages.setError, serviceImages.setLoading, () => serviceImages.fetch());
   };
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,17 +48,15 @@ function ToolBar({ editor }: Props) {
 
     if (files && files.length > 0) {
       const file = files[0];
-
-      const data = new FormData();
-
-      data.append('file', file);
-
-      blogService.uploadImage(data, serviceImages.setError, serviceImages.setLoading, () => serviceImages.fetch());
+      setSelectedUpload({
+        ...selectedUpload,
+        file,
+      });
     }
   };
 
-  const selectImage = (url: string) => {
-    editor.chain().focus().setImage({ src: url }).run();
+  const selectImage = (url: string, alt: string) => {
+    editor.chain().focus().setImage({ src: url, alt }).run();
     setModalUploadImage(false);
   };
 
@@ -87,7 +93,6 @@ function ToolBar({ editor }: Props) {
 
   return (
     <div className="grid grid-cols-4 lg:grid-cols-12 gap-2 border bg-light text-dark border-input rounded-lg py-1 px-3 my-2">
-      <Input onChange={onChangeImage} ref={ref} className="hidden" type="file" />
       <Dialog open={modalUploadImage}>
         <DialogContent className="dark:bg-dark bg-light dark:text-white text-dark p-0 shadow-none border-none">
           <DialogHeader className="p-2">
@@ -99,12 +104,49 @@ function ToolBar({ editor }: Props) {
           </DialogHeader>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 p-4">
             {serviceImages.images.map((item, index) => (
-              <div key={index} onClick={() => selectImage(`${BASE_API_URL}/${item.url}`)} className="rounded-lg cursor-pointer items-center flex justify-center p-2 border-1 border-gray-400">
+              <div key={index} onClick={() => selectImage(`${BASE_API_URL}/${item.url}`, item.alt)} className="rounded-lg cursor-pointer items-center flex justify-center p-2 border-1 border-gray-400">
                 <img className="w-full h-full object-contain" alt="image" src={`${BASE_API_URL}/${item.url}`} />
               </div>
             ))}
-            <div onClick={addImage} className="rounded-lg items-center flex justify-center p-2 border-1 border-gray-400">
+            <div onClick={() => setModalUpload(true)} className="rounded-lg items-center flex justify-center p-2 border-1 border-gray-400">
               <PlusIcon className="w-16 h-16" />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={modalUpload}>
+        <DialogContent className="dark:bg-dark bg-light dark:text-white text-dark p-0 shadow-none border-none">
+          <DialogHeader className="p-2">
+            <div className="flex justify-end">
+              <Button onClick={() => setModalUpload(false)} className="dark:bg-dark bg-light dark:text-white text-dark rounded-xl px-2 py-1 text-teal hover:dark:bg-dark hover:bg-light shadow-none hover:opacity-90">
+                <Cross2Icon />
+              </Button>
+            </div>
+          </DialogHeader>
+          <div className="grid gap-3 p-4">
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="file">Image</Label>
+              <Input id="file" onChange={onChangeImage} ref={ref} type="file" />
+            </div>
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="alt">Alt</Label>
+              <Input
+                type="text"
+                id="alt"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSelectedUpload({
+                    ...selectedUpload,
+                    alt: val,
+                  });
+                }}
+              />
+            </div>
+            <div className="ml-auto">
+              <Button onClick={submitHandler} className="bg-green-500">
+                Submit
+              </Button>
             </div>
           </div>
         </DialogContent>

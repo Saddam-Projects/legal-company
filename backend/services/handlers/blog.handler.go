@@ -162,6 +162,7 @@ func (b *BlogHandlerImpl) UploadImage(ctx *fiber.Ctx, dt *dtos.FileUploadDTO) (*
 
 	cloudImage, err := b.cloudImageRepository.Create(ctx, b.db, &models.CloudImage{
 		Url: mediaUrl,
+		Alt: &dt.Alt,
 	})
 
 	return cloudImage, err

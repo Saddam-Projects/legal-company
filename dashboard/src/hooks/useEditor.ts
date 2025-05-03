@@ -142,11 +142,12 @@ export const useEditorProvider = ({ content, onUpdate }: EditorProps) => {
     editorProps: {
       attributes: {
         class: cn(
-          'prose max-w-none prose-a:text-blue-500 prose-a:no-underline prose-a:underline-offset-4 [&_ol]:list-decimal [&_ul]:list-disc prose-img:mx-auto prose-img:my-2 prose-img:rounded prose-img:shadow-lg prose-img:object-contain prose-img:object-center [&_ol]:text-light [&_ul]:text-dark [&_ol]:pl-5 [&_ul]:pl-5',
-          'rounded-md text-sm p-0 border min-h-[550px] bg-light border-input focus:ring-offset-2 disabled:cursor-not-allows disabled:opacity-50 p-2 text-black'
+          'prose-a:text-blue-500 prose-a:no-underline prose-a:underline-offset-4 [&_ol]:list-decimal [&_ul]:list-disc prose-img:mx-auto prose-img:my-2 prose-img:rounded prose-img:shadow-lg prose-img:object-contain prose-img:object-center [&_ol]:text-light [&_ul]:text-dark [&_ol]:pl-5 [&_ul]:pl-5',
+          'rounded-md text-sm p-0 border min-h-[500px] bg-light border-input focus:ring-offset-2 disabled:cursor-not-allows disabled:opacity-50 p-2 text-black'
         ),
       },
     },
+
     onUpdate({ editor }) {
       onUpdate(editor.getHTML());
     },
