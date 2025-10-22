@@ -45,6 +45,12 @@ export default function BottomBarComponent({ email, phone }: { email: string; ph
           </div>
         ))}
       </div>
+      <div className="flex flex-col justify-center items-center bg-teal py-4">
+        <span className="text-white text-sm font-bold">PT ARUNIKA INDO MIRATAMA</span>
+        <span className="text-white text-sm">NIB: 2911240081863</span>
+        <span className="text-white text-sm">NPWP: 2911240081863</span>
+        <span className="text-white text-sm">SK AHU: AHU-0095144.AH.01.01.TAHUN 2024</span>
+      </div>
     </ContainerComponent>
   );
 }

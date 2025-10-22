@@ -30,7 +30,7 @@ export default function LayoutComponent({ children }: { children: React.ReactNod
                   <ContainerComponent className="h-full w-full ">
                     <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
                   </ContainerComponent>
-                  <div className="h-[10px]"></div>
+                  <div className="h-[100px]"></div>
                 </ScrollArea>
                 <BottomBarComponent email={reference.reference.company_email} phone={reference.reference.company_phone} />
               </div>
