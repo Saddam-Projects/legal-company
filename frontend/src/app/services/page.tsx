@@ -26,8 +26,9 @@ export default function Page() {
               <div className="flex flex-col space-y-4 justify-center order-2 lg:order-1">
                 <TextComponent className={`text-teal text-4xl font-bold ${robot.className} italic capitalize`}>Selamat datang di {TITLE}, Kami Siap Membantu Anda</TextComponent>
                 <TextComponent className="text-teal text-base font-regular">
-                  Kami menawarkan jasa pengurusan perizinan perusahaan yang dapat membantu Anda dalam memulai bisnis Anda dengan lancar. Dengan layanan kami, Anda dapat memperoleh bantuan yang lengkap dan dapat diandalkan untuk mengelola
-                  aspek-aspek penting dalam penrizinan perusahaan, seperti persyaratan administrasi, Jangka waktu dan lain-lain
+                  Kami menawarkan jasa pengurusan perizinan perusahaan yang dapat membantu Anda dalam memulai bisnis Anda dengan lancar. Kami dapat membantu mengurus perizinan BPOM, SBU, Pendirian Perusahaan PMA/PMDN, IDAK, PKP dan Izin
+                  Kemenkes dan PKP Dengan layanan kami, Anda dapat memperoleh bantuan yang lengkap dan dapat diandalkan untuk mengelola aspek-aspek penting dalam penrizinan perusahaan, seperti persyaratan administrasi, Jangka
+                  waktu dan lain-lain
                 </TextComponent>
               </div>
               <div className="flex justify-end order-1 lg:order-2">
